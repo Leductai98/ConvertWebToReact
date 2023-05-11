@@ -3,6 +3,12 @@ import Flatpickr from "react-flatpickr";
 import rangePlugin from "flatpickr/dist/plugins/rangePlugin";
 import { Vietnamese } from "flatpickr/dist/l10n/vn.js";
 export default function DetailInfo({ data, url }) {
+  let today = new Date().toISOString().slice(0, 10);
+  console.log(
+    Date.parse(data.start) >= Date.parse(today)
+      ? data.start.split("-").reverse().join("-")
+      : today.split("-").reverse().join("-")
+  );
   return (
     <div className="room__info">
       <div className="row justify-content-between">
@@ -23,8 +29,8 @@ export default function DetailInfo({ data, url }) {
             </div>
             <div className="col-12">
               <div className="info-feature-list">
-                {data.feature.map((item) => (
-                  <div className="info-feature d-flex gap-4">
+                {data.feature.map((item, index) => (
+                  <div className="info-feature d-flex gap-4" key={index}>
                     <div className="feature-icon">
                       <img src={url + item.icon} alt="" />
                     </div>
@@ -131,8 +137,8 @@ export default function DetailInfo({ data, url }) {
                 <div className="info-sleep-header">Nơi bạn ngủ nghỉ</div>
                 <div className="info-sleep-list">
                   <div className="row gy-4 gx-4">
-                    {data.bedroom.map((item) => (
-                      <div className="col-6 col-lg-4">
+                    {data.bedroom.map((item, index) => (
+                      <div className="col-6 col-lg-4" key={index}>
                         <div className="sleep-item">
                           <div className="sleep-item-icon">
                             <img src="/Group 1030.png" alt="" />
@@ -151,8 +157,8 @@ export default function DetailInfo({ data, url }) {
                 <div className="utinity-des">Nơi này có những gì cho bạn</div>
                 <div className="utinity-list">
                   <div className="row gy-3 justify-content-between">
-                    {data.utinity.map((item) => (
-                      <div className="col-12 col-lg-6">
+                    {data.utinity.map((item, index) => (
+                      <div className="col-12 col-lg-6" key={index}>
                         <div className="utinity-item">
                           <div className="utinity-item-icon">
                             <img src={url + item.icon} alt="" />
@@ -384,11 +390,20 @@ export default function DetailInfo({ data, url }) {
                   options={{
                     locale: Vietnamese,
                     allowInput: true,
-                    mode: "range",
-                    minDate: "today",
                     dateFormat: "d-m-Y",
                     inline: true,
                     showMonths: 2,
+                    mode: "range",
+                    minDate:
+                      Date.parse(data.start) >= Date.parse(today)
+                        ? data.start.split("-").reverse().join("-")
+                        : today.split("-").reverse().join("-"),
+                    enable: [
+                      {
+                        from: data.start.split("-").reverse().join("-"),
+                        to: data.end.split("-").reverse().join("-"),
+                      },
+                    ],
                   }}
                   className="input__in"
                   id="myID"
@@ -445,7 +460,16 @@ export default function DetailInfo({ data, url }) {
                     options={{
                       locale: Vietnamese,
                       dateFormat: "d-m-Y",
-                      minDate: "today",
+                      minDate:
+                        Date.parse(data.start) >= Date.parse(today)
+                          ? data.start.split("-").reverse().join("-")
+                          : today.split("-").reverse().join("-"),
+                      enable: [
+                        {
+                          from: data.start.split("-").reverse().join("-"),
+                          to: data.end.split("-").reverse().join("-"),
+                        },
+                      ],
                       allowInput: true,
                       plugins: [new rangePlugin({ input: "#out" })],
                     }}
@@ -689,7 +713,8 @@ export default function DetailInfo({ data, url }) {
                       </div>
                     </div>
                     <div data-type="service" className="total-item">
-                     đ {(
+                      đ{" "}
+                      {(
                         Number(data.price.split(",").join("")) * 0.1
                       ).toLocaleString()}
                     </div>

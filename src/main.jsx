@@ -27,8 +27,7 @@ const router = createBrowserRouter([
       { path: "/privacy", element: <Privacy /> },
       { path: "/favorite", element: <Favorite /> },
       { path: "/help", element: <Help /> },
-      { path: "/signin", element: <SignIn /> },
-      { path: "/signup", element: <SignUp /> },
+
       { path: "/user", element: <User /> },
     ],
   },
@@ -40,6 +39,8 @@ const router = createBrowserRouter([
     element: <LayoutDetail />,
     children: [{ path: "/detail/:roomId", element: <Detail /> }],
   },
+  { path: "/signin", element: <SignIn /> },
+  { path: "/signup", element: <SignUp /> },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

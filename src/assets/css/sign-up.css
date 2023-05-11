@@ -24,7 +24,7 @@ body {
   color: var(--text-color);
   background-color: white;
 }
-input {
+.signup-wrap input {
   width: auto;
   outline: none;
   width: 400px;
@@ -32,12 +32,16 @@ input {
   font-size: 16px;
   border: none;
 }
-label {
+.signup-wrap input::placeholder {
+  text-align: start;
+}
+.signup-wrap label {
   font-size: 16px;
   font-weight: 600;
 }
 .signup-wrap {
   position: relative;
+  line-height: 24px;
 }
 .signup-content {
   margin-top: 40px;
@@ -91,6 +95,7 @@ label {
 .input-wrap {
   display: flex;
   align-items: center;
+  gap: 5px;
 }
 .icon-password {
   display: flex;
@@ -108,10 +113,13 @@ label {
   opacity: 1;
   cursor: pointer;
 }
-.icon-password ion-icon {
+.icon-password img {
+  width: 18px;
+  height: 18px;
+  opacity: 0.8;
   display: none;
 }
-.icon-password ion-icon.active {
+.icon-password img.active {
   display: block;
 }
 button {
@@ -147,7 +155,7 @@ button {
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: -1;
+  z-index: -2;
 }
 .background2 img {
   width: 100%;
@@ -182,6 +190,10 @@ button {
 }
 .pop-up.active {
   display: flex;
+}
+.pop-up img {
+  width: 35px;
+  height: 35px;
 }
 .toast-icon {
   color: green;
@@ -281,7 +293,7 @@ button {
   .signup-content {
     width: 400px;
   }
-  input {
+  .signup-wrap input {
     width: 100%;
   }
 }

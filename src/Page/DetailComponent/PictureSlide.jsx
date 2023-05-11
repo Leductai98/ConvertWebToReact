@@ -5,8 +5,8 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 export default function PictureSlide({ data, url }) {
-  let htmlCode = data.map((item) => (
-    <SwiperSlide>
+  let htmlCode = data.map((item, index) => (
+    <SwiperSlide key={index}>
       <img src={url + item.link} alt="" />
     </SwiperSlide>
   ));
@@ -29,7 +29,6 @@ export default function PictureSlide({ data, url }) {
         spaceBetween={0}
         centeredSlides={true}
         pagination={{
-          el: ".swiper-pagination",
           type: "fraction",
         }}
         navigation

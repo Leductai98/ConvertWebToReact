@@ -15,8 +15,8 @@ export default function DetailComment({ data, url }) {
           </div>
           <div className="rating-list">
             <Row className="gy-5">
-              {data.comments.map((item) => (
-                <Col xs={12} md={6}>
+              {data.comments.map((item, index) => (
+                <Col xs={12} md={6} key={index}>
                   <div className="rating-item">
                     <div className="rating-item-user">
                       <div className="rating-item-user-avatar">

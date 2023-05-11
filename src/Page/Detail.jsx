@@ -31,7 +31,12 @@ export default function Detail() {
     getRoomInfo();
   }, []);
   document.title = roomInfo.name;
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div className="detail--loading--img">
+        <img src="/Spinner-1s-200px.svg" alt="" />
+      </div>
+    );
   return (
     <>
       <Container>

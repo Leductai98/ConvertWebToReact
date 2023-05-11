@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 export default function BookingBanner() {
   return (
     <section className="booking__banner">
@@ -8,8 +8,8 @@ export default function BookingBanner() {
       </div>
       <div className="booking__banner--sign-up">
         <button>
-          <a
-            href="./sign-up.html"
+          <Link
+            to="/signup"
             style={{
               display: "flex",
               alignItems: "center",
@@ -21,7 +21,7 @@ export default function BookingBanner() {
             }}
           >
             Đăng ký ngay
-          </a>
+          </Link>
         </button>
       </div>
       <div className="booking__banner--des">
