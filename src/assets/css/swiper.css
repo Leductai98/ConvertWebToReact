@@ -1,0 +1,40 @@
+.room__picture .swiper {
+  width: 100%;
+  height: 100%;
+  overflow: hidden !important;
+}
+
+.room__picture .swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.room__picture .swiper-slide img {
+  margin: 0 auto;
+  display: block;
+
+  height: 85%;
+
+  object-fit: contain;
+  cursor: pointer;
+}
+.room__picture .swiper-button-next::after,
+.room__picture .swiper-button-prev::after {
+  color: white;
+  cursor: pointer;
+}
+.room__picture .swiper-pagination.swiper-pagination-fraction {
+  color: white;
+  transform: translateY(-50%);
+}
+
+@media (max-width: 1023px) {
+  .room__picture .swiper-button-next::after,
+  .room__picture .swiper-button-prev::after {
+    display: none;
+  }
+}

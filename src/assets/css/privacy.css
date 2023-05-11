@@ -1,0 +1,33 @@
+.privacy span {
+  color: #3a6ad5;
+}
+.privacy {
+  max-width: 960px;
+  margin: 0 auto;
+}
+.privacy__header {
+  font-weight: 700;
+  font-size: 24px;
+  margin-bottom: 20px;
+  margin-top: 30px;
+  line-height: 33px;
+}
+.privacy h4 {
+  font-weight: 700;
+}
+.privacy h5 {
+  font-size: 22px;
+  font-weight: 700;
+}
+.privacy p {
+  word-spacing: 2px;
+  font-weight: 500;
+  line-height: 28px;
+  font-size: 18px;
+}
+.privacy li {
+  font-size: 16px;
+}
+.privacy li p {
+  font-size: 16px;
+}
