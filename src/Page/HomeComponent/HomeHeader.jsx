@@ -1,12 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import "flatpickr/dist/themes/material_blue.css";
 import Flatpickr from "react-flatpickr";
 import rangePlugin from "flatpickr/dist/plugins/rangePlugin";
 import { Vietnamese } from "flatpickr/dist/l10n/vn.js";
+
+const urlLocation = `https://api-sandy-zeta.vercel.app/location`;
+const getLocation = async () => {
+  const res = await fetch(urlLocation);
+  const data = res.json();
+  return data;
+};
+const promise = getLocation();
 export default function HomeHeader() {
   document.title = "Nhà nghỉ dưỡng & Căn hộ cho thuê - Tai";
-
+  const [location, setLocation] = useState([]);
+  useEffect(() => {
+    promise.then((data) => {
+      setLocation(data);
+    });
+  });
+  console.log(location);
   return (
     <section className="header-index">
       <div className="header-wrap">
@@ -43,22 +57,26 @@ export default function HomeHeader() {
                     <div className="location-menu-overlay-mobile" />
                     <div className="location-menu">
                       <div className="location-list">
-                        <div className="location-item">
-                          <div className="location-item-icon">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width={22}
-                              height={22}
-                              fill="currentColor"
-                              className="bi bi-geo-alt"
-                              viewBox="0 0 16 16"
-                            >
-                              <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z" />
-                              <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-                            </svg>
+                        {location.map((item) => (
+                          <div className="location-item" key={item.id}>
+                            <div className="location-item-icon">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width={22}
+                                height={22}
+                                fill="currentColor"
+                                className="bi bi-geo-alt"
+                                viewBox="0 0 16 16"
+                              >
+                                <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z" />
+                                <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                              </svg>
+                            </div>
+                            <div className="location-item-text">
+                              {item.name}
+                            </div>
                           </div>
-                          <div className="location-item-text">Hà Nội</div>
-                        </div>
+                        ))}
                       </div>
                     </div>
                   </div>
@@ -360,86 +378,24 @@ export default function HomeHeader() {
             <div className="location-menu-pc-overlay" />
             <div className="location-menu">
               <div className="location-list">
-                <div className="location-item">
-                  <div className="location-item-icon">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width={22}
-                      height={22}
-                      fill="currentColor"
-                      className="bi bi-geo-alt"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z" />
-                      <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-                    </svg>
+                {location.map((item) => (
+                  <div className="location-item" key={item.id}>
+                    <div className="location-item-icon">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width={22}
+                        height={22}
+                        fill="currentColor"
+                        className="bi bi-geo-alt"
+                        viewBox="0 0 16 16"
+                      >
+                        <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z" />
+                        <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                      </svg>
+                    </div>
+                    <div className="location-item-text">{item.name}</div>
                   </div>
-                  <div className="location-item-text">Hà Nội</div>
-                </div>
-                <div className="location-item">
-                  <div className="location-item-icon">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width={22}
-                      height={22}
-                      fill="currentColor"
-                      className="bi bi-geo-alt"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z" />
-                      <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-                    </svg>
-                  </div>
-                  <div className="location-item-text">Hà Nội</div>
-                </div>
-                <div className="location-item">
-                  <div className="location-item-icon">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width={22}
-                      height={22}
-                      fill="currentColor"
-                      className="bi bi-geo-alt"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z" />
-                      <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-                    </svg>
-                  </div>
-                  <div className="location-item-text">Hà Nội</div>
-                </div>
-                <div className="location-item">
-                  <div className="location-item-icon">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width={22}
-                      height={22}
-                      fill="currentColor"
-                      className="bi bi-geo-alt"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z" />
-                      <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-                    </svg>
-                  </div>
-                  <div className="location-item-text">Hà Nội</div>
-                </div>
-                <div className="location-item">
-                  <div className="location-item-icon">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width={22}
-                      height={22}
-                      fill="currentColor"
-                      className="bi bi-geo-alt"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z" />
-                      <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-                    </svg>
-                  </div>
-                  <div className="location-item-text">Hà Nội</div>
-                </div>
+                ))}
               </div>
             </div>
           </div>

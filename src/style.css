@@ -689,6 +689,7 @@ body .filter .owl-carousel .owl-stage-outer {
 .booking__room--filter img {
   width: 15px;
   height: 14.48px;
+  opacity: 0.6;
 }
 .booking__room--filter p {
   font-size: 15px;

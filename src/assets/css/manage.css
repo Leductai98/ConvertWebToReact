@@ -34,27 +34,27 @@
   border-radius: 10px;
 }
 
-.room-info {
+.manage-wrap .room-info {
   color: inherit;
   text-decoration: none;
   display: flex;
   gap: 20px;
 }
-.room-picture {
+.manage-wrap .room-picture {
   flex: 1;
 }
-.room-picture img {
+.manage-wrap .room-picture img {
   width: 100%;
   aspect-ratio: 1.1;
   border-radius: 10px;
 }
-.room-text {
+.manage-wrap .room-text {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
-.room-name {
+.manage-wrap .room-name {
   font-size: 18px;
   font-weight: 600;
   display: -webkit-box;
@@ -66,7 +66,7 @@
 }
 .room-location {
 }
-.date {
+.manage-wrap .date {
   width: 100%;
   height: 100%;
   min-height: 90px;
@@ -75,24 +75,24 @@
   justify-content: center;
   align-items: center;
 }
-.date-header {
+.manage-wrap .date-header {
   font-size: 16px;
 }
-.date-des {
+.manage-wrap .date-des {
   color: var(--text-color);
   font-size: 16px;
 }
-.price {
+.manage-wrap .price {
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-.price-header {
+.manage-wrap .price-header {
   font-weight: 600;
 }
-.delete {
+.manage-wrap .delete {
   height: 100%;
   min-height: 60px;
   display: flex;
@@ -101,13 +101,16 @@
   align-items: center;
   font-size: 24px;
 }
-.delete ion-icon {
+.manage-wrap .delete img {
   cursor: pointer;
   transition: all 0.3s ease;
+  width: 24px;
+  height: 24px;
+  opacity: 0.8;
 }
-.delete ion-icon:hover {
+.manage-wrap .delete img:hover {
   scale: 1.1;
 }
-.footer {
-  margin-top: 100px;
+.manage__content {
+  margin-bottom: 100px;
 }
