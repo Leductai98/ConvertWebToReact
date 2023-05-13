@@ -5,6 +5,7 @@ import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 import UserItem from "./UserComponent/UserItem";
 export default function User() {
+  document.title = "Thông tin tài khoản - Tai";
   return (
     <Container className="manage__content">
       <Row>
