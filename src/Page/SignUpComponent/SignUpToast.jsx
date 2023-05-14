@@ -1,24 +1,16 @@
-import React from "react";
+import React, { memo } from "react";
+import SignUpToastItem from "./SignUpToastItem";
 
-export default function SignUpToast({ toast, onCloseToast }) {
+export default memo(function SignUpToast({ toast, onCloseToast }) {
   return (
     <div className="toast-list">
       {toast.map((item) => (
-        <div className="toast-error active" key={item.id}>
-          <div className="toast-error-icon">
-            <img src="/close-circle-outline.svg" alt="" />
-          </div>
-          <div className="toast-error-content">{item.name}</div>
-          <div
-            className="toast-error-close"
-            onClick={() => {
-              onCloseToast(item.id);
-            }}
-          >
-            <img src="/close-outline.svg" alt="" />
-          </div>
-        </div>
+        <SignUpToastItem
+          key={item.id}
+          data={item}
+          onCloseToast={onCloseToast}
+        />
       ))}
     </div>
   );
-}
+});

@@ -1,4 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from "react";
 import SignUpHeader from "./SignUpComponent/SignUpHeader";
 import "../assets/css/sign-up.css";
 import SignUpContent from "./SignUpComponent/SignUpContent";
@@ -7,6 +12,9 @@ import SignUpToast from "./SignUpComponent/SignUpToast";
 export default function SignUp() {
   document.title = "Đăng ký - Tai";
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
+  const [userLogin, setUserLogin] = useState(
+    JSON.parse(localStorage.getItem("login")) ?? []
+  );
   const [passType, setPassType] = useState(false);
   const [passAgainType, setPassAgainType] = useState(false);
   const [formInfo, setFormInfo] = useState({
@@ -22,6 +30,7 @@ export default function SignUp() {
   });
   const [toast, setToast] = useState([]);
   const [popUp, setPopUp] = useState(false);
+  const [removing, setRemoving] = useState("");
   const handlePassType = () => {
     setPassType(!passType);
   };
@@ -105,25 +114,36 @@ export default function SignUp() {
         }, 1500);
       }
     } else {
-      console.log(123);
-      setToast([
-        ...toast,
-        { id: Math.random() * 1000, name: "Vui lòng điền đủ thông tin" },
-      ]);
+      let id = Math.random() * 100000;
+      setToast([...toast, { id: id, name: "Vui lòng điền đủ thông tin" }]);
     }
   };
   const handleCloseToast = (id) => {
     let result = toast.filter((item) => item.id !== id);
+    console.log(result);
     setToast(result);
   };
+  const handleSignIn = (e) => {
+    if (userLogin.length) {
+      e.preventDefault();
+      setToast([
+        ...toast,
+        { id: Math.random() * 100000, name: "Bạn đang đăng nhập rồi" },
+      ]);
+    }
+  };
   useEffect(() => {
-    let closeError = setTimeout(() => {
-      setToast([]);
-    }, 2000);
-    return () => {
-      clearTimeout(closeError);
-    };
+    setToast(toast.filter((item) => item.id !== removing));
+  }, [removing]);
+  useEffect(() => {
+    if (toast.length) {
+      const id = toast[toast.length - 1].id;
+      setTimeout(() => {
+        setRemoving(id);
+      }, 2000);
+    }
   }, [toast]);
+
   return (
     <>
       <SignUpHeader />
@@ -136,9 +156,14 @@ export default function SignUp() {
         error={error}
         onValidateForm={handleValidateForm}
         onSubmit={handleSubmit}
+        onSignIn={handleSignIn}
       />
       <SignUpPopUp popUp={popUp} />
-      <SignUpToast toast={toast} onCloseToast={handleCloseToast} />
+      <SignUpToast
+        toast={toast}
+        onCloseToast={handleCloseToast}
+        setToast={setToast}
+      />
     </>
   );
 }

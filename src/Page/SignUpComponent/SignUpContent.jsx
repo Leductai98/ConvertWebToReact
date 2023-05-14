@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Container from "react-bootstrap/esm/Container";
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
@@ -11,6 +12,7 @@ export default function SignUpContent({
   error,
   onValidateForm,
   onSubmit,
+  onSignIn,
 }) {
   return (
     <>
@@ -133,13 +135,15 @@ export default function SignUpContent({
             </div>
             <div className="have-acount">
               <div className="acount-text">Bạn đã có tài khoản?</div>
-              <a
-                href="/signin
-          "
+              <Link
+                to="/signin"
                 className="acount-btn"
+                onClick={(e) => {
+                  onSignIn(e);
+                }}
               >
                 Đăng nhập
-              </a>
+              </Link>
             </div>
           </Col>
           <div className="background d-none d-lg-block">
