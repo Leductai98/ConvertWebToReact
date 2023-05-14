@@ -1,4 +1,5 @@
 import React from "react";
+
 import "../assets/css/swiper_index.css";
 import "../grid_system.css";
 import "../style.css";
@@ -11,6 +12,7 @@ export default function Layout2() {
     <>
       <Outlet />
       <Footer2 />
+     
     </>
   );
 }

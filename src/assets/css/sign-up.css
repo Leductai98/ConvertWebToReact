@@ -162,7 +162,7 @@ button {
   height: 100%;
   object-fit: cover;
 }
-.pop-up-overlay {
+.pop-up-overlay-success {
   position: fixed;
   top: 0;
   right: 0;
@@ -171,10 +171,10 @@ button {
   background-color: rgba(0, 0, 0, 0.4);
   display: none;
 }
-.pop-up-overlay.active {
+.pop-up-overlay-success.active {
   display: block;
 }
-.pop-up {
+.pop-up-success {
   background-color: white;
   display: flex;
   position: fixed;
@@ -188,14 +188,14 @@ button {
   border-radius: 10px;
   display: none;
 }
-.pop-up.active {
+.pop-up-success.active {
   display: flex;
 }
-.pop-up img {
+.pop-up-success img {
   width: 35px;
   height: 35px;
 }
-.toast-icon {
+.toast-icon-success {
   color: green;
   width: 44px;
   text-align: center;
@@ -204,8 +204,11 @@ button {
   line-height: 44px;
   height: 44px;
   border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.toast-content {
+.toast-content-success {
   font-size: 24px;
   font-weight: 700;
 }
@@ -275,6 +278,10 @@ button {
   height: 44px;
   border-radius: 50%;
 }
+.toast-error-icon img {
+  width: 35px;
+  height: 35px;
+}
 .toast-error-content {
   font-size: 16px;
   font-weight: 500;
@@ -286,7 +293,11 @@ button {
   font-size: 24px;
   cursor: pointer;
 }
-
+.toast-error-close img {
+  width: 24px;
+  height: 24px;
+  opacity: 0.8;
+}
 @media (max-width: 1023px) {
 }
 @media (max-width: 767px) {

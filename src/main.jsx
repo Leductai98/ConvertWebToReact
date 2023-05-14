@@ -1,6 +1,7 @@
 import React, { Children } from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
 import ThemeProvider from "react-bootstrap/ThemeProvider";
 import Layout from "./Component/Layout.jsx";
 import Layout2 from "./Component/Layout2.jsx";
@@ -47,6 +48,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ThemeProvider>
       <RouterProvider router={router} />
+      
     </ThemeProvider>
   </React.StrictMode>
 );

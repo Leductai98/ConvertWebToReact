@@ -1,9 +1,10 @@
 import React from "react";
+
 import { Link } from "react-router-dom";
 export default function Footer2() {
-   const toTop = () => {
-     window.scrollTo(0, 0);
-   };
+  const toTop = () => {
+    window.scrollTo(0, 0);
+  };
   return (
     <>
       <section className="footer-index">

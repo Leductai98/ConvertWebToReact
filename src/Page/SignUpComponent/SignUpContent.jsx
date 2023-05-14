@@ -7,8 +7,10 @@ export default function SignUpContent({
   onPassType,
   passAgainType,
   onPassAgainType,
+  formInfo,
   error,
   onValidateForm,
+  onSubmit,
 }) {
   return (
     <>
@@ -17,18 +19,12 @@ export default function SignUpContent({
           <Col xs={12} lg={5} className="signup-content">
             <div className="signup-header">Đăng ký</div>
             <div className="signup-form-wrap">
-              <form
-                action=""
-                className="signup-form"
-                onChange={(e) => {
-                  onValidateForm(e);
-                }}
-              >
+              <form action="" className="signup-form">
                 <div className={`input-mail ${error.email ? "error" : ""}`}>
                   <label htmlFor="email">
                     Địa chỉ email{" "}
                     <span>
-                      {error.EmailExist
+                      {error.emailExist
                         ? "Email đã tồn tại"
                         : error.email
                         ? "Email không hợp lệ"
@@ -39,6 +35,10 @@ export default function SignUpContent({
                     type="email"
                     id="email"
                     placeholder="Nhập địa chỉ email"
+                    onChange={(e) => {
+                      onValidateForm(e);
+                    }}
+                    value={formInfo.email}
                   />
                 </div>
                 <div
@@ -56,6 +56,10 @@ export default function SignUpContent({
                       id="new-password"
                       placeholder="Nhập mật khẩu"
                       autoComplete="off"
+                      onChange={(e) => {
+                        onValidateForm(e);
+                      }}
+                      value={formInfo.newPassword}
                     />
                     <div
                       className="icon-password"
@@ -94,6 +98,10 @@ export default function SignUpContent({
                       id="pass-again"
                       placeholder="Nhập lại mật khẩu"
                       autoComplete="off"
+                      onChange={(e) => {
+                        onValidateForm(e);
+                      }}
+                      value={formInfo.passAgain}
                     />
                     <div
                       className="icon-password"
@@ -113,7 +121,14 @@ export default function SignUpContent({
                     </div>
                   </div>
                 </div>
-                <button type="submit">Đăng ký</button>
+                <button
+                  onClick={(e) => {
+                    onSubmit(e);
+                  }}
+                  type="submit"
+                >
+                  Đăng ký
+                </button>
               </form>
             </div>
             <div className="have-acount">
