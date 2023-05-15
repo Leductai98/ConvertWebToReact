@@ -36,9 +36,6 @@ export default function HomeHeader() {
     let y = x.join("/");
     location.href = y;
   };
-  const handleCloseUserMenuMobile = () => {
-    setUserMenuDisplay(!userMenuDisplay);
-  };
   useEffect(() => {
     promise.then((data) => {
       setLocation(data);
@@ -330,7 +327,6 @@ export default function HomeHeader() {
               userMenuMobileDisplay={userMenuMobileDisplay}
               onUserMenuMobileDisplay={handleUserMenuMobileDisplay}
               onSignOut={handleSignOut}
-             
             />
           </div>
         </div>

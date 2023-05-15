@@ -381,7 +381,7 @@ export default function DetailInfo({ data, url }) {
               </div>
             </div>
             <div className="col-12">
-              <div id="date" className="info-date">
+              <div className="info-date">
                 <div className="date-header">Chọn ngày nhận phòng</div>
                 <div className="date-des">
                   Thêm ngày đi để biết giá chính xác

@@ -4,13 +4,18 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import UserMenuPc from "../Page/HomeComponent/UserMenuPc";
+import UserMenuMobile from "../Page/HomeComponent/UserMenuMobile";
 export default function Header() {
   const [userLogin, setUserLogin] = useState(
     JSON.parse(localStorage.getItem("login"))
   );
   const [userMenuDisplay, setUserMenuDisplay] = useState(false);
+  const [userMenuMobileDisplay, setUserMenuMobileDisplay] = useState(false);
   const handleUserMenuDisplay = () => {
     setUserMenuDisplay(!userMenuDisplay);
+  };
+  const handleUserMenuMobileDisplay = () => {
+    setUserMenuMobileDisplay(!userMenuMobileDisplay);
   };
   const handleSignOut = () => {
     setUserLogin(null);
@@ -94,7 +99,13 @@ export default function Header() {
               </div>
             </div>
           </div>
-          <label className="col-2 d-md-none menu-icon" htmlFor="mobile-menu">
+          <label
+            className="col-2 d-md-none menu-icon"
+            htmlFor="mobile-menu"
+            onClick={() => {
+              handleUserMenuMobileDisplay();
+            }}
+          >
             <img src="/list.svg" alt="" />
           </label>
           <input
@@ -102,48 +113,12 @@ export default function Header() {
             type="checkbox"
             id="mobile-menu"
           />
-          <label className="overlay-mobile" htmlFor="mobile-menu"></label>
-          <div className="menu">
-            <label className="close-mobile-menu" htmlFor="mobile-menu">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="30"
-                height="30"
-                fill="currentColor"
-                className="bi bi-x"
-                viewBox="0 0 16 16"
-              >
-                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-              </svg>
-            </label>
-            <div className="avatar">
-              <img src="/Frame (7).png" alt="" />
-              <p>Khách</p>
-            </div>
-            <ul className="menu-list">
-              <label htmlFor="mobile-menu">
-                <NavLink to="/signin" className="menu-item">
-                  Đăng nhập
-                </NavLink>
-              </label>
-              <label htmlFor="mobile-menu">
-                <NavLink to="/signup" className="menu-item end-user">
-                  Đăng ký
-                </NavLink>
-              </label>
-              <li>
-                <NavLink className="menu-item">Trở thành chủ nhà</NavLink>
-              </li>
-              <li className="menu-item-languages">
-                Ngôn ngữ: <span>Tiếng Việt</span>
-              </li>
-              <label htmlFor="mobile-menu">
-                <NavLink to="/help" className="menu-item">
-                  Trợ giúp
-                </NavLink>
-              </label>
-            </ul>
-          </div>
+          <UserMenuMobile
+            userLogin={userLogin}
+            userMenuMobileDisplay={userMenuMobileDisplay}
+            onUserMenuMobileDisplay={handleUserMenuMobileDisplay}
+            onSignOut={handleSignOut}
+          />
         </div>
       </div>
     </div>
