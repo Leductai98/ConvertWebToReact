@@ -90,7 +90,7 @@ body {
 .input-pass-again.error {
   border-color: red;
 }
-.signup-form span {
+.signin-form span {
   font-weight: 500;
   color: red;
 }
@@ -180,7 +180,8 @@ button {
   display: flex;
   position: fixed;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 10px;
   padding: 20px;
   top: 40%;
   width: 350px;

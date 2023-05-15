@@ -192,10 +192,10 @@
     cursor: pointer;
     scale: 1.2;
   }
-  .input-mobile-menu:checked ~ .menu {
+  .menu.active {
     transform: translateX(0);
   }
-  .input-mobile-menu:checked ~ .overlay-mobile {
+  .overlay-mobile.active {
     display: block !important;
   }
   .menu-item-languages {
@@ -246,6 +246,17 @@
     bottom: 0;
     right: 0;
     left: 0;
+  }
+  .list--item-wrap {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .booking__room--list--item--rate {
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 /*Tablet*/
@@ -316,6 +327,7 @@
   .cover-detail-item {
     width: 100%;
   }
+
   iframe {
     max-width: 100%;
   }

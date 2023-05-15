@@ -130,6 +130,8 @@ export default function SignUp() {
         ...toast,
         { id: Math.random() * 100000, name: "Bạn đang đăng nhập rồi" },
       ]);
+    } else {
+      localStorage.setItem("previousSignUp", true);
     }
   };
   useEffect(() => {

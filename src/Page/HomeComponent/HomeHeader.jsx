@@ -4,6 +4,8 @@ import "flatpickr/dist/themes/material_blue.css";
 import Flatpickr from "react-flatpickr";
 import rangePlugin from "flatpickr/dist/plugins/rangePlugin";
 import { Vietnamese } from "flatpickr/dist/l10n/vn.js";
+import UserMenuPc from "./UserMenuPc";
+import UserMenuMobile from "./UserMenuMobile";
 
 const urlLocation = `https://api-sandy-zeta.vercel.app/location`;
 const getLocation = async () => {
@@ -15,12 +17,33 @@ const promise = getLocation();
 export default function HomeHeader() {
   document.title = "Nhà nghỉ dưỡng & Căn hộ cho thuê - Tai";
   const [location, setLocation] = useState([]);
+  const [userLogin, setUserLogin] = useState(
+    JSON.parse(localStorage.getItem("login"))
+  );
+  const [userMenuDisplay, setUserMenuDisplay] = useState(false);
+  const [userMenuMobileDisplay, setUserMenuMobileDisplay] = useState(false);
+  const handleUserMenuDisplay = () => {
+    setUserMenuDisplay(!userMenuDisplay);
+  };
+  const handleUserMenuMobileDisplay = () => {
+    setUserMenuMobileDisplay(!userMenuMobileDisplay);
+  };
+  const handleSignOut = () => {
+    setUserLogin(null);
+    localStorage.removeItem("login");
+    let x = location.href.split("/");
+    x.splice(x.length - 1, 1, "");
+    let y = x.join("/");
+    location.href = y;
+  };
+  const handleCloseUserMenuMobile = () => {
+    setUserMenuDisplay(!userMenuDisplay);
+  };
   useEffect(() => {
     promise.then((data) => {
       setLocation(data);
     });
   });
-  console.log(location);
   return (
     <section className="header-index">
       <div className="header-wrap">
@@ -258,7 +281,14 @@ export default function HomeHeader() {
               <div className="nav__button--languages--country">VN</div>
             </div>
             <div className="user-wrap">
-              <div className="nav__button--user">
+              <div
+                className={`nav__button--user ${
+                  userMenuDisplay ? "active" : ""
+                }`}
+                onClick={() => {
+                  handleUserMenuDisplay();
+                }}
+              >
                 <div className="nav__button--user--button">
                   <img src="/Frame (1).png" alt="" />
                 </div>
@@ -266,36 +296,12 @@ export default function HomeHeader() {
                   <img src="/Frame.png" alt="" />
                 </div>
               </div>
-              <div className="user__overlay" />
-              <div className="user__menu">
-                <NavLink
-                  to="/signin"
-                  style={{ color: "inherit", textDecoration: "none" }}
-                  className="user__menu-login"
-                >
-                  Đăng nhập
-                </NavLink>
-                <NavLink
-                  to="/signup"
-                  style={{ color: "inherit", textDecoration: "none" }}
-                  className="user__menu-signup"
-                >
-                  Đăng ký
-                </NavLink>
-                <div
-                  className="user__menu-become-host"
-                  style={{ cursor: "default" }}
-                >
-                  Cho thuê chỗ ở
-                </div>
-                <NavLink
-                  to="/help"
-                  style={{ color: "inherit", textDecoration: "none" }}
-                  className="user__menu-help"
-                >
-                  Trợ giúp
-                </NavLink>
-              </div>
+              <UserMenuPc
+                userLogin={userLogin}
+                userMenuDisplay={userMenuDisplay}
+                onUserMenuDisplay={handleUserMenuDisplay}
+                onSignOut={handleSignOut}
+              />
             </div>
             <div className="nav__button--user on-tablet-mobile">
               <div className="nav__button--user--button">
@@ -305,7 +311,13 @@ export default function HomeHeader() {
                 <img src="/Frame (7).png" alt="" />
               </div>
             </div>
-            <label className="menu-icon-index" htmlFor="mobile-menu">
+            <label
+              className="menu-icon-index"
+              htmlFor="mobile-menu"
+              onClick={() => {
+                handleUserMenuMobileDisplay();
+              }}
+            >
               <img src="/list.svg" alt="" />
             </label>
             <input
@@ -313,50 +325,13 @@ export default function HomeHeader() {
               type="checkbox"
               id="mobile-menu"
             />
-            <label className="overlay-mobile" htmlFor="mobile-menu" />
-            <div className="menu">
-              <label className="close-mobile-menu" htmlFor="mobile-menu">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width={30}
-                  height={30}
-                  fill="currentColor"
-                  className="bi bi-x"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                </svg>
-              </label>
-              <div className="avatar">
-                <img src="/Frame (7).png" alt="" />
-                <p>Khách</p>
-              </div>
-              <ul className="menu-list">
-                <li>
-                  <NavLink to="/signin" className="menu-item">
-                    Đăng nhập
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to="/signup" className="menu-item end-user">
-                    Đăng ký
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink className="menu-item" style={{ cursor: "default" }}>
-                    Trở thành chủ nhà
-                  </NavLink>
-                </li>
-                <li className="menu-item-languages">
-                  Ngôn ngữ: <span>Tiếng Việt</span>
-                </li>
-                <li>
-                  <NavLink to="/help" className="menu-item">
-                    Trợ giúp
-                  </NavLink>
-                </li>
-              </ul>
-            </div>
+            <UserMenuMobile
+              userLogin={userLogin}
+              userMenuMobileDisplay={userMenuMobileDisplay}
+              onUserMenuMobileDisplay={handleUserMenuMobileDisplay}
+              onSignOut={handleSignOut}
+             
+            />
           </div>
         </div>
         <div className="header__des">Khám phá địa điểm mới</div>

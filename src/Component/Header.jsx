@@ -1,9 +1,25 @@
-import React, { useRef } from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import UserMenuPc from "../Page/HomeComponent/UserMenuPc";
 export default function Header() {
+  const [userLogin, setUserLogin] = useState(
+    JSON.parse(localStorage.getItem("login"))
+  );
+  const [userMenuDisplay, setUserMenuDisplay] = useState(false);
+  const handleUserMenuDisplay = () => {
+    setUserMenuDisplay(!userMenuDisplay);
+  };
+  const handleSignOut = () => {
+    setUserLogin(null);
+    localStorage.removeItem("login");
+    let x = location.href.split("/");
+    x.splice(x.length - 1, 1, "");
+    let y = x.join("/");
+    location.href = y;
+  };
   return (
     <div className="container">
       <div className="header">
@@ -30,7 +46,12 @@ export default function Header() {
               </div>
               <div className="col-4 d-flex justify-content-end align-items-center">
                 <div className="user-wrap">
-                  <div className="user">
+                  <div
+                    className={`user ${userMenuDisplay ? "active" : ""}`}
+                    onClick={() => {
+                      handleUserMenuDisplay();
+                    }}
+                  >
                     <div className="user-button">
                       <svg
                         width="16"
@@ -63,36 +84,12 @@ export default function Header() {
                       </svg>
                     </div>
                   </div>
-                  <div className="user__overlay"></div>
-                  <div className="user__menu">
-                    <NavLink
-                      to="/signin"
-                      style={{ color: "inherit", textDecoration: " none" }}
-                      className="user__menu-login"
-                    >
-                      Đăng nhập
-                    </NavLink>
-                    <NavLink
-                      to="/signup"
-                      className="user__menu-signup"
-                      style={{ color: "inherit", textDecoration: "none" }}
-                    >
-                      Đăng ký
-                    </NavLink>
-                    <div
-                      className="user__menu-become-host"
-                      style={{ cursor: "default" }}
-                    >
-                      Cho thuê chỗ ở
-                    </div>
-                    <NavLink
-                      to="/help"
-                      style={{ textDecoration: "none", color: "inherit" }}
-                      className="user__menu-help"
-                    >
-                      Trợ giúp
-                    </NavLink>
-                  </div>
+                  <UserMenuPc
+                    userLogin={userLogin}
+                    userMenuDisplay={userMenuDisplay}
+                    onUserMenuDisplay={handleUserMenuDisplay}
+                    onSignOut={handleSignOut}
+                  />
                 </div>
               </div>
             </div>

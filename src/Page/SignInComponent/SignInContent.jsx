@@ -1,8 +1,16 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Container from "react-bootstrap/esm/Container";
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
-export default function SignInContent() {
+export default function SignInContent({
+  error,
+  formInfo,
+  passType,
+  onPassType,
+  onValidateForm,
+  onSubmit,
+}) {
   return (
     <>
       <Container>
@@ -10,31 +18,59 @@ export default function SignInContent() {
           <Col xs={12} lg={5} className=" signin-content">
             <div className="signin-header">Đăng nhập</div>
             <div className="signin-form-wrap">
-              <form action="" className="signin-form">
-                <div className="input-mail">
+              <form
+                action=""
+                className="signin-form"
+                onSubmit={(e) => {
+                  onSubmit(e);
+                }}
+              >
+                <div className={`input-mail ${error.email ? "error" : ""}`}>
                   <label htmlFor="email">
-                    Địa chỉ email <span />
+                    Địa chỉ email{" "}
+                    <span>{error.email ? "Email không hợp lệ" : ""}</span>
                   </label>
                   <input
                     type="email"
                     id="email"
                     placeholder="Nhập địa chỉ email"
+                    value={formInfo.email}
+                    onChange={(e) => {
+                      onValidateForm(e);
+                    }}
                   />
                 </div>
-                <div className="input-pass">
+                <div className={`input-pass ${error.pass ? "error" : ""}`}>
                   <label htmlFor="new-password">
-                    Mật khẩu <span />
+                    Mật khẩu{" "}
+                    <span>{error.pass ? "Mật khẩu không hợp lệ" : ""}</span>
                   </label>
                   <div className="input-wrap">
                     <input
-                      type="password"
+                      type={passType ? "text" : "password"}
                       id="new-password"
                       placeholder="Nhập mật khẩu"
                       autoComplete="off"
+                      value={formInfo.pass}
+                      onChange={(e) => {
+                        onValidateForm(e);
+                      }}
                     />
-                    <div className="icon-password">
-                      <ion-icon name="eye-outline" />
-                      <ion-icon name="eye-off-outline" className="active" />
+                    <div
+                      className="icon-password"
+                      onClick={() => {
+                        onPassType();
+                      }}
+                    >
+                      <img
+                        src="/eye-outline.svg"
+                        alt=""
+                        className={passType ? "active" : ""}
+                      />
+                      <img
+                        src="/eye-off-outline.svg"
+                        className={passType ? "" : "active"}
+                      />
                     </div>
                   </div>
                 </div>
@@ -43,13 +79,13 @@ export default function SignInContent() {
             </div>
             <div className="have-acount">
               <div className="acount-text">Chưa có tài khoản?</div>
-              <a
-                href="/signup
+              <Link
+                to="/signup
           "
                 className="acount-btn"
               >
                 Đăng ký
-              </a>
+              </Link>
             </div>
           </Col>
           <div className="background-signin d-none d-lg-block">

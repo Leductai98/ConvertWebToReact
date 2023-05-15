@@ -55,10 +55,10 @@ export default function Footer2() {
             </div>
             <div className="mail-des">Nhận thêm thông tin về chúng tôi</div>
             <div className="footer__content--right--mail">
-              <form action style={{ display: "flex" }}>
+              <form style={{ display: "flex" }}>
                 <input type="email" placeholder="Nhập địa chỉ email của bạn" />
                 <button style={{ cursor: "pointer" }}>
-                  Gửi <img src="/Frame (6).png" alt />
+                  Gửi <img src="/Frame (6).png" />
                 </button>
               </form>
             </div>
@@ -82,14 +82,14 @@ export default function Footer2() {
                 </svg>
               </Link>
               <Link to="https://www.facebook.com" className="icon__item">
-                <img src="/Facebook_f_logo_(2019).svg" alt />
+                <img src="/Facebook_f_logo_(2019).svg" />
               </Link>
               <Link
                 to="https://www.instagram.com"
                 className="icon__item"
-                style={{ "background-color": "unset" }}
+                style={{ backgroundColor: "unset" }}
               >
-                <img src="/Instagram_logo_2016.svg" alt />
+                <img src="/Instagram_logo_2016.svg" />
               </Link>
             </div>
           </div>
@@ -114,7 +114,7 @@ export default function Footer2() {
           <div className="detail-wrap">
             <div className="cover-detail-header-contact">
               <div className="detail-header-icon-contact">
-                <img src="/Group (4).png" alt />
+                <img src="/Group (4).png" />
               </div>
               <div className="detail-header-text-contact">
                 Nếu quý khách có thắc mắc, xin vui lòng liên hệ chúng tôi theo
