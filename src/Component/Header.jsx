@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import UserMenuPc from "../Page/HomeComponent/UserMenuPc";
 import UserMenuMobile from "../Page/HomeComponent/UserMenuMobile";
 export default function Header() {
+  const navigate = useNavigate();
   const [userLogin, setUserLogin] = useState(
     JSON.parse(localStorage.getItem("login"))
   );
@@ -20,10 +21,7 @@ export default function Header() {
   const handleSignOut = () => {
     setUserLogin(null);
     localStorage.removeItem("login");
-    let x = location.href.split("/");
-    x.splice(x.length - 1, 1, "");
-    let y = x.join("/");
-    location.href = y;
+    navigate("/");
   };
   return (
     <div className="container">

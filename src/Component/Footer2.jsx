@@ -2,9 +2,7 @@ import React from "react";
 
 import { Link } from "react-router-dom";
 export default function Footer2() {
-  const toTop = () => {
-    window.scrollTo(0, 0);
-  };
+ 
   return (
     <>
       <section className="footer-index">
@@ -24,27 +22,21 @@ export default function Footer2() {
             <div className="footer__content--right--infor">
               <Link
                 to="/about"
-                onClick={() => {
-                  toTop();
-                }}
+              
                 className="infor__item"
               >
                 Về chúng tôi
               </Link>
               <Link
                 to="/help"
-                onClick={() => {
-                  toTop();
-                }}
+             
                 className="infor__item"
               >
                 Trợ giúp
               </Link>
               <Link
                 to="/privacy"
-                onClick={() => {
-                  toTop();
-                }}
+             
                 className="infor__item"
               >
                 Chính sách riêng tư

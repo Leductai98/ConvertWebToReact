@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "flatpickr/dist/themes/material_blue.css";
 import Flatpickr from "react-flatpickr";
 import rangePlugin from "flatpickr/dist/plugins/rangePlugin";
@@ -14,14 +15,19 @@ const getLocation = async () => {
   return data;
 };
 const promise = getLocation();
-export default function HomeHeader() {
+export default function HomeHeader({ filterInfo, setFilterInfo }) {
   document.title = "Nhà nghỉ dưỡng & Căn hộ cho thuê - Tai";
+  const navigate = useNavigate();
   const [location, setLocation] = useState([]);
   const [userLogin, setUserLogin] = useState(
     JSON.parse(localStorage.getItem("login"))
   );
   const [userMenuDisplay, setUserMenuDisplay] = useState(false);
   const [userMenuMobileDisplay, setUserMenuMobileDisplay] = useState(false);
+  const [locationDisplay, setLocationDisplay] = useState({
+    pc: false,
+    mobile: false,
+  });
   const handleUserMenuDisplay = () => {
     setUserMenuDisplay(!userMenuDisplay);
   };
@@ -31,16 +37,66 @@ export default function HomeHeader() {
   const handleSignOut = () => {
     setUserLogin(null);
     localStorage.removeItem("login");
-    let x = location.href.split("/");
-    x.splice(x.length - 1, 1, "");
-    let y = x.join("/");
-    location.href = y;
+    navigate("/");
   };
+  const handleLocationDisplay = (e) => {
+    if (e.target.className === "header__search--location--input") {
+      setLocationDisplay({ ...locationDisplay, pc: !locationDisplay.pc });
+    }
+    if (e.target.className === "location-menu-pc-overlay") {
+      setLocationDisplay({ ...locationDisplay, pc: !locationDisplay.pc });
+    }
+    if (e.target.className == "location-menu-pc-overlay active") {
+      setLocationDisplay({ ...locationDisplay, pc: !locationDisplay.pc });
+    }
+    if (e.target.className === "input-location-mobile") {
+      setLocationDisplay({
+        ...locationDisplay,
+        mobile: !locationDisplay.mobile,
+      });
+    }
+    if (e.target.className === "location-menu-overlay-mobile active") {
+      setLocationDisplay({
+        ...locationDisplay,
+        mobile: !locationDisplay.mobile,
+      });
+    }
+    if (
+      e.target.className === "location-item" ||
+      e.target.className === "location-item-icon" ||
+      e.target.className === "location-item-text"
+    ) {
+      setLocationDisplay({
+        pc: false,
+        mobile: false,
+      });
+    }
+  };
+
   useEffect(() => {
     promise.then((data) => {
       setLocation(data);
     });
-  });
+  }, [promise]);
+  const locationList = location.filter((item) =>
+    filterInfo.location !== ""
+      ? item.name
+          .toLowerCase()
+          .split(" ")
+          .join("")
+          .includes(filterInfo.location.toLowerCase().split(" ").join(""))
+      : item
+  );
+  /*if (filterInfo.location != "") {
+    locationList = location.filter(
+      (item) =>
+        item.name.toLowerCase().split(" ").join("") ==
+        filterInfo.location.toLowerCase().split(" ").join("")
+    );
+  } else {
+    locationList = location;
+  }*/
+
   return (
     <section className="header-index">
       <div className="header-wrap">
@@ -73,12 +129,44 @@ export default function HomeHeader() {
                       type="search"
                       placeholder="Địa điểm"
                       autoComplete="off"
+                      onFocus={(e) => {
+                        handleLocationDisplay(e);
+                      }}
+                      onChange={(e) => {
+                        setFilterInfo({
+                          ...filterInfo,
+                          location: e.target.value,
+                        });
+                      }}
+                      value={filterInfo.location}
                     />
-                    <div className="location-menu-overlay-mobile" />
-                    <div className="location-menu">
+                    <div
+                      className={`location-menu-overlay-mobile ${
+                        locationDisplay.mobile ? "active" : ""
+                      }`}
+                      onClick={(e) => {
+                        handleLocationDisplay(e);
+                      }}
+                    />
+                    <div
+                      className={`location-menu ${
+                        locationDisplay.mobile ? "active" : ""
+                      }`}
+                    >
                       <div className="location-list">
-                        {location.map((item) => (
-                          <div className="location-item" key={item.id}>
+                        {locationList.map((item) => (
+                          <div
+                            className="location-item"
+                            key={item.id}
+                            onClick={(e) => {
+                              handleLocationDisplay(e);
+                              setFilterInfo({
+                                ...filterInfo,
+                                location: item.name,
+                              });
+                              console.log(filterInfo);
+                            }}
+                          >
                             <div className="location-item-icon">
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -262,12 +350,12 @@ export default function HomeHeader() {
             </div>
           </div>
           <div className="nav__button">
-            <NavLink
+            <div
               className="nav__button--host"
               style={{ cursor: "default" }}
             >
               Trở thành chủ nhà
-            </NavLink>
+            </div>
             <div className="nav__button--languages">
               <div className="nav__button--languages--button">
                 <img src="/Group (1).png" alt="" />
@@ -345,12 +433,35 @@ export default function HomeHeader() {
               className="header__search--location--input"
               placeholder="Điểm đến của bạn"
               autoComplete="off"
+              onChange={(e) => {
+                setFilterInfo({ ...filterInfo, location: e.target.value });
+              }}
+              onFocus={(e) => {
+                handleLocationDisplay(e);
+              }}
+              value={filterInfo.location}
             />
-            <div className="location-menu-pc-overlay" />
-            <div className="location-menu">
+            <div
+              className={`location-menu-pc-overlay ${
+                locationDisplay.pc ? "active" : ""
+              }`}
+              onClick={(e) => {
+                handleLocationDisplay(e);
+              }}
+            />
+            <div
+              className={`location-menu ${locationDisplay.pc ? "active" : ""}`}
+            >
               <div className="location-list">
-                {location.map((item) => (
-                  <div className="location-item" key={item.id}>
+                {locationList.map((item) => (
+                  <div
+                    className="location-item"
+                    key={item.id}
+                    onClick={(e) => {
+                      handleLocationDisplay(e);
+                      setFilterInfo({ ...filterInfo, location: item.name });
+                    }}
+                  >
                     <div className="location-item-icon">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"

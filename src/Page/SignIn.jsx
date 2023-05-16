@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from "react";
+import { generatePath } from "react-router";
+import { useNavigate, useLocation } from "react-router-dom";
 import "../assets/css/sign-in.css";
 import SignInHeader from "./SignInComponent/SignInHeader";
 import SignInContent from "./SignInComponent/SignInContent";
 import SignInPopUp from "./SignInComponent/SignInPopUp";
 import SignInToast from "./SignInComponent/SignInToast";
 export default function SignIn() {
+  console.log(localStorage.getItem("previousSignUp") !== null);
   document.title = "Đăng nhập - Tai";
+  const navigate = useNavigate();
+  console.log(navigate);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
   const [passType, setPassType] = useState(false);
   const [formInfo, setFormInfo] = useState({
@@ -50,8 +55,9 @@ export default function SignIn() {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(user);
     if (formInfo.email !== "" && formInfo.pass !== "") {
-      if (user.length) {
+      if (user !== null) {
         let result = "";
         user.forEach((item) => {
           if (item.email == formInfo.email && item.pass == formInfo.pass) {
@@ -66,16 +72,17 @@ export default function SignIn() {
           }, 500);
           setTimeout(() => {
             if (localStorage.getItem("isDetail")) {
-              location.href = localStorage.getItem("isDetail");
+              let y = localStorage.getItem("isDetail").split("/");
+              navigate(`${y[y.legnth - 2]}/${y[y.lengh - 1]}`);
+
               localStorage.removeItem("isDetail");
               localStorage.removeItem("previousSignUp");
             } else {
-              if (localStorage.getItem("previousSignUp")) {
-                let y = location.href.replace("signin", "");
-                location.href = y;
+              if (localStorage.getItem("previousSignUp") !== null) {
+                navigate(-2);
                 localStorage.removeItem("previousSignUp");
               } else {
-                history.back();
+                navigate(-1);
               }
             }
           }, 1500);
@@ -88,6 +95,14 @@ export default function SignIn() {
             },
           ]);
         }
+      } else if (user === null) {
+        setToast([
+          ...toast,
+          {
+            id: Math.random() * 100000,
+            name: "Email hoặc mật khẩu không chính xác",
+          },
+        ]);
       }
     } else {
       setToast([
@@ -98,7 +113,6 @@ export default function SignIn() {
   };
   const handleCloseToast = (id) => {
     let result = toast.filter((item) => item.id !== id);
-    console.log(result);
     setToast(result);
   };
   useEffect(() => {

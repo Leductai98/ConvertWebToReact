@@ -17,7 +17,6 @@ import SignUp from "./Page/SignUp.jsx";
 import User from "./Page/User.jsx";
 import Detail from "./Page/Detail.jsx";
 import LayoutDetail from "./Component/LayoutDetail.jsx";
-
 const router = createBrowserRouter([
   {
     element: <Layout />,
@@ -48,7 +47,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ThemeProvider>
       <RouterProvider router={router} />
-      
+     
     </ThemeProvider>
   </React.StrictMode>
 );

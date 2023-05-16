@@ -4,6 +4,8 @@ import React, {
   useLayoutEffect,
   useState,
 } from "react";
+import { generatePath } from "react-router";
+import { useNavigate } from "react-router-dom";
 import SignUpHeader from "./SignUpComponent/SignUpHeader";
 import "../assets/css/sign-up.css";
 import SignUpContent from "./SignUpComponent/SignUpContent";
@@ -11,6 +13,7 @@ import SignUpPopUp from "./SignUpComponent/SignUpPopUp";
 import SignUpToast from "./SignUpComponent/SignUpToast";
 export default function SignUp() {
   document.title = "Đăng ký - Tai";
+  const navigate = useNavigate();
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
   const [userLogin, setUserLogin] = useState(
     JSON.parse(localStorage.getItem("login")) ?? []
@@ -73,6 +76,13 @@ export default function SignUp() {
         setError({ ...error, newPassword: true });
       } else {
         setError({ ...error, newPassword: false });
+        if (formInfo.passAgain !== "") {
+          if (pass === formInfo.passAgain) {
+            setError({ ...error, newPassword: false, passAgain: false });
+          } else {
+            setError({ ...error, newPassword: false, passAgain: true });
+          }
+        }
       }
     }
     if (e.target.id === "pass-again") {
@@ -86,7 +96,7 @@ export default function SignUp() {
       }
     }
   };
-  const handleSubmit = (e) => {
+  const handleSubmitForm = (e) => {
     e.preventDefault();
     if (
       formInfo.email !== "" &&
@@ -110,7 +120,8 @@ export default function SignUp() {
           setPopUp(true);
         }, 500);
         setTimeout(() => {
-          setPopUp(false);
+          localStorage.setItem("previousSignUp", true);
+          navigate("/signin");
         }, 1500);
       }
     } else {
@@ -157,7 +168,7 @@ export default function SignUp() {
         formInfo={formInfo}
         error={error}
         onValidateForm={handleValidateForm}
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmitForm}
         onSignIn={handleSignIn}
       />
       <SignUpPopUp popUp={popUp} />

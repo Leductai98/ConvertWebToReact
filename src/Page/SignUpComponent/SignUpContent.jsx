@@ -1,4 +1,5 @@
 import React from "react";
+
 import { Link } from "react-router-dom";
 import Container from "react-bootstrap/esm/Container";
 import Row from "react-bootstrap/esm/Row";
@@ -14,6 +15,7 @@ export default function SignUpContent({
   onSubmit,
   onSignIn,
 }) {
+  
   return (
     <>
       <Container>

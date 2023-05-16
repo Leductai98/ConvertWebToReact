@@ -2,9 +2,6 @@ import React from "react";
 import Container from "react-bootstrap/Container";
 import { Link } from "react-router-dom";
 export default function Footer() {
-  const toTop = () => {
-    window.scrollTo(0, 0);
-  };
   return (
     <>
       <div className="footer__detail">
@@ -25,31 +22,13 @@ export default function Footer() {
               </div>
               <div className="footer__content--right">
                 <div className="footer__content--right--infor">
-                  <Link
-                    to="/about"
-                    onClick={() => {
-                      toTop();
-                    }}
-                    className="infor__item"
-                  >
+                  <Link to="/about" className="infor__item">
                     Về chúng tôi
                   </Link>
-                  <Link
-                    to="/help"
-                    onClick={() => {
-                      toTop();
-                    }}
-                    className="infor__item"
-                  >
+                  <Link to="/help" className="infor__item">
                     Trợ giúp
                   </Link>
-                  <Link
-                    to="/privacy"
-                    onClick={() => {
-                      toTop();
-                    }}
-                    className="infor__item"
-                  >
+                  <Link to="/privacy" className="infor__item">
                     Chính sách riêng tư
                   </Link>
                   <label htmlFor="contact-input" className="infor__item">
