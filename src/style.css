@@ -798,8 +798,8 @@ body .filter .owl-carousel .owl-stage-outer {
   border-radius: 10px;
   overflow: hidden;
 }
-.range-price.disabled {
-  opacity: 0.1;
+.progress.disabled {
+  opacity: 0;
 }
 .progress {
   position: absolute;

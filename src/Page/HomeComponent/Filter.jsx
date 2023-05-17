@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
-
-
+import { HomeContext } from "./HomeContext&Reducer";
+import { actions } from "./HomeContext&Reducer";
 const urlImage = `https://api-git-main-leductai98.vercel.app`;
 const getFilter = async () => {
   const res = await fetch(`https://api-sandy-zeta.vercel.app/filter`);
@@ -13,6 +13,8 @@ const getFilter = async () => {
 };
 const promise = getFilter();
 export default function Filter() {
+  const [state, dispatch] = useContext(HomeContext);
+  const { FilterTypeActive } = state;
   const [filterList, setFilterList] = useState([]);
   useEffect(() => {
     promise.then((data) => {
@@ -48,8 +50,13 @@ export default function Filter() {
         {filterList.map((item) => (
           <SwiperSlide
             key={item.id}
-            className="filter__item "
+            className={`filter__item ${
+              FilterTypeActive.id === item.id ? "active" : ""
+            }`}
             data-type={item.name}
+            onClick={() => {
+              dispatch(actions.activeFilterType(item.id, item.name));
+            }}
           >
             <div className="filter__item--picture">
               <img src={urlImage + item.picture} alt="" loanding="lazy" />

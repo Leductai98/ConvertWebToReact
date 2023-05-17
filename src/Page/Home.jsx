@@ -7,17 +7,19 @@ import BookingBanner from "./HomeComponent/BookingBanner";
 import Room from "./HomeComponent/Room";
 import Button from "./HomeComponent/Button";
 import { useState } from "react";
-
+import { HomeProvider } from "./HomeComponent/HomeContext&Reducer";
 export default function Home() {
   const [filterInfo, setFilterInfo] = useState({ location: "" });
   return (
     <>
-      <ImageBackGround />
-      <HomeHeader filterInfo={filterInfo} setFilterInfo={setFilterInfo} />
-      <Filter />
-      <Room />
-      <Button />
-      <BookingBanner />
+      <HomeProvider>
+        <ImageBackGround />
+        <HomeHeader filterInfo={filterInfo} setFilterInfo={setFilterInfo} />
+        <Filter />
+        <Room />
+        <Button />
+        <BookingBanner />
+      </HomeProvider>
     </>
   );
 }

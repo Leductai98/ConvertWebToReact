@@ -1,6 +1,12 @@
-import React from "react";
-
+import React, { useContext } from "react";
+import { HomeContext } from "./HomeContext&Reducer";
+import { actions } from "./HomeContext&Reducer";
 export default function RoomFilter() {
+  const [state, dispatch] = useContext(HomeContext);
+  const { rangePrice } = state;
+  const { minLength, minPrice, maxPrice, progressLeft, progressRight } =
+    rangePrice;
+
   return (
     <div className="booking-filter-wrap">
       <label
@@ -38,7 +44,15 @@ export default function RoomFilter() {
               <div className="booking-filter-item-header">Khoảng giá</div>
               <div className="booking-filter-item-price">
                 <div className="range-price">
-                  <div className="progress" />
+                  <div
+                    className={`progress ${
+                      minPrice < 500000 || maxPrice > 2000000 ? "disabled" : ""
+                    }`}
+                    style={{
+                      left: `${progressLeft}%`,
+                      right: `${progressRight}%`,
+                    }}
+                  />
                 </div>
                 <div className="range-input">
                   <input
@@ -46,16 +60,30 @@ export default function RoomFilter() {
                     className="range-min"
                     min={500000}
                     max={2000000}
-                    defaultValue={500000}
-                    step={10000}
+                    value={minPrice}
+                    step={5000}
+                    onChange={(e) => {
+                      let result = e.target.value;
+                      if (maxPrice - result < minLength) {
+                        result = maxPrice - minLength;
+                      }
+                      dispatch(actions.setMinPrice(result));
+                    }}
                   />
                   <input
                     type="range"
                     className="range-max"
                     min={500000}
                     max={2000000}
-                    defaultValue={2000000}
-                    step={10000}
+                    value={maxPrice}
+                    step={5000}
+                    onChange={(e) => {
+                      let result = e.target.value;
+                      if (e.target.value - minPrice < minLength) {
+                        result = minPrice + minLength;
+                      }
+                      dispatch(actions.setMaxPrice(result));
+                    }}
                   />
                 </div>
                 <div className="number-price">
@@ -66,7 +94,12 @@ export default function RoomFilter() {
                       <input
                         type="number"
                         className="input-min"
-                        defaultValue={500000}
+                        value={minPrice}
+                        onChange={(e) => {
+                          let result = e.target.value;
+
+                          dispatch(actions.setMinPrice(result));
+                        }}
                       />
                     </div>
                   </div>
@@ -77,7 +110,12 @@ export default function RoomFilter() {
                       <input
                         type="number"
                         className="input-max"
-                        defaultValue={2000000}
+                        value={maxPrice}
+                        onChange={(e) => {
+                          let result = e.target.value;
+
+                          dispatch(actions.setMaxPrice(result));
+                        }}
                       />
                     </div>
                   </div>

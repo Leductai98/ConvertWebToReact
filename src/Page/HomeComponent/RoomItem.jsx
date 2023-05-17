@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { HomeContext } from "./HomeContext&Reducer";
 import { Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Link } from "react-router-dom";
@@ -6,6 +7,8 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 export default function RoomItem({ data, urlImage }) {
+  const [state, dispatch] = useContext(HomeContext);
+
   return (
     <div className="booking__room--list--item col-index l-3 m-6 c-12">
       <div className="booking__room-list-picture">
