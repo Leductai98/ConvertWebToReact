@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { HomeContext } from "./HomeContext&Reducer";
+import { actions } from "./HomeContext&Reducer";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "flatpickr/dist/themes/material_blue.css";
@@ -17,6 +19,18 @@ const getLocation = async () => {
 const promise = getLocation();
 export default function HomeHeader({ filterInfo, setFilterInfo }) {
   document.title = "Nhà nghỉ dưỡng & Căn hộ cho thuê - Tai";
+  const [state, dispatch] = useContext(HomeContext);
+  const { guestMenu } = state;
+  const {
+    guestAdultChildMax,
+    guestBabyMax,
+    guestPetMax,
+    guestAdult,
+    guestChild,
+    guestBaby,
+    guestPet,
+  } = guestMenu;
+  console.log(guestMenu);
   const navigate = useNavigate();
   const [location, setLocation] = useState([]);
   const [userLogin, setUserLogin] = useState(
@@ -222,9 +236,11 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
                 id="header__search--people-pc"
               >
                 <div className="header__search--people--placeholder-mobile">
-                  <div className="guest-adult-child-mobile">1 khách</div>
-                  <div className="guest-baby-mobile">, 1 em bé</div>
-                  <div className="guest-pet-mobile">, 1 thú cưng</div>
+                  <div className="guest-adult-child-mobile">
+                    {guestAdult + guestChild} khách
+                  </div>
+                  <div className="guest-baby-mobile">, {guestBaby} em bé</div>
+                  <div className="guest-pet-mobile">, {guestPet} thú cưng</div>
                 </div>
               </label>
               <input type="checkbox" name="" id="guest-menu-input-mobile" />
@@ -350,10 +366,7 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
             </div>
           </div>
           <div className="nav__button">
-            <div
-              className="nav__button--host"
-              style={{ cursor: "default" }}
-            >
+            <div className="nav__button--host" style={{ cursor: "default" }}>
               Trở thành chủ nhà
             </div>
             <div className="nav__button--languages">
@@ -535,10 +548,10 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
             </div>
             <div className="header__search--people--placeholder-pc">
               <div className="guest-adult-child" data-max={16}>
-                1 khách
+                {guestAdult + guestChild} khách
               </div>
-              <div className="guest-baby">, 1 em bé</div>
-              <div className="guest-pet">, 1 thú cưng</div>
+              <div className="guest-baby">, {guestBaby} em bé</div>
+              <div className="guest-pet">, {guestPet} thú cưng</div>
             </div>
           </label>
           <label
@@ -553,7 +566,19 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
                   <div className="item-left-des">Từ 13 tuổi trở lên</div>
                 </div>
                 <div className="item-right">
-                  <div className="item-right-reduce" data-type="adult">
+                  <div
+                    className={`item-right-reduce ${
+                      guestAdult > 1 ? "active" : ""
+                    }`}
+                    data-type="adult"
+                    onClick={() => {
+                      if (guestAdult === 1) {
+                        return;
+                      } else {
+                        dispatch(actions.setAdult(guestAdult - 1));
+                      }
+                    }}
+                  >
                     -
                   </div>
                   <div
@@ -561,9 +586,23 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
                     data-type="adult"
                     data-max={16}
                   >
-                    1
+                    {guestAdult}
                   </div>
-                  <div className="item-right-increase" data-type="adult">
+                  <div
+                    className={`item-right-increase ${
+                      guestAdult + guestChild >= guestAdultChildMax
+                        ? "disabled"
+                        : ""
+                    }`}
+                    data-type="adult"
+                    onClick={() => {
+                      if (guestAdult + guestChild >= guestAdultChildMax) {
+                        return;
+                      } else {
+                        dispatch(actions.setAdult(guestAdult + 1));
+                      }
+                    }}
+                  >
                     +
                   </div>
                 </div>

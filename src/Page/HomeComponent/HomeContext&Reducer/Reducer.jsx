@@ -4,6 +4,10 @@ import {
   ACTIVE__FILTER__TYPE,
   SET__ROOMAFTERFILTER__LENGTH,
   SET__ROOMRENDER,
+  SET__ADULT,
+  SET__CHILD,
+  SET__BABY,
+  SET__PET,
 } from "./Constant";
 
 const initalState = {
@@ -17,6 +21,15 @@ const initalState = {
   FilterTypeActive: { id: 0, name: "Tất cả nhà" },
   roomListAfterFilterLength: 0,
   numberRoomRender: 12,
+  guestMenu: {
+    guestAdultChildMax: 16,
+    guestBabyMax: 5,
+    guestPetMax: 5,
+    guestAdult: 1,
+    guestChild: 0,
+    guestBaby: 0,
+    guestPet: 0,
+  },
 };
 
 function reducer(state, action) {
@@ -54,6 +67,26 @@ function reducer(state, action) {
       return {
         ...state,
         numberRoomRender: action.value,
+      };
+    case SET__ADULT:
+      return {
+        ...state,
+        guestMenu: { ...state.guestMenu, guestAdult: action.value },
+      };
+    case SET__CHILD:
+      return {
+        ...state,
+        guestMenu: { ...state.guestMenu, guestChild: action.value },
+      };
+    case SET__BABY:
+      return {
+        ...state,
+        guestMenu: { ...state.guestMenu, guestBaby: action.value },
+      };
+    case SET__PET:
+      return {
+        ...state,
+        guestMenu: { ...state.guestMenu, guestPet: action.value },
       };
   }
 }

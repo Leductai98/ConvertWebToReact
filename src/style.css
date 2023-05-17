@@ -822,6 +822,7 @@ body .filter .owl-carousel .owl-stage-outer {
   background: none;
   -webkit-appearance: none;
   pointer-events: none;
+  cursor: pointer;
 }
 .range-min::-webkit-slider-thumb {
   height: 20px;
@@ -1883,6 +1884,8 @@ div.guest-pet-mobile.active {
 .item-right-quantity {
   font-size: 22px;
   user-select: none;
+  text-align: center;
+  min-width: 27px;
 }
 .item-right-quantity-mobile {
   font-size: 22px;

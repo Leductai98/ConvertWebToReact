@@ -3,3 +3,7 @@ export const SET__MAXPRICE = "set__maxprice";
 export const ACTIVE__FILTER__TYPE = "active__filter__type";
 export const SET__ROOMAFTERFILTER__LENGTH = "set__roomafterfilter__length";
 export const SET__ROOMRENDER = "set__roomrender";
+export const SET__ADULT = "set__adult";
+export const SET__CHILD = "set__child";
+export const SET__BABY = "set__baby";
+export const SET__PET = "set__pet";

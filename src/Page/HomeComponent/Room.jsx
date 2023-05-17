@@ -42,6 +42,7 @@ export default function Room() {
     dispatch(actions.setRoomAfterFilter(roomListAfterFilter.length));
     dispatch(actions.setRoomRender(number));
   }, [number]);
+
   let arrayRender = [];
   for (let i = 0; i < number; i++) {
     arrayRender.push(roomListAfterFilter[i]);
