@@ -4,7 +4,11 @@ import { actions } from "./HomeContext&Reducer";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "flatpickr/dist/themes/material_blue.css";
-import Flatpickr from "react-flatpickr";
+import Flatpickr, {
+  onChange,
+  onDayCreate,
+  onValueUpdate,
+} from "react-flatpickr";
 import rangePlugin from "flatpickr/dist/plugins/rangePlugin";
 import { Vietnamese } from "flatpickr/dist/l10n/vn.js";
 import UserMenuPc from "./UserMenuPc";
@@ -20,7 +24,8 @@ const promise = getLocation();
 export default function HomeHeader({ filterInfo, setFilterInfo }) {
   document.title = "Nhà nghỉ dưỡng & Căn hộ cho thuê - Tai";
   const [state, dispatch] = useContext(HomeContext);
-  const { guestMenu } = state;
+
+  const { roomList, guestMenu, dayStart, dayEnd, roomListAfterFilter } = state;
   const {
     guestAdultChildMax,
     guestBabyMax,
@@ -30,7 +35,7 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
     guestBaby,
     guestPet,
   } = guestMenu;
-  console.log(guestMenu);
+
   const navigate = useNavigate();
   const [location, setLocation] = useState([]);
   const [userLogin, setUserLogin] = useState(
@@ -101,15 +106,25 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
           .includes(filterInfo.location.toLowerCase().split(" ").join(""))
       : item
   );
-  /*if (filterInfo.location != "") {
-    locationList = location.filter(
-      (item) =>
-        item.name.toLowerCase().split(" ").join("") ==
-        filterInfo.location.toLowerCase().split(" ").join("")
+
+  const handleFilterRoom = () => {
+    let result = roomList;
+    if (filterInfo.location != "") {
+      result = roomList.filter((item) => item.location === filterInfo.location);
+    }
+    if (dayStart !== 0 && dayEnd !== 0) {
+      result = result.filter(
+        (item) =>
+          Date.parse(item.start) <= Date.parse(dayStart) &&
+          Date.parse(item.end) >= Date.parse(dayEnd)
+      );
+    }
+    result = result.filter(
+      (item) => parseInt(item.guest) >= guestAdult + guestChild
     );
-  } else {
-    locationList = location;
-  }*/
+    dispatch(actions.setRoomListAfterFilter(result));
+    dispatch(actions.setDefault());
+  };
 
   return (
     <section className="header-index">
@@ -122,7 +137,12 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
             <img src="/Group (4).png" alt="" />
           </NavLink>
           <div className="header__search on-tablet-mobile">
-            <div className="search-icon">
+            <div
+              className="search-icon"
+              onClick={() => {
+                handleFilterRoom();
+              }}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width={16}
@@ -178,7 +198,6 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
                                 ...filterInfo,
                                 location: item.name,
                               });
-                              console.log(filterInfo);
                             }}
                           >
                             <div className="location-item-icon">
@@ -227,6 +246,16 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
                 placeholder="Ngày"
                 className="input-mobile"
                 autoComplete="off"
+                onChange={(e) => {
+                  if (e.length > 1) {
+                    dispatch(
+                      actions.setDayStart(e[0].toLocaleDateString("fr-CA"))
+                    );
+                    dispatch(
+                      actions.setDayEnd(e[1].toLocaleDateString("fr-CA"))
+                    );
+                  }
+                }}
               />
             </div>
             <div className="people-wrap">
@@ -239,8 +268,20 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
                   <div className="guest-adult-child-mobile">
                     {guestAdult + guestChild} khách
                   </div>
-                  <div className="guest-baby-mobile">, {guestBaby} em bé</div>
-                  <div className="guest-pet-mobile">, {guestPet} thú cưng</div>
+                  <div
+                    className={`guest-baby-mobile ${
+                      guestBaby > 0 ? "active" : ""
+                    }`}
+                  >
+                    , {guestBaby} em bé
+                  </div>
+                  <div
+                    className={`guest-pet-mobile ${
+                      guestPet > 0 ? "active" : ""
+                    }`}
+                  >
+                    , {guestPet} thú cưng
+                  </div>
                 </div>
               </label>
               <input type="checkbox" name="" id="guest-menu-input-mobile" />
@@ -257,8 +298,17 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
                     </div>
                     <div className="item-right">
                       <div
-                        className="item-right-reduce-mobile"
+                        className={`item-right-reduce-mobile ${
+                          guestAdult > 1 ? "active" : ""
+                        }`}
                         data-type="adult"
+                        onClick={() => {
+                          if (guestAdult === 1) {
+                            return;
+                          } else {
+                            dispatch(actions.setAdult(guestAdult - 1));
+                          }
+                        }}
                       >
                         -
                       </div>
@@ -267,11 +317,22 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
                         data-type="adult"
                         data-max={16}
                       >
-                        1
+                        {guestAdult}
                       </div>
                       <div
-                        className="item-right-increase-mobile"
+                        className={`item-right-increase-mobile ${
+                          guestAdult + guestChild >= guestAdultChildMax
+                            ? "disabled"
+                            : ""
+                        }`}
                         data-type="adult"
+                        onClick={() => {
+                          if (guestAdult + guestChild >= guestAdultChildMax) {
+                            return;
+                          } else {
+                            dispatch(actions.setAdult(guestAdult + 1));
+                          }
+                        }}
                       >
                         +
                       </div>
@@ -284,8 +345,17 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
                     </div>
                     <div className="item-right">
                       <div
-                        className="item-right-reduce-mobile"
+                        className={`item-right-reduce-mobile ${
+                          guestChild > 0 ? "active" : ""
+                        }`}
                         data-type="child"
+                        onClick={() => {
+                          if (guestChild <= 0) {
+                            return;
+                          } else {
+                            dispatch(actions.setChild(guestChild - 1));
+                          }
+                        }}
                       >
                         -
                       </div>
@@ -294,11 +364,22 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
                         data-type="child"
                         data-max={15}
                       >
-                        0
+                        {guestChild}
                       </div>
                       <div
-                        className="item-right-increase-mobile"
+                        className={`item-right-increase-mobile ${
+                          guestAdult + guestChild >= guestAdultChildMax
+                            ? "disabled"
+                            : ""
+                        }`}
                         data-type="child"
+                        onClick={() => {
+                          if (guestAdult + guestChild >= guestAdultChildMax) {
+                            return;
+                          } else {
+                            dispatch(actions.setChild(guestChild + 1));
+                          }
+                        }}
                       >
                         +
                       </div>
@@ -311,8 +392,17 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
                     </div>
                     <div className="item-right">
                       <div
-                        className="item-right-reduce-mobile"
+                        className={`item-right-reduce-mobile ${
+                          guestBaby > 0 ? "active" : ""
+                        }`}
                         data-type="baby"
+                        onClick={() => {
+                          if (guestBaby <= 0) {
+                            return;
+                          } else {
+                            dispatch(actions.setBaby(guestBaby - 1));
+                          }
+                        }}
                       >
                         -
                       </div>
@@ -321,11 +411,20 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
                         data-type="baby"
                         data-max={5}
                       >
-                        0
+                        {guestBaby}
                       </div>
                       <div
-                        className="item-right-increase-mobile"
+                        className={`item-right-increase-mobile ${
+                          guestBaby >= guestBabyMax ? "disabled" : ""
+                        }`}
                         data-type="baby"
+                        onClick={() => {
+                          if (guestBaby >= guestBabyMax) {
+                            return;
+                          } else {
+                            dispatch(actions.setBaby(guestBaby + 1));
+                          }
+                        }}
                       >
                         +
                       </div>
@@ -337,7 +436,19 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
                       <div className="item-left-des" />
                     </div>
                     <div className="item-right">
-                      <div className="item-right-reduce-mobile" data-type="pet">
+                      <div
+                        className={`item-right-reduce-mobile ${
+                          guestPet > 0 ? "active" : ""
+                        }`}
+                        data-type="pet"
+                        onClick={() => {
+                          if (guestPet <= 0) {
+                            return;
+                          } else {
+                            dispatch(actions.setPet(guestPet - 1));
+                          }
+                        }}
+                      >
                         -
                       </div>
                       <div
@@ -345,11 +456,20 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
                         data-type="pet"
                         data-max={5}
                       >
-                        0
+                        {guestPet}
                       </div>
                       <div
-                        className="item-right-increase-mobile"
+                        className={`item-right-increase-mobile ${
+                          guestPet >= guestPetMax ? "disabled" : ""
+                        }`}
                         data-type="pet"
+                        onClick={() => {
+                          if (guestPet >= guestPetMax) {
+                            return;
+                          } else {
+                            dispatch(actions.setPet(guestPet + 1));
+                          }
+                        }}
                       >
                         +
                       </div>
@@ -514,6 +634,16 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
                 type="text"
                 placeholder="Thêm ngày"
                 autoComplete="off"
+                onChange={(e) => {
+                  if (e.length > 1) {
+                    dispatch(
+                      actions.setDayStart(e[0].toLocaleDateString("fr-CA"))
+                    );
+                    dispatch(
+                      actions.setDayEnd(e[1].toLocaleDateString("fr-CA"))
+                    );
+                  }
+                }}
               />
             </div>
           </div>
@@ -550,8 +680,12 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
               <div className="guest-adult-child" data-max={16}>
                 {guestAdult + guestChild} khách
               </div>
-              <div className="guest-baby">, {guestBaby} em bé</div>
-              <div className="guest-pet">, {guestPet} thú cưng</div>
+              <div className={`guest-baby ${guestBaby > 0 ? "active" : ""}`}>
+                , {guestBaby} em bé
+              </div>
+              <div className={`guest-pet ${guestPet > 0 ? "active" : ""}`}>
+                , {guestPet} thú cưng
+              </div>
             </div>
           </label>
           <label
@@ -613,7 +747,19 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
                   <div className="item-left-des">Độ tuổi 2 - 12</div>
                 </div>
                 <div className="item-right">
-                  <div className="item-right-reduce" data-type="child">
+                  <div
+                    className={`item-right-reduce ${
+                      guestChild > 0 ? "active" : ""
+                    }`}
+                    data-type="child"
+                    onClick={() => {
+                      if (guestChild <= 0) {
+                        return;
+                      } else {
+                        dispatch(actions.setChild(guestChild - 1));
+                      }
+                    }}
+                  >
                     -
                   </div>
                   <div
@@ -621,9 +767,23 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
                     data-type="child"
                     data-max={15}
                   >
-                    0
+                    {guestChild}
                   </div>
-                  <div className="item-right-increase" data-type="child">
+                  <div
+                    className={`item-right-increase ${
+                      guestAdult + guestChild >= guestAdultChildMax
+                        ? "disabled"
+                        : ""
+                    }`}
+                    data-type="child"
+                    onClick={() => {
+                      if (guestAdult + guestChild >= guestAdultChildMax) {
+                        return;
+                      } else {
+                        dispatch(actions.setChild(guestChild + 1));
+                      }
+                    }}
+                  >
                     +
                   </div>
                 </div>
@@ -634,7 +794,19 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
                   <div className="item-left-des">Dưới 2 tuổi</div>
                 </div>
                 <div className="item-right">
-                  <div className="item-right-reduce" data-type="baby">
+                  <div
+                    className={`item-right-reduce ${
+                      guestBaby > 0 ? "active" : ""
+                    }`}
+                    data-type="baby"
+                    onClick={() => {
+                      if (guestBaby <= 0) {
+                        return;
+                      } else {
+                        dispatch(actions.setBaby(guestBaby - 1));
+                      }
+                    }}
+                  >
                     -
                   </div>
                   <div
@@ -642,9 +814,21 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
                     data-type="baby"
                     data-max={5}
                   >
-                    0
+                    {guestBaby}
                   </div>
-                  <div className="item-right-increase" data-type="baby">
+                  <div
+                    className={`item-right-increase ${
+                      guestBaby >= guestBabyMax ? "disabled" : ""
+                    }`}
+                    data-type="baby"
+                    onClick={() => {
+                      if (guestBaby >= guestBabyMax) {
+                        return;
+                      } else {
+                        dispatch(actions.setBaby(guestBaby + 1));
+                      }
+                    }}
+                  >
                     +
                   </div>
                 </div>
@@ -655,7 +839,19 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
                   <div className="item-left-des" />
                 </div>
                 <div className="item-right">
-                  <div className="item-right-reduce" data-type="pet">
+                  <div
+                    className={`item-right-reduce ${
+                      guestPet > 0 ? "active" : ""
+                    }`}
+                    data-type="pet"
+                    onClick={() => {
+                      if (guestPet <= 0) {
+                        return;
+                      } else {
+                        dispatch(actions.setPet(guestPet - 1));
+                      }
+                    }}
+                  >
                     -
                   </div>
                   <div
@@ -663,9 +859,21 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
                     data-type="pet"
                     data-max={5}
                   >
-                    0
+                    {guestPet}
                   </div>
-                  <div className="item-right-increase" data-type="pet">
+                  <div
+                    className={`item-right-increase ${
+                      guestPet >= guestPetMax ? "disabled" : ""
+                    }`}
+                    data-type="pet"
+                    onClick={() => {
+                      if (guestPet >= guestPetMax) {
+                        return;
+                      } else {
+                        dispatch(actions.setPet(guestPet + 1));
+                      }
+                    }}
+                  >
                     +
                   </div>
                 </div>
@@ -676,7 +884,15 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
             </label>
           </div>
         </div>
-        <button className="btn header__search--button">Khám phá ngay</button>
+        <button
+          className="btn header__search--button"
+          onClick={(e) => {
+            e.preventDefault();
+            handleFilterRoom();
+          }}
+        >
+          Khám phá ngay
+        </button>
       </div>
     </section>
   );

@@ -1,12 +1,137 @@
 import React, { useContext } from "react";
 import { HomeContext } from "./HomeContext&Reducer";
 import { actions } from "./HomeContext&Reducer";
+import { setRoomListAfterFilter } from "./HomeContext&Reducer/Actions";
 export default function RoomFilter() {
   const [state, dispatch] = useContext(HomeContext);
-  const { rangePrice } = state;
+  const {
+    roomListAfterFilter,
+    rangePrice,
+    roomStatus,
+    bedRoomCount,
+    bedCount,
+    bathRoomCount,
+    houseType,
+    things,
+  } = state;
   const { minLength, minPrice, maxPrice, progressLeft, progressRight } =
     rangePrice;
 
+  const handleFilter = () => {
+    let result = roomListAfterFilter;
+    result = result.filter(
+      (item) =>
+        Number(item.price.split(",").join("")) >= rangePrice.minPrice &&
+        Number(item.price.split(",").join("")) <= rangePrice.maxPrice
+    );
+    let result2 = [];
+    if (
+      !roomStatus.entireHouse &&
+      !roomStatus.privateRoom &&
+      !roomStatus.commonRoom
+    ) {
+      result2 = result;
+    } else {
+      if (roomStatus.entireHouse) {
+        result.forEach((item) => {
+          if (item.status === "Toàn bộ nhà") {
+            result2.push(item);
+          }
+        });
+      }
+      if (roomStatus.privateRoom) {
+        result.forEach((item) => {
+          if (item.status === "Phòng riêng") {
+            result2.push(item);
+          }
+        });
+      }
+      if (roomStatus.commonRoom) {
+        result.forEach((item) => {
+          if (item.status === "Phòng chung") {
+            result2.push(item);
+          }
+        });
+      }
+    }
+    result2 = result2.filter(
+      (item) =>
+        parseInt(item.room[0]) >= bedRoomCount &&
+        parseInt(item.room[1]) >= bedCount &&
+        parseInt(item.room[2]) >= bathRoomCount
+    );
+    let result3 = [];
+    if (
+      !houseType.home &&
+      !houseType.apartment &&
+      !houseType.guestRoom &&
+      !houseType.hotel
+    ) {
+      result3 = result2;
+    } else {
+      if (houseType.home) {
+        result2.forEach((item) => {
+          if (item.house === "Nhà") {
+            result3.push(item);
+          }
+        });
+      }
+      if (houseType.apartment) {
+        result2.forEach((item) => {
+          if (item.house === "Căn hộ") {
+            result3.push(item);
+          }
+        });
+      }
+      if (houseType.guestRoom) {
+        result2.forEach((item) => {
+          if (item.house === "Nhà khách") {
+            result3.push(item);
+          }
+        });
+      }
+      if (houseType.hotel) {
+        result2.forEach((item) => {
+          if (item.house === "Khách sạn") {
+            result3.push(item);
+          }
+        });
+      }
+    }
+
+    if (things.wifi) {
+      result3 = result3.filter((item) =>
+        item.utinity.some((item2) => item2.name === "Wi-fi")
+      );
+    }
+    if (things.washingMachine) {
+      result3 = result3.filter((item) =>
+        item.utinity.some((item2) => item2.name === "Máy giặt")
+      );
+    }
+    if (things.airCondition) {
+      result3 = result3.filter((item) =>
+        item.utinity.some((item2) => item2.name === "Điều hòa nhiệt độ")
+      );
+    }
+    if (things.kitchen) {
+      result3 = result3.filter((item) =>
+        item.utinity.some((item2) => item2.name === "Bếp")
+      );
+    }
+    if (things.dryer) {
+      result3 = result3.filter((item) =>
+        item.utinity.some((item2) => item2.name === "Máy sấy quần áo")
+      );
+    }
+    if (things.heating) {
+      result3 = result3.filter((item) =>
+        item.utinity.some((item2) => item2.name === "Hệ thống sưởi")
+      );
+    }
+    console.log(result3);
+    dispatch(actions.setRoomListAfterFilter(result3));
+  };
   return (
     <div className="booking-filter-wrap">
       <label
@@ -129,6 +254,15 @@ export default function RoomFilter() {
                   id="entire-house"
                   type="checkbox"
                   className="type-input"
+                  checked={roomStatus.entireHouse}
+                  onChange={() => {
+                    dispatch(
+                      actions.setRoomStatus(
+                        "entireHouse",
+                        !roomStatus.entireHouse
+                      )
+                    );
+                  }}
                 />
                 <label htmlFor="entire-house" className="type-item">
                   <div className="checkbox-icon">
@@ -154,6 +288,15 @@ export default function RoomFilter() {
                   id="private-house"
                   type="checkbox"
                   className="type-input"
+                  checked={roomStatus.privateRoom}
+                  onChange={() => {
+                    dispatch(
+                      actions.setRoomStatus(
+                        "privateRoom",
+                        !roomStatus.privateRoom
+                      )
+                    );
+                  }}
                 />
                 <label htmlFor="private-house" className="type-item">
                   <div className="checkbox-icon">
@@ -180,6 +323,15 @@ export default function RoomFilter() {
                   id="commom-house"
                   type="checkbox"
                   className="type-input"
+                  checked={roomStatus.commonRoom}
+                  onChange={() => {
+                    dispatch(
+                      actions.setRoomStatus(
+                        "commonRoom",
+                        !roomStatus.commonRoom
+                      )
+                    );
+                  }}
                 />
                 <label htmlFor="commom-house" className="type-item">
                   <div className="checkbox-icon">
@@ -217,7 +369,10 @@ export default function RoomFilter() {
                       name="sleeproom-count"
                       className="sleeproom-count"
                       id="sleep-0"
-                      defaultChecked=""
+                      checked={bedRoomCount === 0 ? true : false}
+                      onChange={() => {
+                        dispatch(actions.setBedRoomCount(0));
+                      }}
                     />
                     <label className="label-sleep any" htmlFor="sleep-0">
                       Bất kì
@@ -227,6 +382,10 @@ export default function RoomFilter() {
                       name="sleeproom-count"
                       className="sleeproom-count"
                       id="sleep-1"
+                      checked={bedRoomCount === 1 ? true : false}
+                      onChange={() => {
+                        dispatch(actions.setBedRoomCount(1));
+                      }}
                     />
                     <label className="label-sleep" htmlFor="sleep-1">
                       1
@@ -236,6 +395,10 @@ export default function RoomFilter() {
                       name="sleeproom-count"
                       className="sleeproom-count"
                       id="sleep-2"
+                      checked={bedRoomCount === 2 ? true : false}
+                      onChange={() => {
+                        dispatch(actions.setBedRoomCount(2));
+                      }}
                     />
                     <label className="label-sleep" htmlFor="sleep-2">
                       2
@@ -245,6 +408,10 @@ export default function RoomFilter() {
                       name="sleeproom-count"
                       className="sleeproom-count"
                       id="sleep-3"
+                      checked={bedRoomCount === 3 ? true : false}
+                      onChange={() => {
+                        dispatch(actions.setBedRoomCount(3));
+                      }}
                     />
                     <label className="label-sleep" htmlFor="sleep-3">
                       3
@@ -254,6 +421,10 @@ export default function RoomFilter() {
                       name="sleeproom-count"
                       className="sleeproom-count"
                       id="sleep-4"
+                      checked={bedRoomCount === 4 ? true : false}
+                      onChange={() => {
+                        dispatch(actions.setBedRoomCount(4));
+                      }}
                     />
                     <label className="label-sleep" htmlFor="sleep-4">
                       4
@@ -263,6 +434,10 @@ export default function RoomFilter() {
                       name="sleeproom-count"
                       className="sleeproom-count"
                       id="sleep-5"
+                      checked={bedRoomCount === 5 ? true : false}
+                      onChange={() => {
+                        dispatch(actions.setBedRoomCount(5));
+                      }}
                     />
                     <label className="label-sleep" htmlFor="sleep-5">
                       5
@@ -272,6 +447,10 @@ export default function RoomFilter() {
                       name="sleeproom-count"
                       className="sleeproom-count"
                       id="sleep-6"
+                      checked={bedRoomCount === 6 ? true : false}
+                      onChange={() => {
+                        dispatch(actions.setBedRoomCount(6));
+                      }}
                     />
                     <label className="label-sleep" htmlFor="sleep-6">
                       6
@@ -281,6 +460,10 @@ export default function RoomFilter() {
                       name="sleeproom-count"
                       className="sleeproom-count"
                       id="sleep-7"
+                      checked={bedRoomCount === 7 ? true : false}
+                      onChange={() => {
+                        dispatch(actions.setBedRoomCount(7));
+                      }}
                     />
                     <label className="label-sleep" htmlFor="sleep-7">
                       7
@@ -290,6 +473,10 @@ export default function RoomFilter() {
                       name="sleeproom-count"
                       className="sleeproom-count"
                       id="sleep-8"
+                      checked={bedRoomCount === 8 ? true : false}
+                      onChange={() => {
+                        dispatch(actions.setBedRoomCount(8));
+                      }}
                     />
                     <label className="label-sleep" htmlFor="sleep-8">
                       8+
@@ -304,7 +491,10 @@ export default function RoomFilter() {
                       name="bedroom-count"
                       className="sleeproom-count"
                       id="bed-0"
-                      defaultChecked=""
+                      checked={bedCount === 0 ? true : false}
+                      onChange={() => {
+                        dispatch(actions.setBedCount(0));
+                      }}
                     />
                     <label className="label-sleep any" htmlFor="bed-0">
                       Bất kì
@@ -314,6 +504,10 @@ export default function RoomFilter() {
                       name="bedroom-count"
                       className="sleeproom-count"
                       id="bed-1"
+                      checked={bedCount === 1 ? true : false}
+                      onChange={() => {
+                        dispatch(actions.setBedCount(1));
+                      }}
                     />
                     <label className="label-sleep" htmlFor="bed-1">
                       1
@@ -323,6 +517,10 @@ export default function RoomFilter() {
                       name="bedroom-count"
                       className="sleeproom-count"
                       id="bed-2"
+                      checked={bedCount === 2 ? true : false}
+                      onChange={() => {
+                        dispatch(actions.setBedCount(2));
+                      }}
                     />
                     <label className="label-sleep" htmlFor="bed-2">
                       2
@@ -332,6 +530,10 @@ export default function RoomFilter() {
                       name="bedroom-count"
                       className="sleeproom-count"
                       id="bed-3"
+                      checked={bedCount === 3 ? true : false}
+                      onChange={() => {
+                        dispatch(actions.setBedCount(3));
+                      }}
                     />
                     <label className="label-sleep" htmlFor="bed-3">
                       3
@@ -341,6 +543,10 @@ export default function RoomFilter() {
                       name="bedroom-count"
                       className="sleeproom-count"
                       id="bed-4"
+                      checked={bedCount === 4 ? true : false}
+                      onChange={() => {
+                        dispatch(actions.setBedCount(4));
+                      }}
                     />
                     <label className="label-sleep" htmlFor="bed-4">
                       4
@@ -350,6 +556,10 @@ export default function RoomFilter() {
                       name="bedroom-count"
                       className="sleeproom-count"
                       id="bed-5"
+                      checked={bedCount === 5 ? true : false}
+                      onChange={() => {
+                        dispatch(actions.setBedCount(5));
+                      }}
                     />
                     <label className="label-sleep" htmlFor="bed-5">
                       5
@@ -359,6 +569,10 @@ export default function RoomFilter() {
                       name="bedroom-count"
                       className="sleeproom-count"
                       id="bed-6"
+                      checked={bedCount === 6 ? true : false}
+                      onChange={() => {
+                        dispatch(actions.setBedCount(6));
+                      }}
                     />
                     <label className="label-sleep" htmlFor="bed-6">
                       6
@@ -368,6 +582,10 @@ export default function RoomFilter() {
                       name="bedroom-count"
                       className="sleeproom-count"
                       id="bed-7"
+                      checked={bedCount === 7 ? true : false}
+                      onChange={() => {
+                        dispatch(actions.setBedCount(7));
+                      }}
                     />
                     <label className="label-sleep" htmlFor="bed-7">
                       7
@@ -377,6 +595,10 @@ export default function RoomFilter() {
                       name="bedroom-count"
                       className="sleeproom-count"
                       id="bed-8"
+                      checked={bedCount === 8 ? true : false}
+                      onChange={() => {
+                        dispatch(actions.setBedCount(8));
+                      }}
                     />
                     <label className="label-sleep" htmlFor="bed-8">
                       8+
@@ -391,7 +613,10 @@ export default function RoomFilter() {
                       name="bathroom-count"
                       className="sleeproom-count"
                       id="bath-0"
-                      defaultChecked=""
+                      checked={bathRoomCount === 0 ? true : false}
+                      onChange={() => {
+                        dispatch(actions.setBathRoomCount(0));
+                      }}
                     />
                     <label className="label-sleep any" htmlFor="bath-0">
                       Bất kì
@@ -401,6 +626,10 @@ export default function RoomFilter() {
                       name="bathroom-count"
                       className="sleeproom-count"
                       id="bath-1"
+                      checked={bathRoomCount === 1 ? true : false}
+                      onChange={() => {
+                        dispatch(actions.setBathRoomCount(1));
+                      }}
                     />
                     <label className="label-sleep" htmlFor="bath-1">
                       1
@@ -410,6 +639,10 @@ export default function RoomFilter() {
                       name="bathroom-count"
                       className="sleeproom-count"
                       id="bath-2"
+                      checked={bathRoomCount === 2 ? true : false}
+                      onChange={() => {
+                        dispatch(actions.setBathRoomCount(2));
+                      }}
                     />
                     <label className="label-sleep" htmlFor="bath-2">
                       2
@@ -419,6 +652,10 @@ export default function RoomFilter() {
                       name="bathroom-count"
                       className="sleeproom-count"
                       id="bath-3"
+                      checked={bathRoomCount === 3 ? true : false}
+                      onChange={() => {
+                        dispatch(actions.setBathRoomCount(3));
+                      }}
                     />
                     <label className="label-sleep" htmlFor="bath-3">
                       3
@@ -428,6 +665,10 @@ export default function RoomFilter() {
                       name="bathroom-count"
                       className="sleeproom-count"
                       id="bath-4"
+                      checked={bathRoomCount === 4 ? true : false}
+                      onChange={() => {
+                        dispatch(actions.setBathRoomCount(4));
+                      }}
                     />
                     <label className="label-sleep" htmlFor="bath-4">
                       4
@@ -437,6 +678,10 @@ export default function RoomFilter() {
                       name="bathroom-count"
                       className="sleeproom-count"
                       id="bath-5"
+                      checked={bathRoomCount === 5 ? true : false}
+                      onChange={() => {
+                        dispatch(actions.setBathRoomCount(5));
+                      }}
                     />
                     <label className="label-sleep" htmlFor="bath-5">
                       5
@@ -446,6 +691,10 @@ export default function RoomFilter() {
                       name="bathroom-count"
                       className="sleeproom-count"
                       id="bath-6"
+                      checked={bathRoomCount === 6 ? true : false}
+                      onChange={() => {
+                        dispatch(actions.setBathRoomCount(6));
+                      }}
                     />
                     <label className="label-sleep" htmlFor="bath-6">
                       6
@@ -455,6 +704,10 @@ export default function RoomFilter() {
                       name="bathroom-count"
                       className="sleeproom-count"
                       id="bath-7"
+                      checked={bathRoomCount === 7 ? true : false}
+                      onChange={() => {
+                        dispatch(actions.setBathRoomCount(7));
+                      }}
                     />
                     <label className="label-sleep" htmlFor="bath-7">
                       7
@@ -464,6 +717,10 @@ export default function RoomFilter() {
                       name="bathroom-count"
                       className="sleeproom-count"
                       id="bath-8"
+                      checked={bathRoomCount === 8 ? true : false}
+                      onChange={() => {
+                        dispatch(actions.setBathRoomCount(8));
+                      }}
                     />
                     <label className="label-sleep" htmlFor="bath-8">
                       8+
@@ -475,7 +732,15 @@ export default function RoomFilter() {
             <div className="booking-filter-item">
               <div className="booking-filter-item-header">Loại nhà/phòng</div>
               <div className="booking-filter-item-type-list house-type">
-                <input type="checkbox" name="" id="home" />
+                <input
+                  type="checkbox"
+                  name=""
+                  id="home"
+                  checked={houseType.home}
+                  onChange={() => {
+                    dispatch(actions.setHouseType("home", !houseType.home));
+                  }}
+                />
                 <label htmlFor="home" className="house-item">
                   <div className="house-item-logo">
                     <svg
@@ -491,7 +756,16 @@ export default function RoomFilter() {
                   </div>
                   <div className="house-item-name">Nhà</div>
                 </label>
-                <input type="checkbox" id="apartment" />
+                <input
+                  type="checkbox"
+                  id="apartment"
+                  checked={houseType.apartment}
+                  onChange={() => {
+                    dispatch(
+                      actions.setHouseType("apartment", !houseType.apartment)
+                    );
+                  }}
+                />
                 <label htmlFor="apartment" className="house-item">
                   <div className="house-item-logo">
                     <svg
@@ -508,7 +782,16 @@ export default function RoomFilter() {
                   </div>
                   <div className="house-item-name">Căn hộ</div>
                 </label>
-                <input type="checkbox" id="guest-room" />
+                <input
+                  type="checkbox"
+                  id="guest-room"
+                  checked={houseType.guestRoom}
+                  onChange={() => {
+                    dispatch(
+                      actions.setHouseType("guestRoom", !houseType.guestRoom)
+                    );
+                  }}
+                />
                 <label htmlFor="guest-room" className="house-item">
                   <div className="house-item-logo">
                     <svg
@@ -524,7 +807,14 @@ export default function RoomFilter() {
                   </div>
                   <div className="house-item-name">Nhà khách</div>
                 </label>
-                <input type="checkbox" id="hotel" />
+                <input
+                  type="checkbox"
+                  id="hotel"
+                  checked={houseType.hotel}
+                  onChange={() => {
+                    dispatch(actions.setHouseType("hotel", !houseType.hotel));
+                  }}
+                />
                 <label htmlFor="hotel" className="house-item">
                   <div className="house-item-logo">
                     <svg
@@ -548,7 +838,15 @@ export default function RoomFilter() {
                 Đồ dùng thiết yếu
               </div>
               <div className="booking-filter-item-type-list things">
-                <input id="wifi" type="checkbox" className="type-input" />
+                <input
+                  id="wifi"
+                  type="checkbox"
+                  className="type-input"
+                  checked={things.wifi}
+                  onChange={() => {
+                    dispatch(actions.setThings("wifi", !things.wifi));
+                  }}
+                />
                 <label htmlFor="wifi" className="type-item">
                   <div className="checkbox-icon">
                     <svg
@@ -566,7 +864,15 @@ export default function RoomFilter() {
                     <div className="type-header">Wi-fi</div>
                   </div>
                 </label>
-                <input id="stove" type="checkbox" className="type-input" />
+                <input
+                  id="stove"
+                  type="checkbox"
+                  className="type-input"
+                  checked={things.kitchen}
+                  onChange={() => {
+                    dispatch(actions.setThings("kitchen", !things.kitchen));
+                  }}
+                />
                 <label htmlFor="stove" className="type-item">
                   <div className="checkbox-icon">
                     <svg
@@ -584,7 +890,20 @@ export default function RoomFilter() {
                     <div className="type-header">Bếp</div>
                   </div>
                 </label>
-                <input id="washer" type="checkbox" className="type-input" />
+                <input
+                  id="washer"
+                  type="checkbox"
+                  className="type-input"
+                  checked={things.washingMachine}
+                  onChange={() => {
+                    dispatch(
+                      actions.setThings(
+                        "washingMachine",
+                        !things.washingMachine
+                      )
+                    );
+                  }}
+                />
                 <label htmlFor="washer" className="type-item">
                   <div className="checkbox-icon">
                     <svg
@@ -602,7 +921,15 @@ export default function RoomFilter() {
                     <div className="type-header">Máy giặt</div>
                   </div>
                 </label>
-                <input id="dryer" type="checkbox" className="type-input" />
+                <input
+                  id="dryer"
+                  type="checkbox"
+                  className="type-input"
+                  checked={things.dryer}
+                  onChange={() => {
+                    dispatch(actions.setThings("dryer", !things.dryer));
+                  }}
+                />
                 <label htmlFor="dryer" className="type-item">
                   <div className="checkbox-icon">
                     <svg
@@ -624,6 +951,12 @@ export default function RoomFilter() {
                   id="air-conditioner"
                   type="checkbox"
                   className="type-input"
+                  checked={things.airCondition}
+                  onChange={() => {
+                    dispatch(
+                      actions.setThings("airCondition", !things.airCondition)
+                    );
+                  }}
                 />
                 <label htmlFor="air-conditioner" className="type-item">
                   <div className="checkbox-icon">
@@ -646,6 +979,10 @@ export default function RoomFilter() {
                   id="heating-system"
                   type="checkbox"
                   className="type-input"
+                  checked={things.heating}
+                  onChange={() => {
+                    dispatch(actions.setThings("heating", !things.heating));
+                  }}
                 />
                 <label htmlFor="heating-system" className="type-item">
                   <div className="checkbox-icon">
@@ -728,6 +1065,9 @@ export default function RoomFilter() {
           <label
             htmlFor="input-booking-room-filter"
             className="booking-filter-button"
+            onClick={() => {
+              handleFilter();
+            }}
           >
             Tìm kiếm
           </label>

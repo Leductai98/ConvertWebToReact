@@ -11,41 +11,42 @@ const getRoom = async () => {
 };
 const promise = getRoom();
 export default function Room() {
-  const [roomList, setRoomList] = useState([]);
   const [state, dispatch] = useContext(HomeContext);
-  const { FilterTypeActive, roomListAfterFilterLength, numberRoomRender } =
-    state;
+  const {
+    roomList,
+    roomListAfterFilter,
+    FilterTypeActive,
+    roomListAfterFilterLength,
+    numberRoomRender,
+  } = state;
   useEffect(() => {
     promise.then((data) => {
-      setRoomList(data);
+      dispatch(actions.setRoomList(data));
+      dispatch(actions.setRoomListAfterFilter(data));
     });
   }, []);
-  let roomListAfterFilter = [];
+  let list = [];
   if (FilterTypeActive.name == "Tất cả nhà") {
-    roomListAfterFilter = roomList;
+    list = roomListAfterFilter;
   } else {
-    roomListAfterFilter = roomList.filter(
+    list = roomListAfterFilter.filter(
       (item) => item.type == FilterTypeActive.name
     );
   }
 
-  let number =
-    roomListAfterFilter.length > 12 ? 12 : roomListAfterFilter.length;
+  let number = list.length > 12 ? 12 : list.length;
   if (numberRoomRender > 12) {
-    number =
-      roomListAfterFilter.length > numberRoomRender
-        ? numberRoomRender
-        : roomListAfterFilter.length;
+    number = list.length > numberRoomRender ? numberRoomRender : list.length;
   }
 
   useEffect(() => {
-    dispatch(actions.setRoomAfterFilter(roomListAfterFilter.length));
+    dispatch(actions.setRoomAfterFilter(list.length));
     dispatch(actions.setRoomRender(number));
   }, [number]);
 
   let arrayRender = [];
   for (let i = 0; i < number; i++) {
-    arrayRender.push(roomListAfterFilter[i]);
+    arrayRender.push(list[i]);
   }
 
   return (

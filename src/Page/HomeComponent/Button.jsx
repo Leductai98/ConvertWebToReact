@@ -16,7 +16,7 @@ export default function Button() {
     >
       <button
         onClick={() => {
-          console.log(numberRoomRender);
+         
           dispatch(actions.setRoomRender(numberRoomRender + 4));
         }}
       >

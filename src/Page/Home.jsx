@@ -12,14 +12,13 @@ export default function Home() {
   const [filterInfo, setFilterInfo] = useState({ location: "" });
   return (
     <>
-      <HomeProvider>
-        <ImageBackGround />
-        <HomeHeader filterInfo={filterInfo} setFilterInfo={setFilterInfo} />
-        <Filter />
-        <Room />
-        <Button />
-        <BookingBanner />
-      </HomeProvider>
+    <HomeProvider>
+      <ImageBackGround />
+      <HomeHeader filterInfo={filterInfo} setFilterInfo={setFilterInfo} />
+      <Filter />
+      <Room />
+      <Button />
+      <BookingBanner /></HomeProvider>
     </>
   );
 }
