@@ -1002,13 +1002,13 @@ input::placeholder {
 .guest-baby {
   display: none;
 }
-.guest-baby.active {
+span.guest-baby.active {
   display: inline-block;
 }
 .guest-pet {
   display: none;
 }
-.guest-pet.active {
+span.guest-pet.active {
   display: inline-block;
 }
 .guest-input img {

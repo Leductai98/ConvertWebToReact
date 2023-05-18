@@ -5,7 +5,7 @@ import Container from "react-bootstrap/Container";
 import DetailHeader from "./DetailComponent/DetailHeader";
 import DetailPicture from "./DetailComponent/DetailPicture";
 import DetailInfo from "./DetailComponent/DetailInfo";
-
+import { DetailProvider } from "./DetailComponent/DetailContext&Reducer";
 import "../assets/css/swiper.css";
 
 import DetailComment from "./DetailComponent/DetailComment";
@@ -39,17 +39,19 @@ export default function Detail() {
     );
   return (
     <>
-      <Container>
-        <div className="room-wrap">
-          <DetailHeader data={roomInfo} />
-          <DetailPicture data={picture} url={urlRoomInfoPicture} />
-          <DetailInfo data={roomInfo} url={urlRoomInfoPicture} />
-        </div>
-      </Container>
-      <Container>
-        <DetailComment data={roomInfo} url={urlRoomInfoPicture} />
-        <DetailMap data={roomInfo} />
-      </Container>
+      <DetailProvider>
+        <Container>
+          <div className="room-wrap">
+            <DetailHeader data={roomInfo} />
+            <DetailPicture data={picture} url={urlRoomInfoPicture} />
+            <DetailInfo data={roomInfo} url={urlRoomInfoPicture} />
+          </div>
+        </Container>
+        <Container>
+          <DetailComment data={roomInfo} url={urlRoomInfoPicture} />
+          <DetailMap data={roomInfo} />
+        </Container>
+      </DetailProvider>
     </>
   );
 }

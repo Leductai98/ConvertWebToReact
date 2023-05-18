@@ -14,6 +14,7 @@ export default function DetailHeader({ data }) {
           <Col
             xs={10}
             md={2}
+            lg={1}
             className=" d-flex align-items-end justify-content-start"
           >
             <div className="rating d-flex gap-2 align-items-end justify-content-start">
@@ -25,7 +26,8 @@ export default function DetailHeader({ data }) {
           </Col>
           <Col
             xs={0}
-            md={6}
+            md={7}
+            lg={9}
             className=" d-none d-md-block d-flex align-items-end justify-content-start"
           >
             <div className="info-status">
@@ -36,6 +38,7 @@ export default function DetailHeader({ data }) {
           <Col
             xs={1}
             md={2}
+            lg={1}
             className="d-flex align-items-end justify-content-end"
           >
             <div className="share">
@@ -68,7 +71,8 @@ export default function DetailHeader({ data }) {
           </Col>
           <Col
             xs={1}
-            md={2}
+            md={1}
+            lg={1}
             className="d-flex align-items-end justify-content-end"
           >
             <div className="save">

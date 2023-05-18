@@ -1,14 +1,31 @@
-import React from "react";
+import React, { useEffect, useContext } from "react";
+import { DetailContext } from "./DetailContext&Reducer";
+import { actions } from "./DetailContext&Reducer";
 import Flatpickr from "react-flatpickr";
 import rangePlugin from "flatpickr/dist/plugins/rangePlugin";
 import { Vietnamese } from "flatpickr/dist/l10n/vn.js";
 export default function DetailInfo({ data, url }) {
   let today = new Date().toISOString().slice(0, 10);
-  console.log(
-    Date.parse(data.start) >= Date.parse(today)
-      ? data.start.split("-").reverse().join("-")
-      : today.split("-").reverse().join("-")
-  );
+  const [state, dispatch] = useContext(DetailContext);
+
+  const { guestMenu, dayStart, dayEnd } = state;
+  const {
+    guestAdultChildMax,
+    guestAdult,
+    guestChild,
+    guestBabyMax,
+    guestBaby,
+    guestPetMax,
+    guestPet,
+  } = guestMenu;
+  useEffect(() => {
+    dispatch(actions.setGuestMax(parseInt(data.guest)));
+  }, [data]);
+  useEffect(() => {
+    let end = document.getElementById("out");
+    end.value = dayEnd;
+  }, [dayEnd]);
+
   return (
     <div className="room__info">
       <div className="row justify-content-between">
@@ -410,6 +427,17 @@ export default function DetailInfo({ data, url }) {
                   type="text"
                   placeholder="Chọn ngày"
                   autoComplete="off"
+                  value={`${dayStart} đến ${dayEnd}`}
+                  onChange={(e) => {
+                    if (e.length > 1) {
+                      dispatch(
+                        actions.setDayStart(e[0].toLocaleDateString("es-CL"))
+                      );
+                      dispatch(
+                        actions.setDayEnd(e[1].toLocaleDateString("es-CL"))
+                      );
+                    }
+                  }}
                 />
               </div>
             </div>
@@ -458,6 +486,8 @@ export default function DetailInfo({ data, url }) {
                   </label>
                   <Flatpickr
                     options={{
+                      altInputClass: "input__out",
+                      conjunction: "#out",
                       locale: Vietnamese,
                       dateFormat: "d-m-Y",
                       minDate:
@@ -475,10 +505,21 @@ export default function DetailInfo({ data, url }) {
                     }}
                     className="in"
                     type="text"
-                    name=""
+                    name="date"
                     id="in"
                     placeholder="Thêm ngày"
                     autoComplete="off"
+                    value={dayStart}
+                    onChange={(e) => {
+                      if (e.length > 1) {
+                        dispatch(
+                          actions.setDayStart(e[0].toLocaleDateString("es-CL"))
+                        );
+                        dispatch(
+                          actions.setDayEnd(e[1].toLocaleDateString("es-CL"))
+                        );
+                      }
+                    }}
                   />
                 </div>
                 <div className="time-check-out">
@@ -487,8 +528,9 @@ export default function DetailInfo({ data, url }) {
                   </label>
                   <input
                     type="text"
-                    name=""
+                    name="date"
                     id="out"
+                    defaultValue={dayEnd}
                     className="input__out"
                     placeholder="Thêm ngày"
                     autoComplete="off"
@@ -509,17 +551,43 @@ export default function DetailInfo({ data, url }) {
                         <div className="item-left-des">Từ 13 tuổi trở lên</div>
                       </div>
                       <div className="item-right">
-                        <div className="item-right-reduce" data-type="adult">
+                        <div
+                          className={`item-right-reduce ${
+                            guestAdult > 1 ? "active" : ""
+                          }`}
+                          data-type="adult"
+                          onClick={() => {
+                            if (guestAdult === 1) {
+                              return;
+                            } else {
+                              dispatch(actions.setAdult(guestAdult - 1));
+                            }
+                          }}
+                        >
                           -
                         </div>
                         <div
                           className="item-right-quantity"
                           data-type="adult"
-                          data-max="${parseInt(item.guest)}"
+                          data-max={16}
                         >
-                          1
+                          {guestAdult}
                         </div>
-                        <div className="item-right-increase" data-type="adult">
+                        <div
+                          className={`item-right-increase ${
+                            guestAdult + guestChild >= guestAdultChildMax
+                              ? "disabled"
+                              : ""
+                          }`}
+                          data-type="adult"
+                          onClick={() => {
+                            if (guestAdult + guestChild >= guestAdultChildMax) {
+                              return;
+                            } else {
+                              dispatch(actions.setAdult(guestAdult + 1));
+                            }
+                          }}
+                        >
                           +
                         </div>
                       </div>
@@ -530,17 +598,43 @@ export default function DetailInfo({ data, url }) {
                         <div className="item-left-des">Độ tuổi 2 - 12</div>
                       </div>
                       <div className="item-right">
-                        <div className="item-right-reduce" data-type="child">
+                        <div
+                          className={`item-right-reduce ${
+                            guestChild > 0 ? "active" : ""
+                          }`}
+                          data-type="child"
+                          onClick={() => {
+                            if (guestChild <= 0) {
+                              return;
+                            } else {
+                              dispatch(actions.setChild(guestChild - 1));
+                            }
+                          }}
+                        >
                           -
                         </div>
                         <div
                           className="item-right-quantity"
                           data-type="child"
-                          data-max={parseInt(data.guest) - 1}
+                          data-max={15}
                         >
-                          0
+                          {guestChild}
                         </div>
-                        <div className="item-right-increase" data-type="child">
+                        <div
+                          className={`item-right-increase ${
+                            guestAdult + guestChild >= guestAdultChildMax
+                              ? "disabled"
+                              : ""
+                          }`}
+                          data-type="child"
+                          onClick={() => {
+                            if (guestAdult + guestChild >= guestAdultChildMax) {
+                              return;
+                            } else {
+                              dispatch(actions.setChild(guestChild + 1));
+                            }
+                          }}
+                        >
                           +
                         </div>
                       </div>
@@ -551,7 +645,19 @@ export default function DetailInfo({ data, url }) {
                         <div className="item-left-des">Dưới 2 tuổi</div>
                       </div>
                       <div className="item-right">
-                        <div className="item-right-reduce" data-type="baby">
+                        <div
+                          className={`item-right-reduce ${
+                            guestBaby > 0 ? "active" : ""
+                          }`}
+                          data-type="baby"
+                          onClick={() => {
+                            if (guestBaby <= 0) {
+                              return;
+                            } else {
+                              dispatch(actions.setBaby(guestBaby - 1));
+                            }
+                          }}
+                        >
                           -
                         </div>
                         <div
@@ -559,9 +665,21 @@ export default function DetailInfo({ data, url }) {
                           data-type="baby"
                           data-max={5}
                         >
-                          0
+                          {guestBaby}
                         </div>
-                        <div className="item-right-increase" data-type="baby">
+                        <div
+                          className={`item-right-increase ${
+                            guestBaby >= guestBabyMax ? "disabled" : ""
+                          }`}
+                          data-type="baby"
+                          onClick={() => {
+                            if (guestBaby >= guestBabyMax) {
+                              return;
+                            } else {
+                              dispatch(actions.setBaby(guestBaby + 1));
+                            }
+                          }}
+                        >
                           +
                         </div>
                       </div>
@@ -572,7 +690,19 @@ export default function DetailInfo({ data, url }) {
                         <div className="item-left-des" />
                       </div>
                       <div className="item-right">
-                        <div className="item-right-reduce" data-type="pet">
+                        <div
+                          className={`item-right-reduce ${
+                            guestPet > 0 ? "active" : ""
+                          }`}
+                          data-type="pet"
+                          onClick={() => {
+                            if (guestPet <= 0) {
+                              return;
+                            } else {
+                              dispatch(actions.setPet(guestPet - 1));
+                            }
+                          }}
+                        >
                           -
                         </div>
                         <div
@@ -580,9 +710,21 @@ export default function DetailInfo({ data, url }) {
                           data-type="pet"
                           data-max={5}
                         >
-                          0
+                          {guestPet}
                         </div>
-                        <div className="item-right-increase" data-type="pet">
+                        <div
+                          className={`item-right-increase ${
+                            guestPet >= guestPetMax ? "disabled" : ""
+                          }`}
+                          data-type="pet"
+                          onClick={() => {
+                            if (guestPet >= guestPetMax) {
+                              return;
+                            } else {
+                              dispatch(actions.setPet(guestPet + 1));
+                            }
+                          }}
+                        >
                           +
                         </div>
                       </div>
@@ -599,9 +741,21 @@ export default function DetailInfo({ data, url }) {
                   <div className="guest-header">Khách</div>
                   <div className="guest-input">
                     <div className="guest-count">
-                      <span className="guest-adult-child">1 khách </span>
-                      <span className="guest-baby">, 1 em bé</span>
-                      <span className="guest-pet">, 1 thú cưng</span>
+                      <span className="guest-adult-child">
+                        {guestAdult + guestChild} khách{" "}
+                      </span>
+                      <span
+                        className={`guest-baby ${
+                          guestBaby > 0 ? "active" : ""
+                        }`}
+                      >
+                        , {guestBaby} em bé
+                      </span>
+                      <span
+                        className={`guest-pet ${guestPet > 0 ? "active" : ""}`}
+                      >
+                        , {guestPet} thú cưng
+                      </span>
                     </div>
                     <img src="/Frame (14).png" alt="" />
                   </div>
@@ -618,7 +772,23 @@ export default function DetailInfo({ data, url }) {
                       <input type="checkbox" id="calc-input-room" />
                       <label htmlFor="calc-input-room" className="calc-item">
                         <span className="cost-night">đ {data.price}</span> x
-                        <span className="count-night">1 đêm</span>
+                        <span className="count-night">
+                          {(Date.parse(dayEnd.split("-").reverse().join("-")) -
+                            Date.parse(
+                              dayStart.split("-").reverse().join("-")
+                            )) /
+                            (3600 * 24 * 1000) >=
+                          1
+                            ? (Date.parse(
+                                dayEnd.split("-").reverse().join("-")
+                              ) -
+                                Date.parse(
+                                  dayStart.split("-").reverse().join("-")
+                                )) /
+                              (3600 * 24 * 1000)
+                            : 1}{" "}
+                          đêm
+                        </span>
                       </label>
                       <label
                         htmlFor="calc-input-room"
@@ -644,7 +814,22 @@ export default function DetailInfo({ data, url }) {
                       </div>
                     </div>
                     <div data-type="night" className="total-item">
-                      đ {data.price}
+                      đ{" "}
+                      {(Date.parse(dayEnd.split("-").reverse().join("-")) -
+                        Date.parse(dayStart.split("-").reverse().join("-"))) /
+                        (3600 * 24 * 1000) >=
+                      1
+                        ? (
+                            (Number(data.price.split(",").join("")) *
+                              (Date.parse(
+                                dayEnd.split("-").reverse().join("-")
+                              ) -
+                                Date.parse(
+                                  dayStart.split("-").reverse().join("-")
+                                ))) /
+                            (3600 * 24 * 1000)
+                          ).toLocaleString()
+                        : data.price}
                     </div>
                   </div>
                   <div className="cost-item">
@@ -714,9 +899,24 @@ export default function DetailInfo({ data, url }) {
                     </div>
                     <div data-type="service" className="total-item">
                       đ{" "}
-                      {(
-                        Number(data.price.split(",").join("")) * 0.1
-                      ).toLocaleString()}
+                      {(Date.parse(dayEnd.split("-").reverse().join("-")) -
+                        Date.parse(dayStart.split("-").reverse().join("-"))) /
+                        (3600 * 24 * 1000) >=
+                      1
+                        ? (
+                            ((Number(data.price.split(",").join("")) *
+                              (Date.parse(
+                                dayEnd.split("-").reverse().join("-")
+                              ) -
+                                Date.parse(
+                                  dayStart.split("-").reverse().join("-")
+                                ))) /
+                              (3600 * 24 * 1000)) *
+                            0.1
+                          ).toLocaleString()
+                        : (
+                            Number(data.price.split(",").join("")) * 0.1
+                          ).toLocaleString()}
                     </div>
                   </div>
                 </div>
@@ -724,9 +924,23 @@ export default function DetailInfo({ data, url }) {
                   <div className="total-des">Tổng</div>
                   <div className="total-cost">
                     đ{" "}
-                    {Number(
-                      data.price.split(",").join("") * 1.1 + 200000
-                    ).toLocaleString()}
+                    {(Date.parse(dayEnd.split("-").reverse().join("-")) -
+                      Date.parse(dayStart.split("-").reverse().join("-"))) /
+                      (3600 * 24 * 1000) >=
+                    1
+                      ? (
+                          ((Number(data.price.split(",").join("")) *
+                            (Date.parse(dayEnd.split("-").reverse().join("-")) -
+                              Date.parse(
+                                dayStart.split("-").reverse().join("-")
+                              ))) /
+                            (3600 * 24 * 1000)) *
+                            1.1 +
+                          200000
+                        ).toLocaleString()
+                      : Number(
+                          data.price.split(",").join("") * 1.1 + 200000
+                        ).toLocaleString()}
                   </div>
                 </div>
               </div>
