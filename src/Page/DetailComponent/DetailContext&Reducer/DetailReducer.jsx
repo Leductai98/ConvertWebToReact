@@ -26,6 +26,7 @@ const detailInitalState = {
   dayEnd: "",
   toast: [],
   toastRemoving: 0,
+  favorite: false,
 };
 
 const detailReducer = (state, action) => {

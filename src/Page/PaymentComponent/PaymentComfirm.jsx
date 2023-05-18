@@ -19,7 +19,6 @@ export default function PaymentComfirm() {
     guestPetMax,
     guestPet,
   } = guestMenu;
-  console.log(state);
   return (
     <div className="confirm-payment">
       <div className="confirm-payment-header">Xác nhận và thanh toán</div>
@@ -63,6 +62,19 @@ export default function PaymentComfirm() {
                     );
                     dispatch(
                       actions.setDayEnd(e[1].toLocaleDateString("es-CL"))
+                    );
+                    dispatch(
+                      actions.setTotalPrice(
+                        ((Date.parse(e[1]) - Date.parse(e[0])) /
+                          (3600 * 24 * 1000)) *
+                          Number(
+                            JSON.parse(localStorage.getItem("roomOrder"))
+                              .infoPrice.split(",")
+                              .join("")
+                          ) *
+                          1.1 +
+                          200000
+                      )
                     );
                   }
                 }}

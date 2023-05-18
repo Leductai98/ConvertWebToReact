@@ -30,6 +30,7 @@ export default function DetailInfo({ data, url }) {
   useEffect(() => {
     dispatch(actions.setUserLogin(JSON.parse(localStorage.getItem("login"))));
   }, [localStorage.getItem("login")]);
+
   const handleBookingRoom = (e) => {
     if (userLogin === null) {
       e.preventDefault();

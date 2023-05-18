@@ -71,19 +71,11 @@ export default function SignIn() {
             setPopUp(true);
           }, 500);
           setTimeout(() => {
-            if (localStorage.getItem("isDetail")) {
-              let y = localStorage.getItem("isDetail").split("/");
-              navigate(`${y[y.legnth - 2]}/${y[y.lengh - 1]}`);
-
-              localStorage.removeItem("isDetail");
+            if (localStorage.getItem("previousSignUp")) {
+              navigate(-2);
               localStorage.removeItem("previousSignUp");
             } else {
-              if (localStorage.getItem("previousSignUp") !== null) {
-                navigate(-2);
-                localStorage.removeItem("previousSignUp");
-              } else {
-                navigate(-1);
-              }
+              navigate(-1);
             }
           }, 1500);
         } else {

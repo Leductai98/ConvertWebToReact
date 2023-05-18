@@ -10,6 +10,7 @@ export default memo(function ToastItem({ data, onCloseToast }) {
       <div
         className="toast-error-close"
         onClick={() => {
+          console.log(data);
           onCloseToast(data.id);
         }}
       >

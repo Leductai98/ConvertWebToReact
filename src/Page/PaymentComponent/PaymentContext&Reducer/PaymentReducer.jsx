@@ -8,47 +8,84 @@ import {
   SET__PET,
   SET__PAYWAY,
   SET__CARD,
+  SET__ROOM__LIST,
+  SET__TOTAL__PRICE,
+  SET__SUCCESS,
+  SET__TOAST,
+  SET__TOAST__REMOVING,
 } from "./PaymentConstant";
 
 const paymentInitalState = {
   userLogin: JSON.parse(localStorage.getItem("login")),
-  dayStart: JSON.parse(localStorage.getItem("roomOrder")).infoDate.split(
-    " "
-  )[0],
-  dayEnd: JSON.parse(localStorage.getItem("roomOrder")).infoDate.split(" ")[2],
+  dayStart:
+    JSON.parse(localStorage.getItem("roomOrder")) !== null
+      ? JSON.parse(localStorage.getItem("roomOrder")).infoDate.split(" ")[0]
+      : "",
+  dayEnd:
+    JSON.parse(localStorage.getItem("roomOrder")) !== null
+      ? JSON.parse(localStorage.getItem("roomOrder")).infoDate.split(" ")[2]
+      : "",
   guestMenu: {
-    guestAdultChildMax: JSON.parse(localStorage.getItem("roomOrder"))
-      .infoMaxGuest,
-    guestAdult: JSON.parse(localStorage.getItem("roomOrder")).infoAdult,
-    guestChild: JSON.parse(localStorage.getItem("roomOrder")).infoChild,
-    guestBabyMax: JSON.parse(localStorage.getItem("roomOrder")).infoMaxBaby,
-    guestBaby: JSON.parse(localStorage.getItem("roomOrder")).infoBaby,
-    guestPetMax: JSON.parse(localStorage.getItem("roomOrder")).infoMaxPet,
-    guestPet: JSON.parse(localStorage.getItem("roomOrder")).infoPet,
+    guestAdultChildMax:
+      JSON.parse(localStorage.getItem("roomOrder")) !== null
+        ? JSON.parse(localStorage.getItem("roomOrder")).infoMaxGuest
+        : 0,
+    guestAdult:
+      JSON.parse(localStorage.getItem("roomOrder")) !== null
+        ? JSON.parse(localStorage.getItem("roomOrder")).infoAdult
+        : 0,
+    guestChild:
+      JSON.parse(localStorage.getItem("roomOrder")) !== null
+        ? JSON.parse(localStorage.getItem("roomOrder")).infoChild
+        : 0,
+    guestBabyMax:
+      JSON.parse(localStorage.getItem("roomOrder")) !== null
+        ? JSON.parse(localStorage.getItem("roomOrder")).infoMaxBaby
+        : 0,
+    guestBaby:
+      JSON.parse(localStorage.getItem("roomOrder")) !== null
+        ? JSON.parse(localStorage.getItem("roomOrder")).infoBaby
+        : 0,
+    guestPetMax:
+      JSON.parse(localStorage.getItem("roomOrder")) !== null
+        ? JSON.parse(localStorage.getItem("roomOrder")).infoMaxPet
+        : 0,
+    guestPet:
+      JSON.parse(localStorage.getItem("roomOrder")) !== null
+        ? JSON.parse(localStorage.getItem("roomOrder")).infoPet
+        : 0,
   },
   totalPrice:
-    ((Date.parse(
-      JSON.parse(localStorage.getItem("roomOrder"))
-        .infoDate.split(" ")[2]
-        .split("-")
-        .reverse()
-        .join("-")
-    ) -
-      Date.parse(
-        JSON.parse(localStorage.getItem("roomOrder"))
-          .infoDate.split(" ")[0]
-          .split("-")
-          .reverse()
-          .join("-")
-      )) /
-      (3600 * 24 * 1000)) *
-    Number(
-      JSON.parse(localStorage.getItem("roomOrder"))
-        .infoPrice.split(",")
-        .join("")
-    ),
+    JSON.parse(localStorage.getItem("roomOrder")) !== null
+      ? ((Date.parse(
+          JSON.parse(localStorage.getItem("roomOrder"))
+            .infoDate.split(" ")[2]
+            .split("-")
+            .reverse()
+            .join("-")
+        ) -
+          Date.parse(
+            JSON.parse(localStorage.getItem("roomOrder"))
+              .infoDate.split(" ")[0]
+              .split("-")
+              .reverse()
+              .join("-")
+          )) /
+          (3600 * 24 * 1000)) *
+          Number(
+            JSON.parse(localStorage.getItem("roomOrder"))
+              .infoPrice.split(",")
+              .join("")
+          ) *
+          1.1 +
+        200000
+      : 0,
   payWay: "",
   card: false,
+  roomList: {},
+  success: false,
+  toast: [],
+  toastRemoving: 0,
 };
 
 const paymentReducer = (state, action) => {
@@ -83,6 +120,16 @@ const paymentReducer = (state, action) => {
       return { ...state, payWay: action.value };
     case SET__CARD:
       return { ...state, card: action.value };
+    case SET__ROOM__LIST:
+      return { ...state, roomList: action.object };
+    case SET__TOTAL__PRICE:
+      return { ...state, totalPrice: action.value };
+    case SET__SUCCESS:
+      return { ...state, success: action.value };
+    case SET__TOAST:
+      return { ...state, toast: action.array };
+    case SET__TOAST__REMOVING:
+      return { ...state, toastRemoving: action.value };
   }
 };
 export { paymentInitalState };

@@ -8,6 +8,11 @@ import {
   SET__PET,
   SET__PAYWAY,
   SET__CARD,
+  SET__ROOM__LIST,
+  SET__TOTAL__PRICE,
+  SET__SUCCESS,
+  SET__TOAST,
+  SET__TOAST__REMOVING,
 } from "./PaymentConstant";
 
 export const setUserLogin = (value) => {
@@ -43,4 +48,19 @@ export const setPayWay = (value) => {
 
 export const setCard = (value) => {
   return { type: SET__CARD, value };
+};
+export const setRoomList = (object) => {
+  return { type: SET__ROOM__LIST, object };
+};
+export const setTotalPrice = (value) => {
+  return { type: SET__TOTAL__PRICE, value };
+};
+export const setSuccess = (value) => {
+  return { type: SET__SUCCESS, value };
+};
+export const setToast = (array) => {
+  return { type: SET__TOAST, array};
+};
+export const setToastRemoving = (value) => {
+  return { type: SET__TOAST__REMOVING, value };
 };

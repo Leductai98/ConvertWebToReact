@@ -1,9 +1,75 @@
-import React from "react";
-
+import React, { useContext, useState, useEffect } from "react";
+import { DetailContext } from "./DetailContext&Reducer";
+import { actions } from "./DetailContext&Reducer";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 export default function DetailHeader({ data }) {
+  const [state, dispatch] = useContext(DetailContext);
+  const { userLogin, toast } = state;
+  const [favorite, setFavorite] = useState(false);
+  let favoriteArr =
+    localStorage.getItem("favorite") != null
+      ? JSON.parse(localStorage.getItem("favorite"))
+      : [];
+
+  useEffect(() => {
+    favoriteArr =
+      localStorage.getItem("favorite") != null
+        ? JSON.parse(localStorage.getItem("favorite"))
+        : [];
+
+    if (userLogin !== null) {
+      if (favoriteArr.length != 0) {
+        favoriteArr.forEach((item) => {
+          if (item.user == userLogin.name) {
+            if (item.name == data.name) {
+              setFavorite(true);
+            }
+          }
+        });
+      }
+    }
+  }, [localStorage.getItem("favorite")]);
+  console.log(favorite);
+  const handleFavorite = () => {
+    if (userLogin !== null) {
+      if (!favorite) {
+        setFavorite(true);
+        let favoriteItem = {
+          user: userLogin.name,
+          name: data.name,
+          picture: `https://api-sandy-zeta.vercel.app${data.picture[0].link}`,
+          location: data.location,
+          status: data.status,
+          price: data.price,
+          link: window.location.href,
+        };
+        favoriteArr.push(favoriteItem);
+        localStorage.setItem("favorite", JSON.stringify(favoriteArr));
+      } else {
+        setFavorite(false);
+        const result = favoriteArr.filter(
+          (item) =>
+            (item.user !== userLogin.name && item.name !== data.name) ||
+            (item.user === userLogin.name && item.name !== data.name) ||
+            (item.user !== userLogin.name && item.name === data.name)
+        );
+        localStorage.setItem("favorite", JSON.stringify(result));
+      }
+    } else {
+      dispatch(
+        actions.setToast([
+          ...toast,
+          {
+            id: Math.floor(Math.random() * 1000000),
+            name: "Vui lòng đăng nhập để thực hiện chức năng này",
+          },
+        ])
+      );
+    }
+  };
+
   return (
     <div className="room__des-header">
       <div className="header-name">
@@ -75,8 +141,11 @@ export default function DetailHeader({ data }) {
             lg={1}
             className="d-flex align-items-end justify-content-end"
           >
-            <div className="save">
-              <div className="save-icon" style={{ color: "none" }}>
+            <div className="save" onClick={handleFavorite}>
+              <div
+                className={`save-icon ${favorite ? "active" : ""}`}
+                style={{ color: "none" }}
+              >
                 <svg
                   viewBox="0 0 32 32"
                   xmlns="http://www.w3.org/2000/svg"

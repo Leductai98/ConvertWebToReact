@@ -6,8 +6,8 @@ import Col from "react-bootstrap/esm/Col";
 import PaymentComfirm from "./PaymentComponent/PaymentComfirm";
 import PaymentInfoMenu from "./PaymentComponent/PaymentInfoMenu";
 import PaymentPopUp from "./PaymentComponent/PaymentPopUp";
-import PaymentToast from "./PaymentComponent/PaymentToast";
 import { PaymentProvider } from "./PaymentComponent/PaymentContext&Reducer";
+import Toast from "./PaymentComponent/Toast";
 export default function Payment() {
   document.title = "Đặt phòng - Tai";
   return (
@@ -24,7 +24,7 @@ export default function Payment() {
           </Row>
         </Container>
         <PaymentPopUp />
-        <PaymentToast />
+        <Toast />
       </PaymentProvider>
     </>
   );

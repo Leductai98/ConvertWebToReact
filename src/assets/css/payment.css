@@ -304,6 +304,14 @@ body {
 .room-text-payment {
   flex: 2;
 }
+.room-rate-payment {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.room-rate-payment img {
+  width: 15px;
+}
 .room-name-payment {
   font-weight: 600;
   display: -webkit-box;
@@ -442,7 +450,7 @@ body {
   font-size: 24px;
   cursor: pointer;
 }
-.toast-close-payment img{
+.toast-close-payment img {
   width: 24px;
   height: 24px;
   opacity: 0.8;
