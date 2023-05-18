@@ -848,6 +848,9 @@ body {
 }
 
 /*booking-form*/
+.booking-form a:hover {
+  text-decoration: none;
+}
 .info-booking {
   width: 100%;
   border: 1px solid #717171;

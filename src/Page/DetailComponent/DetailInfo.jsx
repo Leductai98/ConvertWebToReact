@@ -1,6 +1,7 @@
 import React, { useEffect, useContext } from "react";
 import { DetailContext } from "./DetailContext&Reducer";
 import { actions } from "./DetailContext&Reducer";
+import { Link } from "react-router-dom";
 import Flatpickr from "react-flatpickr";
 import rangePlugin from "flatpickr/dist/plugins/rangePlugin";
 import { Vietnamese } from "flatpickr/dist/l10n/vn.js";
@@ -8,7 +9,8 @@ export default function DetailInfo({ data, url }) {
   let today = new Date().toISOString().slice(0, 10);
   const [state, dispatch] = useContext(DetailContext);
 
-  const { guestMenu, dayStart, dayEnd } = state;
+  const { userLogin, guestMenu, dayStart, dayEnd, toast } = state;
+
   const {
     guestAdultChildMax,
     guestAdult,
@@ -25,7 +27,53 @@ export default function DetailInfo({ data, url }) {
     let end = document.getElementById("out");
     end.value = dayEnd;
   }, [dayEnd]);
-
+  useEffect(() => {
+    dispatch(actions.setUserLogin(JSON.parse(localStorage.getItem("login"))));
+  }, [localStorage.getItem("login")]);
+  const handleBookingRoom = (e) => {
+    if (userLogin === null) {
+      e.preventDefault();
+      dispatch(
+        actions.setToast([
+          ...toast,
+          {
+            id: Math.floor(Math.random() * 1000000),
+            name: "Vui lòng đăng nhập để thực hiện chức năng này",
+          },
+        ])
+      );
+    } else {
+      if (dayStart === "" || dayEnd === "") {
+        e.preventDefault();
+        dispatch(
+          actions.setToast([
+            ...toast,
+            {
+              id: Math.floor(Math.random() * 1000000),
+              name: "Vui lòng chọn ngày nhận và trả phòng",
+            },
+          ])
+        );
+      } else {
+        let roomInfo = {
+          infoId: data.id,
+          infoMaxGuest: guestAdultChildMax,
+          infoDate: `${dayStart} đến ${dayEnd}`,
+          infoPrice: data.price,
+          infoAdult: guestAdult,
+          infoChild: guestChild,
+          infoMaxBaby: guestBabyMax,
+          infoBaby: guestBaby,
+          infoMaxPet: guestPetMax,
+          infoPet: guestPet,
+          infoLink: window.location.href,
+          validDayStart: data.start,
+          validDayEnd: data.end,
+        };
+        localStorage.setItem("roomOrder", JSON.stringify(roomInfo));
+      }
+    }
+  };
   return (
     <div className="room__info">
       <div className="row justify-content-between">
@@ -405,8 +453,8 @@ export default function DetailInfo({ data, url }) {
                 </div>
                 <Flatpickr
                   options={{
-                    locale: Vietnamese,
                     allowInput: true,
+                    locale: Vietnamese,
                     dateFormat: "d-m-Y",
                     inline: true,
                     showMonths: 2,
@@ -451,17 +499,31 @@ export default function DetailInfo({ data, url }) {
                   <span>đ {data.price}</span> / đêm
                 </div>
                 <div className="booking-mobile-time">
-                  <a href="#date" className="time-mobile">
-                    <span className="time-mobile-in" />
-                    <span> - </span>
-                    <span className="time-mobile-out" />
+                  <a
+                    href="#myID"
+                    className={`time-mobile ${dayStart !== "" ? "active" : ""}`}
+                  >
+                    <span className="time-mobile-in">{dayStart}</span>
+                    <span> đến </span>
+                    <span
+                      className={`time-mobile-out ${
+                        dayEnd !== "" ? "active" : ""
+                      }`}
+                    >
+                      {dayEnd}
+                    </span>
                   </a>
                 </div>
               </div>
               <div className="booking-mobile-right">
-                <a href="./payment.html">
+                <Link
+                  to="/payment"
+                  onClick={(e) => {
+                    handleBookingRoom(e);
+                  }}
+                >
                   <button className="booking-mobile-btn">Đặt phòng</button>
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -486,8 +548,7 @@ export default function DetailInfo({ data, url }) {
                   </label>
                   <Flatpickr
                     options={{
-                      altInputClass: "input__out",
-                      conjunction: "#out",
+                      allowInput: true,
                       locale: Vietnamese,
                       dateFormat: "d-m-Y",
                       minDate:
@@ -500,7 +561,7 @@ export default function DetailInfo({ data, url }) {
                           to: data.end.split("-").reverse().join("-"),
                         },
                       ],
-                      allowInput: true,
+
                       plugins: [new rangePlugin({ input: "#out" })],
                     }}
                     className="in"
@@ -761,10 +822,14 @@ export default function DetailInfo({ data, url }) {
                   </div>
                 </label>
               </div>
-              <a href="./payment.html">
-                {" "}
+              <Link
+                to="/payment"
+                onClick={(e) => {
+                  handleBookingRoom(e);
+                }}
+              >
                 <button className="order-room">Đặt phòng</button>
-              </a>
+              </Link>
               <div className="cost-wrap">
                 <div className="cost-list">
                   <div className="cost-item">

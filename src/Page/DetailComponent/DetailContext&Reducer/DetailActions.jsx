@@ -1,4 +1,5 @@
 import {
+  SET__USER__LOGIN,
   SET__ADULT,
   SET__CHILD,
   SET__BABY,
@@ -6,7 +7,13 @@ import {
   SET__GUEST__MAX,
   SET__DAY__START,
   SET__DAY__END,
+  SET__TOAST,
+  SET__TOAST__REMOVING,
 } from "./DetailConstant";
+
+export const setUserLogin = (value) => {
+  return { type: SET__USER__LOGIN, value };
+};
 
 export const setAdult = (value) => {
   return { type: SET__ADULT, value };
@@ -30,4 +37,10 @@ export const setDayStart = (value) => {
 };
 export const setDayEnd = (value) => {
   return { type: SET__DAY__END, value };
+};
+export const setToast = (array) => {
+  return { type: SET__TOAST, array };
+};
+export const setToastRemoving = (id) => {
+  return { type: SET__TOAST__REMOVING, id };
 };

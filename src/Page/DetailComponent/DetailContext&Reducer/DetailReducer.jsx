@@ -1,4 +1,5 @@
 import {
+  SET__USER__LOGIN,
   SET__ADULT,
   SET__BABY,
   SET__CHILD,
@@ -6,9 +7,12 @@ import {
   SET__GUEST__MAX,
   SET__DAY__START,
   SET__DAY__END,
+  SET__TOAST,
+  SET__TOAST__REMOVING,
 } from "./DetailConstant";
 
 const detailInitalState = {
+  userLogin: JSON.parse(localStorage.getItem("login")),
   guestMenu: {
     guestAdultChildMax: 0,
     guestAdult: 1,
@@ -20,10 +24,17 @@ const detailInitalState = {
   },
   dayStart: "",
   dayEnd: "",
+  toast: [],
+  toastRemoving: 0,
 };
 
 const detailReducer = (state, action) => {
   switch (action.type) {
+    case SET__USER__LOGIN:
+      return {
+        ...state,
+        userLogin: action.value,
+      };
     case SET__ADULT:
       return {
         ...state,
@@ -58,6 +69,16 @@ const detailReducer = (state, action) => {
       return {
         ...state,
         dayEnd: action.value,
+      };
+    case SET__TOAST:
+      return {
+        ...state,
+        toast: action.array,
+      };
+    case SET__TOAST__REMOVING:
+      return {
+        ...state,
+        toastRemoving: action.id,
       };
   }
 };

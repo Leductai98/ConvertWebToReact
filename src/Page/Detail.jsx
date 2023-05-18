@@ -10,6 +10,7 @@ import "../assets/css/swiper.css";
 
 import DetailComment from "./DetailComponent/DetailComment";
 import DetailMap from "./DetailComponent/DetailMap";
+import Toast from "./DetailComponent/Toast";
 const urlRoomInfoPicture = `https://api-sandy-zeta.vercel.app`;
 export default function Detail() {
   const { roomId } = useParams();
@@ -51,6 +52,7 @@ export default function Detail() {
           <DetailComment data={roomInfo} url={urlRoomInfoPicture} />
           <DetailMap data={roomInfo} />
         </Container>
+        <Toast />
       </DetailProvider>
     </>
   );
