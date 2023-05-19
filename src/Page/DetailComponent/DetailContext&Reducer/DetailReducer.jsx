@@ -9,6 +9,7 @@ import {
   SET__DAY__END,
   SET__TOAST,
   SET__TOAST__REMOVING,
+  SET__TOAST__SUCCESS,
 } from "./DetailConstant";
 
 const detailInitalState = {
@@ -25,6 +26,7 @@ const detailInitalState = {
   dayStart: "",
   dayEnd: "",
   toast: [],
+  toastSuccess: [],
   toastRemoving: 0,
   favorite: false,
 };
@@ -80,6 +82,11 @@ const detailReducer = (state, action) => {
       return {
         ...state,
         toastRemoving: action.id,
+      };
+    case SET__TOAST__SUCCESS:
+      return {
+        ...state,
+        toastSuccess: action.value,
       };
   }
 };

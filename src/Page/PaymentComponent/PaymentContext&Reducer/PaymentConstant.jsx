@@ -12,3 +12,6 @@ export const SET__TOTAL__PRICE = "set__total__price";
 export const SET__SUCCESS = "set__success";
 export const SET__TOAST = "set__toast";
 export const SET__TOAST__REMOVING = "set__toast__removing";
+export const SET__GUEST__MAX="set__guest__max";
+export const SET__BABY__MAX="set__baby__max";
+export const SET__PET__MAX="set__pet__max";

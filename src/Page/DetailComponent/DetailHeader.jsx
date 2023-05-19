@@ -6,7 +6,7 @@ import Col from "react-bootstrap/Col";
 
 export default function DetailHeader({ data }) {
   const [state, dispatch] = useContext(DetailContext);
-  const { userLogin, toast } = state;
+  const { userLogin, toast, toastSuccess } = state;
   const [favorite, setFavorite] = useState(false);
   let favoriteArr =
     localStorage.getItem("favorite") != null
@@ -31,12 +31,23 @@ export default function DetailHeader({ data }) {
       }
     }
   }, [localStorage.getItem("favorite")]);
-  console.log(favorite);
   const handleFavorite = () => {
     if (userLogin !== null) {
       if (!favorite) {
         setFavorite(true);
+
+        dispatch(
+          actions.setToast([
+            ...toast,
+            {
+              id: Math.floor(Math.random() * 1000000),
+              status: true,
+              name: "Đã thêm vào danh sách yêu thích",
+            },
+          ])
+        );
         let favoriteItem = {
+          id: Math.floor(Math.random() * 1000000),
           user: userLogin.name,
           name: data.name,
           picture: `https://api-sandy-zeta.vercel.app${data.picture[0].link}`,
@@ -49,6 +60,16 @@ export default function DetailHeader({ data }) {
         localStorage.setItem("favorite", JSON.stringify(favoriteArr));
       } else {
         setFavorite(false);
+        dispatch(
+          actions.setToast([
+            ...toast,
+            {
+              id: Math.floor(Math.random() * 1000000),
+              status: false,
+              name: "Đã xóa khỏi danh sách yêu thích",
+            },
+          ])
+        );
         const result = favoriteArr.filter(
           (item) =>
             (item.user !== userLogin.name && item.name !== data.name) ||
@@ -63,6 +84,7 @@ export default function DetailHeader({ data }) {
           ...toast,
           {
             id: Math.floor(Math.random() * 1000000),
+            status: false,
             name: "Vui lòng đăng nhập để thực hiện chức năng này",
           },
         ])

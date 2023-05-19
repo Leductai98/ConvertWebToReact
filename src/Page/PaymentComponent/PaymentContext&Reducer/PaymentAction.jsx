@@ -13,6 +13,9 @@ import {
   SET__SUCCESS,
   SET__TOAST,
   SET__TOAST__REMOVING,
+  SET__GUEST__MAX,
+  SET__BABY__MAX,
+  SET__PET__MAX,
 } from "./PaymentConstant";
 
 export const setUserLogin = (value) => {
@@ -41,6 +44,15 @@ export const setBaby = (value) => {
 export const setPet = (value) => {
   return { type: SET__PET, value };
 };
+export const setGuestMax = (value) => {
+  return { type: SET__GUEST__MAX, value };
+};
+export const setBabyMax = (value) => {
+  return { type: SET__BABY__MAX, value };
+};
+export const setPetMax = (value) => {
+  return { type: SET__PET__MAX, value };
+};
 
 export const setPayWay = (value) => {
   return { type: SET__PAYWAY, value };
@@ -59,7 +71,7 @@ export const setSuccess = (value) => {
   return { type: SET__SUCCESS, value };
 };
 export const setToast = (array) => {
-  return { type: SET__TOAST, array};
+  return { type: SET__TOAST, array };
 };
 export const setToastRemoving = (value) => {
   return { type: SET__TOAST__REMOVING, value };

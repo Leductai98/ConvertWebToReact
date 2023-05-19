@@ -39,6 +39,7 @@ export default function DetailInfo({ data, url }) {
           ...toast,
           {
             id: Math.floor(Math.random() * 1000000),
+            status:false,
             name: "Vui lòng đăng nhập để thực hiện chức năng này",
           },
         ])
@@ -51,6 +52,7 @@ export default function DetailInfo({ data, url }) {
             ...toast,
             {
               id: Math.floor(Math.random() * 1000000),
+              status:false,
               name: "Vui lòng chọn ngày nhận và trả phòng",
             },
           ])

@@ -13,6 +13,9 @@ import {
   SET__SUCCESS,
   SET__TOAST,
   SET__TOAST__REMOVING,
+  SET__GUEST__MAX,
+  SET__BABY__MAX,
+  SET__PET__MAX,
 } from "./PaymentConstant";
 
 const paymentInitalState = {
@@ -115,6 +118,21 @@ const paymentReducer = (state, action) => {
       return {
         ...state,
         guestMenu: { ...state.guestMenu, guestPet: action.value },
+      };
+    case SET__GUEST__MAX:
+      return {
+        ...state,
+        guestMenu: { ...state.guestMenu, guestAdultChildMax: action.value },
+      };
+    case SET__BABY__MAX:
+      return {
+        ...state,
+        guestMenu: { ...state.guestMenu, guestBabyMax: action.value },
+      };
+    case SET__PET__MAX:
+      return {
+        ...state,
+        guestMenu: { ...state.guestMenu, guestPetMAx: action.value },
       };
     case SET__PAYWAY:
       return { ...state, payWay: action.value };

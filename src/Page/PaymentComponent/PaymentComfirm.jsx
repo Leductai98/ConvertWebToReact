@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { PaymentContext } from "./PaymentContext&Reducer";
 import { actions } from "./PaymentContext&Reducer";
 import Flatpickr from "react-flatpickr";
@@ -10,6 +10,72 @@ export default function PaymentComfirm() {
   const [state, dispatch] = useContext(PaymentContext);
 
   const { dayStart, dayEnd, guestMenu, totalPrice, payWay } = state;
+  useEffect(() => {
+    dispatch(
+      actions.setGuestMax(
+        JSON.parse(localStorage.getItem("roomOrder")).infoMaxGuest
+      )
+    );
+    dispatch(
+      actions.setAdult(JSON.parse(localStorage.getItem("roomOrder")).infoAdult)
+    );
+    dispatch(
+      actions.setChild(JSON.parse(localStorage.getItem("roomOrder")).infoChild)
+    );
+    dispatch(
+      actions.setBabyMax(
+        JSON.parse(localStorage.getItem("roomOrder")).infoMaxBaby
+      )
+    );
+    dispatch(
+      actions.setBaby(JSON.parse(localStorage.getItem("roomOrder")).infoBaby)
+    );
+    dispatch(
+      actions.setPetMax(
+        JSON.parse(localStorage.getItem("roomOrder")).infoMaxPet
+      )
+    );
+    dispatch(
+      actions.setPet(JSON.parse(localStorage.getItem("roomOrder")).infoPet)
+    );
+    dispatch(
+      actions.setTotalPrice(
+        ((Date.parse(
+          JSON.parse(localStorage.getItem("roomOrder"))
+            .infoDate.split(" ")[2]
+            .split("-")
+            .reverse()
+            .join("-")
+        ) -
+          Date.parse(
+            JSON.parse(localStorage.getItem("roomOrder"))
+              .infoDate.split(" ")[0]
+              .split("-")
+              .reverse()
+              .join("-")
+          )) /
+          (3600 * 24 * 1000)) *
+          Number(
+            JSON.parse(localStorage.getItem("roomOrder"))
+              .infoPrice.split(",")
+              .join("")
+          ) *
+          1.1 +
+          200000
+      )
+    );
+    dispatch(
+      actions.setDayStart(
+        JSON.parse(localStorage.getItem("roomOrder")).infoDate.split(" ")[0]
+      )
+    );
+    dispatch(
+      actions.setDayEnd(
+        JSON.parse(localStorage.getItem("roomOrder")).infoDate.split(" ")[2]
+      )
+    );
+    dispatch(actions.setUserLogin(JSON.parse(localStorage.getItem("login"))));
+  }, [localStorage.getItem("roomOrder")]);
   const {
     guestAdultChildMax,
     guestAdult,

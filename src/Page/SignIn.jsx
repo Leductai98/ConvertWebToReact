@@ -7,10 +7,10 @@ import SignInContent from "./SignInComponent/SignInContent";
 import SignInPopUp from "./SignInComponent/SignInPopUp";
 import SignInToast from "./SignInComponent/SignInToast";
 export default function SignIn() {
-  console.log(localStorage.getItem("previousSignUp") !== null);
+ 
   document.title = "Đăng nhập - Tai";
   const navigate = useNavigate();
-  console.log(navigate);
+
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
   const [passType, setPassType] = useState(false);
   const [formInfo, setFormInfo] = useState({

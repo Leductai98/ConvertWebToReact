@@ -9,6 +9,7 @@ import {
   SET__DAY__END,
   SET__TOAST,
   SET__TOAST__REMOVING,
+  SET__TOAST__SUCCESS,
 } from "./DetailConstant";
 
 export const setUserLogin = (value) => {
@@ -43,4 +44,7 @@ export const setToast = (array) => {
 };
 export const setToastRemoving = (id) => {
   return { type: SET__TOAST__REMOVING, id };
+};
+export const setToastSuccess = (value) => {
+  return { type: SET__TOAST__SUCCESS, value };
 };

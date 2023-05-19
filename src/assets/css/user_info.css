@@ -105,14 +105,45 @@
   gap: 10px;
 }
 .user__info--background {
-background: #E0EAFC;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #CFDEF3, #E0EAFC);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #CFDEF3, #E0EAFC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-
-
-
+  background: #e0eafc; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #cfdef3,
+    #e0eafc
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #cfdef3,
+    #e0eafc
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
   padding: 20px;
   border-radius: 10px;
+}
+.pass-wrap {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.icon-password-user {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  cursor: pointer;
+}
+.icon-password-user img {
+  width: 18px;
+  height: 18px;
+  opacity: 0.8;
+  display: none;
+}
+.icon-password-user img.active {
+  display: block;
+}
+#name-input.error {
+  border-color: red;
 }

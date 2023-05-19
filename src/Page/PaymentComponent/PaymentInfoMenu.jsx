@@ -1,18 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { PaymentContext } from "./PaymentContext&Reducer";
 import { actions } from "./PaymentContext&Reducer";
-const getRoomList = async () => {
-  const res = await fetch(
-    `https://api-sandy-zeta.vercel.app/room-list/${
-      JSON.parse(localStorage.getItem("roomOrder")) !== null
-        ? JSON.parse(localStorage.getItem("roomOrder")).infoId
-        : 0
-    }`
-  );
-  const data = await res.json();
-  return data;
-};
-const promise = getRoomList();
 
 export default function PaymentInfoMenu() {
   const [isLoading, setIsLoaing] = useState(true);
@@ -29,14 +17,25 @@ export default function PaymentInfoMenu() {
     success,
   } = state;
   useEffect(() => {
-    promise
+    const getRoomList = async () => {
+      const res = await fetch(
+        `https://api-sandy-zeta.vercel.app/room-list/${
+          JSON.parse(localStorage.getItem("roomOrder")) !== null
+            ? JSON.parse(localStorage.getItem("roomOrder")).infoId
+            : 0
+        }`
+      );
+      const data = await res.json();
+      return data;
+    };
+    getRoomList()
       .then((data) => {
         dispatch(actions.setRoomList(data));
       })
       .then(() => {
         setIsLoaing(false);
       });
-  }, [promise]);
+  }, [localStorage.getItem("roomOrder")]);
 
   const handlePay = () => {
     if (payWay === "") {
@@ -66,6 +65,7 @@ export default function PaymentInfoMenu() {
             ? JSON.parse(localStorage.getItem("payment"))
             : [];
         let paymentItem = {
+          id: Math.floor(Math.random() * 1000000),
           user: userLogin.name,
           picture: `https://api-sandy-zeta.vercel.app${roomList.picture[0].link}`,
           name: roomList.name,
