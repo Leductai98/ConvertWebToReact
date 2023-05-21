@@ -3,13 +3,24 @@ import { PaymentContext } from "./PaymentContext&Reducer";
 import { actions } from "./PaymentContext&Reducer";
 import Flatpickr from "react-flatpickr";
 import { Vietnamese } from "flatpickr/dist/l10n/vn.js";
+import { useBodyScrollLock } from "../../Component";
 export default function PaymentComfirm() {
   const data = JSON.parse(localStorage.getItem("roomOrder"));
-
+  const [isLocked, toggle] = useBodyScrollLock();
   let today = new Date().toISOString().slice(0, 10);
   const [state, dispatch] = useContext(PaymentContext);
 
-  const { dayStart, dayEnd, guestMenu, totalPrice, payWay } = state;
+  const {
+    dayStart,
+    dayEnd,
+    guestMenu,
+    totalPrice,
+    payWay,
+    cardNumber,
+    cardName,
+    cardDate,
+    cardCVV,
+  } = state;
   useEffect(() => {
     dispatch(
       actions.setGuestMax(
@@ -164,12 +175,15 @@ export default function PaymentComfirm() {
               </div>
             </div>
             <div className="item-eidt">
-              <label htmlFor="guest-menu-input">Chỉnh sửa</label>
+              <label htmlFor="guest-menu-input" onClick={toggle}>
+                Chỉnh sửa
+              </label>
               <div className="guest-wrap">
                 <input type="checkbox" name="" id="guest-menu-input" />
                 <label
                   className="guest-menu-overlay"
                   htmlFor="guest-menu-input"
+                  onClick={toggle}
                 />
                 <div className="guest-menu">
                   <div className="guest-menu-header">Khách</div>
@@ -366,6 +380,7 @@ export default function PaymentComfirm() {
                     <label
                       htmlFor="guest-menu-input"
                       className="guest-menu-close"
+                      onClick={toggle}
                     >
                       Lưu lại
                     </label>
@@ -443,19 +458,164 @@ export default function PaymentComfirm() {
           <div className="payment-by-text">Thẻ tín dụng</div>
           <div className="payment-by-number">
             <input
-              type="number"
+              type="tel"
               name=""
-              id=""
+              id="card-number"
+              value={cardNumber}
+              maxLength={19}
               placeholder=" "
+              onFocus={(e) => {
+                e.target.placeholder = "0000 0000 0000 0000";
+              }}
+              onBlur={(e) => {
+                e.target.placeholder = " ";
+              }}
+              onKeyDown={(e) => {
+                if (
+                  e.key.charCodeAt(0) < 48 ||
+                  (e.key.charCodeAt(0) > 57 && e.key.charCodeAt(0) != 66)
+                ) {
+                  e.preventDefault();
+                }
+              }}
               onChange={(e) => {
-                dispatch(
-                  actions.setCard(
-                    Number(e.target.value) === 123456 ? true : false
-                  )
-                );
+                let result = e.target.value.split("");
+
+                if (result.length >= 4) {
+                  if (!result.includes(" ")) result.splice(4, 0, " ");
+                }
+                if (result.length >= 9) {
+                  result = result.filter((item) => item != " ");
+                  result.splice(4, 0, " ");
+                  result.splice(9, 0, " ");
+                }
+                if (result.length >= 14) {
+                  result = result.filter((item) => item != " ");
+                  result.splice(4, 0, " ");
+                  result.splice(9, 0, " ");
+                  result.splice(14, 0, " ");
+                }
+                if (result.length > 19) {
+                  return;
+                }
+                if (result.length == 15) {
+                  result.splice(result.length - 1, 1);
+                }
+                if (result.length == 10) {
+                  result.splice(result.length - 1, 1);
+                }
+                if (result.length == 5) {
+                  result.splice(result.length - 1, 1);
+                }
+                dispatch(actions.setCardNumber(result.join("")));
               }}
             />
-            <div className="card-number">Số thẻ</div>
+            <label htmlFor="card-number" className="card-number">
+              Số thẻ
+            </label>
+            <div className="card-border"></div>
+          </div>
+          <div className="payment-by-number">
+            <input
+              type="tel"
+              name=""
+              id="card-name"
+              value={cardName}
+              maxLength={19}
+              placeholder=" "
+              onFocus={(e) => {
+                e.target.placeholder = "NGUYEN VAN A";
+              }}
+              onBlur={(e) => {
+                e.target.placeholder = " ";
+              }}
+              onChange={(e) => {
+                dispatch(actions.setCardName(e.target.value));
+              }}
+            />
+            <label htmlFor="card-name" className="card-number">
+              Tên
+            </label>{" "}
+            <div className="card-border"></div>
+          </div>
+          <div className="card-ex-cvv">
+            <div className="payment-by-number">
+              <input
+                type="text"
+                name=""
+                id="card-date"
+                value={cardDate}
+                maxLength={19}
+                placeholder=" "
+                onFocus={(e) => {
+                  e.target.placeholder = "TT/NN";
+                }}
+                onBlur={(e) => {
+                  e.target.placeholder = " ";
+                }}
+                onKeyDown={(e) => {
+                  if (
+                    e.key.charCodeAt(0) < 48 ||
+                    (e.key.charCodeAt(0) > 57 && e.key.charCodeAt(0) != 66)
+                  ) {
+                    e.preventDefault();
+                  }
+                }}
+                onChange={(e) => {
+                  let result = e.target.value.split("");
+                  if (result.length < 2 && result.length != 0) {
+                    if (result[0] != "0" && result[0] != "1") {
+                      result.splice(0, 0, "0");
+                    }
+                  }
+                  if (result.length >= 3) {
+                    if (!result.includes("/")) result.splice(2, 0, "/");
+                  }
+                  if (result.length > 5) return;
+                  if (result.length == 3) {
+                    result.pop();
+                  }
+                  dispatch(actions.setCardDate(result.join("")));
+                }}
+              />
+              <label htmlFor="card-date" className="card-number">
+                Ngày hết hạn
+              </label>{" "}
+              <div className="card-border-half"></div>
+            </div>
+            <div className="payment-by-number">
+              <input
+                type="tel"
+                name=""
+                id="card-cvv"
+                value={cardCVV}
+                maxLength={19}
+                placeholder=" "
+                onFocus={(e) => {
+                  e.target.placeholder = "123";
+                }}
+                onBlur={(e) => {
+                  e.target.placeholder = " ";
+                }}
+                onKeyDown={(e) => {
+                  if (
+                    e.key.charCodeAt(0) < 48 ||
+                    (e.key.charCodeAt(0) > 57 && e.key.charCodeAt(0) != 66)
+                  ) {
+                    e.preventDefault();
+                  }
+                }}
+                onChange={(e) => {
+                  let result = e.target.value.split("");
+                  if (result.length > 3) return;
+                  dispatch(actions.setCardCVV(result.join("")));
+                }}
+              />
+              <label htmlFor="card-cvv" className="card-number">
+                CVV
+              </label>{" "}
+              <div className="card-border-half-two"></div>
+            </div>
           </div>
         </div>
       </div>

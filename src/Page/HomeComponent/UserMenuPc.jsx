@@ -19,6 +19,9 @@ export default function UserMenuPc({
       />
       <div
         className={`user__menu ${userMenuDisplay ? "user__display-flex" : ""}`}
+        onClick={() => {
+          onUserMenuDisplay();
+        }}
       >
         {userLogin !== null ? (
           <>
@@ -79,12 +82,13 @@ export default function UserMenuPc({
             >
               Đăng ký
             </NavLink>
-            <div
+            <NavLink
+              to="/about"
               className="user__menu-become-host"
-              style={{ cursor: "default" }}
+              
             >
-              Cho thuê chỗ ở
-            </div>
+              Về chúng tôi
+            </NavLink>
             <NavLink
               to="/help"
               style={{ color: "inherit", textDecoration: "none" }}

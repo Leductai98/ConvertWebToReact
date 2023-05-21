@@ -16,6 +16,10 @@ import {
   SET__GUEST__MAX,
   SET__BABY__MAX,
   SET__PET__MAX,
+  SET__CARD__NUMBER,
+  SET__CARD__NAME,
+  SET__CARD__DATE,
+  SET__CARD__CVV,
 } from "./PaymentConstant";
 
 export const setUserLogin = (value) => {
@@ -75,4 +79,17 @@ export const setToast = (array) => {
 };
 export const setToastRemoving = (value) => {
   return { type: SET__TOAST__REMOVING, value };
+};
+
+export const setCardNumber = (value) => {
+  return { type: SET__CARD__NUMBER, value };
+};
+export const setCardName = (value) => {
+  return { type: SET__CARD__NAME, value };
+};
+export const setCardDate = (value) => {
+  return { type: SET__CARD__DATE, value };
+};
+export const setCardCVV = (value) => {
+  return { type: SET__CARD__CVV, value };
 };

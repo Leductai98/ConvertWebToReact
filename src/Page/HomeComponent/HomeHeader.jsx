@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { HomeContext } from "./HomeContext&Reducer";
 import { actions } from "./HomeContext&Reducer";
-import { NavLink } from "react-router-dom";
+import { NavLink, useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "flatpickr/dist/themes/material_blue.css";
 import Flatpickr, {
@@ -24,7 +24,7 @@ const promise = getLocation();
 export default function HomeHeader({ filterInfo, setFilterInfo }) {
   document.title = "Nhà nghỉ dưỡng & Căn hộ cho thuê - Tai";
   const [state, dispatch] = useContext(HomeContext);
-
+  const [searchParams, setSearchParams] = useSearchParams();
   const { roomList, guestMenu, dayStart, dayEnd, roomListAfterFilter } = state;
   const {
     guestAdultChildMax,
@@ -486,18 +486,8 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
             </div>
           </div>
           <div className="nav__button">
-            <div className="nav__button--host" style={{ cursor: "default" }}>
-              Trở thành chủ nhà
-            </div>
-            <div className="nav__button--languages">
-              <div className="nav__button--languages--button">
-                <img src="/Group (1).png" alt="" />
-              </div>
-              <div className="nav__button--languages--button on-tablet-mobile">
-                <img src="/Group (5).png" alt="" />
-              </div>
-              <div className="nav__button--languages--country">VN</div>
-            </div>
+           
+          
             <div className="user-wrap">
               <div
                 className={`nav__button--user ${
@@ -507,11 +497,18 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
                   handleUserMenuDisplay();
                 }}
               >
-                <div className="nav__button--user--button">
-                  <img src="/Frame (1).png" alt="" />
-                </div>
-                <div className="nav__button--user--icon">
-                  <img src="/Frame.png" alt="" />
+                <div
+                  className="nav__button--user--icon
+                "
+                >
+                  {userLogin !== null ? (
+                    <img
+                      src="/man-with-rainbow-haircut-rainbow-shirt.jpg"
+                      alt=""
+                    />
+                  ) : (
+                    <img src="/user.svg" alt="" />
+                  )}
                 </div>
               </div>
               <UserMenuPc
@@ -568,6 +565,8 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
               autoComplete="off"
               onChange={(e) => {
                 setFilterInfo({ ...filterInfo, location: e.target.value });
+                setSearchParams({ ...searchParams, location: e.target.value });
+                console.log(searchParams.get("location"));
               }}
               onFocus={(e) => {
                 handleLocationDisplay(e);
@@ -593,6 +592,7 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
                     onClick={(e) => {
                       handleLocationDisplay(e);
                       setFilterInfo({ ...filterInfo, location: item.name });
+                      setSearchParams({ location: item.name });
                     }}
                   >
                     <div className="location-item-icon">
@@ -639,6 +639,11 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
                     dispatch(
                       actions.setDayStart(e[0].toLocaleDateString("fr-CA"))
                     );
+                    setSearchParams({
+                      ...searchParams.getAll(searchParams),
+                      dayStart: e[0].toLocaleDateString("fr-CA"),
+                    });
+                    console.log(searchParams);
                     dispatch(
                       actions.setDayEnd(e[1].toLocaleDateString("fr-CA"))
                     );
@@ -889,6 +894,7 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
           onClick={(e) => {
             e.preventDefault();
             handleFilterRoom();
+            console.log(searchParams);
           }}
         >
           Khám phá ngay

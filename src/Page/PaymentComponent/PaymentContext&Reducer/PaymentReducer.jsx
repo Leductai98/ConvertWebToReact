@@ -16,6 +16,10 @@ import {
   SET__GUEST__MAX,
   SET__BABY__MAX,
   SET__PET__MAX,
+  SET__CARD__NUMBER,
+  SET__CARD__NAME,
+  SET__CARD__DATE,
+  SET__CARD__CVV,
 } from "./PaymentConstant";
 
 const paymentInitalState = {
@@ -89,6 +93,10 @@ const paymentInitalState = {
   success: false,
   toast: [],
   toastRemoving: 0,
+  cardNumber: "1234 4567 8910 1112",
+  cardName: "LE DUC TAI",
+  cardDate: "08/24",
+  cardCVV: "123",
 };
 
 const paymentReducer = (state, action) => {
@@ -148,6 +156,14 @@ const paymentReducer = (state, action) => {
       return { ...state, toast: action.array };
     case SET__TOAST__REMOVING:
       return { ...state, toastRemoving: action.value };
+    case SET__CARD__NUMBER:
+      return { ...state, cardNumber: action.value };
+    case SET__CARD__NAME:
+      return { ...state, cardName: action.value };
+    case SET__CARD__DATE:
+      return { ...state, cardDate: action.value };
+    case SET__CARD__CVV:
+      return { ...state, cardCVV: action.value };
   }
 };
 export { paymentInitalState };

@@ -43,7 +43,12 @@ export default function UserMenuMobile({
               </svg>
             </label>
             <div className="avatar">
-              <img src="/Frame (7).png" alt="" />
+              {userLogin !== null ? (
+                <img src="/man-with-rainbow-haircut-rainbow-shirt.jpg" alt="" />
+              ) : (
+                <img src="/userDetail.png" alt="" />
+              )}
+
               <p>{userLogin.name}</p>
             </div>
             <ul className="menu-list">
@@ -102,7 +107,7 @@ export default function UserMenuMobile({
               </svg>
             </label>
             <div className="avatar">
-              <img src="/Frame (7).png" alt="" />
+              <img src="/userDetail.png" alt="" />
               <p>Khách</p>
             </div>
             <ul className="menu-list">

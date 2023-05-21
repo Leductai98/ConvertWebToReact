@@ -5,7 +5,9 @@ import { Link } from "react-router-dom";
 import Flatpickr from "react-flatpickr";
 import rangePlugin from "flatpickr/dist/plugins/rangePlugin";
 import { Vietnamese } from "flatpickr/dist/l10n/vn.js";
+import { useBodyScrollLock } from "../../Component";
 export default function DetailInfo({ data, url }) {
+  const [isLocked, toggle] = useBodyScrollLock();
   let today = new Date().toISOString().slice(0, 10);
   const [state, dispatch] = useContext(DetailContext);
 
@@ -39,7 +41,7 @@ export default function DetailInfo({ data, url }) {
           ...toast,
           {
             id: Math.floor(Math.random() * 1000000),
-            status:false,
+            status: false,
             name: "Vui lòng đăng nhập để thực hiện chức năng này",
           },
         ])
@@ -52,7 +54,7 @@ export default function DetailInfo({ data, url }) {
             ...toast,
             {
               id: Math.floor(Math.random() * 1000000),
-              status:false,
+              status: false,
               name: "Vui lòng chọn ngày nhận và trả phòng",
             },
           ])
@@ -120,14 +122,26 @@ export default function DetailInfo({ data, url }) {
                   nhà hủy, thông tin nhà/phòng cho thuê không chính xác và những
                   vấn đề khác như sự cố trong quá trình nhận phòng.
                 </div>
-                <label htmlFor="cover-input" className="info-cover-more">
+                <label
+                  htmlFor="cover-input"
+                  className="info-cover-more"
+                  onClick={toggle}
+                >
                   Tìm hiểu thêm
                 </label>
               </div>
               <input type="checkbox" id="cover-input" />
-              <label htmlFor="cover-input" className="info-cover-overlay" />
+              <label
+                htmlFor="cover-input"
+                className="info-cover-overlay"
+                onClick={toggle}
+              />
               <div className="info-cover-detail">
-                <label htmlFor="cover-input" className="cover-detail-close">
+                <label
+                  htmlFor="cover-input"
+                  className="cover-detail-close"
+                  onClick={toggle}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width={32}
@@ -250,15 +264,27 @@ export default function DetailInfo({ data, url }) {
                   vào chính sách của chủ nhà. <br />
                   Hãy đọc toàn bộ chính sách hủy của Chủ nhà.
                 </div>
-                <label htmlFor="cancel-input" className="cancel-more">
+                <label
+                  htmlFor="cancel-input"
+                  className="cancel-more"
+                  onClick={toggle}
+                >
                   <span className="text">Hiển thị thêm</span>
                   <img src="./assets/image/Frame (13).png" alt="" />
                 </label>
               </div>
               <input type="checkbox" id="cancel-input" />
-              <label htmlFor="cancel-input" className="info-cover-overlay" />
+              <label
+                htmlFor="cancel-input"
+                className="info-cover-overlay"
+                onClick={toggle}
+              />
               <div className="info-cancel-detail">
-                <label htmlFor="cancel-input" className="cover-detail-close">
+                <label
+                  htmlFor="cancel-input"
+                  className="cover-detail-close"
+                  onClick={toggle}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width={32}
@@ -310,14 +336,26 @@ export default function DetailInfo({ data, url }) {
                   <div className="rules-item">Trả phòng trước 12:00</div>
                   <div className="rules-item">Tối đa {data.guest}</div>
                 </div>
-                <label htmlFor="rules-input" className="rules-more">
+                <label
+                  htmlFor="rules-input"
+                  className="rules-more"
+                  onClick={toggle}
+                >
                   <span>Hiển thị thêm</span>
                   <img src="./assets/image/Frame (13).png" alt="" />
                 </label>
                 <input type="checkbox" id="rules-input" />
-                <label htmlFor="rules-input" className="info-cover-overlay" />
+                <label
+                  htmlFor="rules-input"
+                  className="info-cover-overlay"
+                  onClick={toggle}
+                />
                 <div className="info-rules-detail">
-                  <label htmlFor="rules-input" className="cover-detail-close">
+                  <label
+                    htmlFor="rules-input"
+                    className="cover-detail-close"
+                    onClick={toggle}
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width={32}

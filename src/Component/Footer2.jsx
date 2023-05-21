@@ -1,8 +1,8 @@
 import React from "react";
-
+import { useBodyScrollLock } from "./hooks";
 import { Link } from "react-router-dom";
 export default function Footer2() {
- 
+  const [isLocked, toggle] = useBodyScrollLock();
   return (
     <>
       <section className="footer-index">
@@ -20,28 +20,20 @@ export default function Footer2() {
           </div>
           <div className="footer__content--right">
             <div className="footer__content--right--infor">
-              <Link
-                to="/about"
-              
-                className="infor__item"
-              >
+              <Link to="/about" className="infor__item">
                 Về chúng tôi
               </Link>
-              <Link
-                to="/help"
-             
-                className="infor__item"
-              >
+              <Link to="/help" className="infor__item">
                 Trợ giúp
               </Link>
-              <Link
-                to="/privacy"
-             
-                className="infor__item"
-              >
+              <Link to="/privacy" className="infor__item">
                 Chính sách riêng tư
               </Link>
-              <label htmlFor="contact-input" className="infor__item">
+              <label
+                htmlFor="contact-input"
+                className="infor__item"
+                onClick={toggle}
+              >
                 Liên hệ
               </label>
             </div>
@@ -89,9 +81,17 @@ export default function Footer2() {
       </section>
       <section className="contact">
         <input type="checkbox" id="contact-input" />
-        <label htmlFor="contact-input" className="info-contact-overlay" />
+        <label
+          htmlFor="contact-input"
+          className="info-contact-overlay"
+          onClick={toggle}
+        />
         <div className="info-contact-detail">
-          <label htmlFor="contact-input" className="cover-detail-close">
+          <label
+            htmlFor="contact-input"
+            className="cover-detail-close"
+            onClick={toggle}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width={32}

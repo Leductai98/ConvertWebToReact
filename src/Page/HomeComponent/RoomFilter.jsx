@@ -5,6 +5,7 @@ import { setRoomListAfterFilter } from "./HomeContext&Reducer/Actions";
 export default function RoomFilter() {
   const [state, dispatch] = useContext(HomeContext);
   const {
+    roomList,
     roomListAfterFilter,
     rangePrice,
     roomStatus,
@@ -18,7 +19,7 @@ export default function RoomFilter() {
     rangePrice;
 
   const handleFilter = () => {
-    let result = roomListAfterFilter;
+    let result = roomList;
     result = result.filter(
       (item) =>
         Number(item.price.split(",").join("")) >= rangePrice.minPrice &&
@@ -54,6 +55,7 @@ export default function RoomFilter() {
         });
       }
     }
+    console.log(result2);
     result2 = result2.filter(
       (item) =>
         parseInt(item.room[0]) >= bedRoomCount &&
@@ -129,7 +131,7 @@ export default function RoomFilter() {
         item.utinity.some((item2) => item2.name === "Hệ thống sưởi")
       );
     }
-    console.log(result3);
+
     dispatch(actions.setRoomListAfterFilter(result3));
   };
   return (
@@ -170,12 +172,24 @@ export default function RoomFilter() {
               <div className="booking-filter-item-price">
                 <div className="range-price">
                   <div
-                    className={`progress ${
+                    className={`progress-home ${
                       minPrice < 500000 || maxPrice > 2000000 ? "disabled" : ""
                     }`}
                     style={{
                       left: `${progressLeft}%`,
                       right: `${progressRight}%`,
+                      borderBottomLeftRadius: `${
+                        progressLeft > 20 ? "0px" : "10px"
+                      }`,
+                      borderTopLeftRadius: `${
+                        progressLeft > 20 ? "0px" : "10px"
+                      }`,
+                      borderBottomRightRadius: `${
+                        progressRight > 20 ? "0px" : "10px"
+                      }`,
+                      borderTopRightRadius: `${
+                        progressRight > 20 ? "0px" : "10px"
+                      }`,
                     }}
                   />
                 </div>

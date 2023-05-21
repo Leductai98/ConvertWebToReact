@@ -15,7 +15,6 @@ export default function SignUpContent({
   onSubmit,
   onSignIn,
 }) {
-  
   return (
     <>
       <Container>
@@ -50,9 +49,7 @@ export default function SignUpContent({
                 >
                   <label htmlFor="new-password">
                     Mật khẩu{" "}
-                    <span>
-                      {error.newPassword ? "Mật khẩu không hợp lệ" : ""}
-                    </span>
+                    <span>{error.newPassword ? "Tối thiểu 6 ký tự" : ""}</span>
                   </label>
                   <div className="input-wrap">
                     <input

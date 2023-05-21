@@ -179,8 +179,8 @@ a:hover {
   position: relative;
 }
 .nav__button--user {
-  width: 100px;
-  height: 52px;
+  width: 50px;
+  height: 50px;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -198,6 +198,19 @@ a:hover {
 }
 .nav__button--user.on-tablet-mobile {
   display: none;
+}
+.nav__button--user--icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+.nav__button--user--icon img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  overflow: hidden;
 }
 .header__des {
   color: white;
@@ -284,7 +297,7 @@ a:hover {
   position: absolute;
   top: 100%;
   left: -5px;
-  min-width: 300px;
+  min-width: 250px;
   background-color: white;
   padding: 20px;
   border-radius: 0 0 10px 10px;
@@ -304,6 +317,9 @@ a:hover {
   flex-direction: column;
   gap: 15px;
   overflow: scroll;
+}
+.location-list::-webkit-scrollbar {
+  display: none;
 }
 .location-item {
   color: var(--text-color);
@@ -461,6 +477,11 @@ a:hover {
   align-items: center;
   position: relative;
   color: var(--text-color);
+}
+.avatar img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
 }
 .avatar p {
   margin: 0;
@@ -798,10 +819,10 @@ body .filter .owl-carousel .owl-stage-outer {
   border-radius: 10px;
   overflow: hidden;
 }
-.progress.disabled {
+.progress-home.disabled {
   opacity: 0;
 }
-.progress {
+.progress-home {
   position: absolute;
   top: 0;
   left: 0;
@@ -1526,8 +1547,8 @@ input[type="number"]::-webkit-inner-spin-button {
   height: fit-content;
   display: none;
   flex-direction: column;
-  gap: 20px;
-  padding: 20px;
+  gap: 0;
+  padding: 10px 0;
   box-shadow: 0 0 5px 1px rgba(209, 207, 207, 0.459);
   border-radius: 10px;
   z-index: 10;
@@ -1540,18 +1561,30 @@ input[type="number"]::-webkit-inner-spin-button {
 .user__menu-become-host,
 .user__menu-help {
   width: auto;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 20px;
+  transition: all 0.1s linear;
+}
+.user__menu-become-host {
+  text-decoration: none;
+  color: inherit;
 }
 .user__menu-login:hover {
   cursor: pointer;
+  background-color: rgba(0, 0, 255, 0.1);
 }
 .user__menu-signup:hover {
   cursor: pointer;
+  background-color: rgba(0, 0, 255, 0.1);
 }
 .user__menu-become-host:hover {
   cursor: pointer;
+  background-color: rgba(0, 0, 255, 0.1);
 }
 .user__menu-help:hover {
   cursor: pointer;
+  background-color: rgba(0, 0, 255, 0.1);
 }
 .user__menu-login {
   font-weight: 600;
@@ -1559,15 +1592,7 @@ input[type="number"]::-webkit-inner-spin-button {
 .user__menu-signup {
   position: relative;
 }
-.user__menu-signup::after {
-  content: "";
-  width: 240px;
-  height: 1px;
-  background-color: var(--border-bottom-color);
-  position: absolute;
-  top: calc(100% + 10px);
-  left: -20px;
-}
+
 .user__overlay {
   position: fixed;
   top: 0;

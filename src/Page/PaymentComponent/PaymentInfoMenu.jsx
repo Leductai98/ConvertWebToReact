@@ -15,6 +15,10 @@ export default function PaymentInfoMenu() {
     card,
     toast,
     success,
+    cardNumber,
+    cardName,
+    cardDate,
+    cardCVV,
   } = state;
   useEffect(() => {
     const getRoomList = async () => {
@@ -49,13 +53,18 @@ export default function PaymentInfoMenu() {
         ])
       );
     } else {
-      if (!card) {
+      if (
+        cardName != "LE DUC TAI" ||
+        cardNumber != "1234 4567 8910 1112" ||
+        cardDate != "08/24" ||
+        cardCVV != "123"
+      ) {
         dispatch(
           actions.setToast([
             ...toast,
             {
               id: Math.floor(Math.random() * 1000000),
-              name: "Nhập số thẻ: 123456",
+              name: "Thông tin thẻ không đúng",
             },
           ])
         );
