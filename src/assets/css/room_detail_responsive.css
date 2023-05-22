@@ -66,6 +66,15 @@
   .picture-small {
     height: 141px;
   }
+  .share__menu-wrap {
+    left: 0 !important;
+    right: 0 !important;
+    top: 5%;
+    bottom: 0;
+  }
+.share__menu--info--picture img{
+  width: 100px !important;
+}
   /*mobile-user-menu*/
 }
 @media (max-width: 991px) {
@@ -98,4 +107,25 @@
   .picture-small {
     height: 191px;
   }
+  .share__menu-wrap {
+    left: 20%;
+    right: 20%;
+    height: unset !important;
+  }
+  .share__menu {
+    padding: 20px !important;
+    padding-top: 40px !important;
+  }
+  .share__menu--way--item {
+    width: 200px;
+    height: 60px;
+  }
+}
+@media (max-width: 1024px) {
+  .share__menu-wrap {
+    left: 20%;
+    right: 20%;
+    height: fit-content !;
+  }
+  
 }

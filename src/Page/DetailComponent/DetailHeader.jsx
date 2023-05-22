@@ -1,5 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { DetailContext } from "./DetailContext&Reducer";
+import { useBodyScrollLock } from "../../Component";
 import { actions } from "./DetailContext&Reducer";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -8,6 +10,7 @@ export default function DetailHeader({ data }) {
   const [state, dispatch] = useContext(DetailContext);
   const { userLogin, toast, toastSuccess } = state;
   const [favorite, setFavorite] = useState(false);
+  const [isBlocked, toggle] = useBodyScrollLock();
   let favoriteArr =
     localStorage.getItem("favorite") != null
       ? JSON.parse(localStorage.getItem("favorite"))
@@ -129,15 +132,15 @@ export default function DetailHeader({ data }) {
             lg={1}
             className="d-flex align-items-end justify-content-end"
           >
-            <div className="share">
+            <label
+              htmlFor="share-checkbox"
+              className="share"
+              onClick={(e) => {
+                toggle();
+              }}
+            >
               <div className="share-icon">
-                <svg
-                  onMouseDown={(e) => {
-                    e.target.parentElement.parentElement.style = "scale:0.95";
-                  }}
-                  onMouseUp={(e) => {
-                    e.target.parentElement.parentElement.style = "scale:1";
-                  }}
+                <svg             
                   viewBox="0 0 32 32"
                   xmlns="http://www.w3.org/2000/svg"
                   aria-hidden="true"
@@ -161,59 +164,167 @@ export default function DetailHeader({ data }) {
               </div>
               <div
                 className="share-text d-none d-md-block"
-                onMouseDown={(e) => {
-                  e.target.parentElement.style = "scale:0.95";
-                }}
-                onMouseUp={(e) => {
-                  e.target.parentElement.style = "scale:1";
-                }}
               >
                 Chia sẻ
               </div>
-            </div>
+            </label>
             <input type="checkbox" name="" id="share-checkbox" />
-            <div className="share__menu--overlay"></div>
-            <div className="share__menu">
-              <div className="share__menu--close">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width={32}
-                  height={32}
-                  fill="currentColor"
-                  className="bi bi-x"
-                  viewBox="0 0 16 16"
+            <label
+              htmlFor="share-checkbox"
+              className="share__menu--overlay"
+              onClick={(e) => {
+                toggle();
+              }}
+            ></label>
+            <div className="share__menu-wrap">
+              <div className="share__menu">
+                <label
+                  htmlFor="share-checkbox"
+                  className="share__menu--close"
+                  onClick={(e) => {
+                    toggle();
+                  }}
                 >
-                  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                </svg>
-              </div>
-              <h4>Chia sẻ nơi lưu trú này</h4>
-              <div className="share__menu--info">
-                <div className="share__menu--info--picture">
-                  <img
-                    src={`https://api-sandy-zeta.vercel.app${data.picture[0].link}`}
-                    alt=""
-                  />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width={32}
+                    height={32}
+                    fill="currentColor"
+                    className="bi bi-x"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                  </svg>
+                </label>
+                <h4>Chia sẻ nơi lưu trú này</h4>
+                <div className="share__menu--info">
+                  <div className="share__menu--info--picture">
+                    <img
+                      src={`https://api-sandy-zeta.vercel.app${data.picture[0].link}`}
+                      alt=""
+                    />
+                  </div>
+                  <div className="share__menu--info--detail">
+                    <div className="share__menu--info--detail--item">
+                      {data.name}
+                    </div>
+                    <div className="share__menu--info--detail--item">
+                      <img src="/Star.png" alt="" />
+                      <p>{data.rate}</p>
+                    </div>
+                    <div className="share__menu--info--detail--item">
+                      <p>{data.room[0]}</p> <p> {data.room[1]} </p>
+                      <p> {data.room[2]} </p>
+                    </div>
+                  </div>
                 </div>
-                <div className="share__menu--info--detail">
-                  <div className="share__menu--info--detail--item">
-                    {data.name}
+                <div className="share__menu--way">
+                  <div
+                    className="share__menu--way--item"
+                    onClick={() => {
+                      window.open(
+                        `https://www.facebook.com/sharer.php?u=${encodeURI(
+                          location.href
+                        )}`,
+                        "",
+                        "width=800,height=1000"
+                      );
+                    }}
+                  >
+                    <div className="share__menu--way--item--picture">
+                      <img src="/facebook.png" alt="" />
+                    </div>
+                    <div className="share__menu--way--item--des">Facebook</div>
                   </div>
-                  <div className="share__menu--info--detail--item">
-                    <img src="/Star.png" alt="" />
-                    <p>{data.rate}</p>
+                  <div
+                    className="share__menu--way--item"
+                    onClick={() => {
+                      window.open(
+                        `https://twitter.com/share?url=${encodeURI(
+                          location.href
+                        )}`,
+                        "",
+                        "width=800,height=1000"
+                      );
+                    }}
+                  >
+                    <div className="share__menu--way--item--picture">
+                      <img src="/twitter.png" alt="" />
+                    </div>
+                    <div className="share__menu--way--item--des">Twitter</div>
                   </div>
-                  <div className="share__menu--info--detail--item">
-                    <p>{data.room[0]}</p> <p> {data.room[1]} </p>
-                    <p> {data.room[2]} </p>
+                  <div
+                    className="share__menu--way--item"
+                    onClick={() => {
+                      window.open(
+                        `https://www.linkedin.com/shareArticle?url=${encodeURI(
+                          "https://build-orcin-nine.vercel.app/detail/8"
+                        )}`,
+                        "",
+                        "width=800,height=1000"
+                      );
+                    }}
+                  >
+                    <div className="share__menu--way--item--picture">
+                      <img src="/linkedin.png" alt="" />
+                    </div>
+                    <div className="share__menu--way--item--des">LinkedIn</div>
                   </div>
-                </div>
-              </div>
-              <div className="share__menu--way">
-                <div className="share__menu--way--item">
-                  <div className="share__menu--way--item--picture">
-                    <img src="/facebook.png" alt="" />
+                  <div
+                    onClick={() => {
+                      window.open(
+                        `https://api.whatsapp.com/send?text=${encodeURI(
+                          data.name
+                        )} ${encodeURI(location.href)}`,
+                        "",
+                        "width=800,height=1000"
+                      );
+                    }}
+                    className="share__menu--way--item"
+                  >
+                    <div className="share__menu--way--item--picture">
+                      <img src="/whatsapp.png" alt="" />
+                    </div>
+                    <div className="share__menu--way--item--des">WhatsApp</div>
+                  </div>{" "}
+                  <div
+                    onClick={() => {
+                      window.open(
+                        `https://pinterest.com/pin/create/bookmarklet/?media=${encodeURI(
+                          `https://api-sandy-zeta.vercel.app${data.picture[0].link}`
+                        )}&url=${encodeURI(
+                          location.href
+                        )}&is_video=[is_video]&description=${encodeURI(
+                          data.name
+                        )}`,
+                        "",
+                        "width=800,height=1000"
+                      );
+                    }}
+                    className="share__menu--way--item"
+                  >
+                    <div className="share__menu--way--item--picture">
+                      <img src="/pinterest.png" alt="" />
+                    </div>
+                    <div className="share__menu--way--item--des">Pinterest</div>
+                  </div>{" "}
+                  <div
+                    onClick={() => {
+                      window.open(
+                        `https://reddit.com/submit?url=${encodeURI(
+                          location.href
+                        )}&title=${encodeURI(data.name)}`,
+                        "",
+                        "width=800,height=1000"
+                      );
+                    }}
+                    className="share__menu--way--item"
+                  >
+                    <div className="share__menu--way--item--picture">
+                      <img src="/reddit.png" alt="" />
+                    </div>
+                    <div className="share__menu--way--item--des">Reddit</div>
                   </div>
-                  <div className="share__menu--way--item--des">Facebook</div>
                 </div>
               </div>
             </div>
@@ -230,12 +341,7 @@ export default function DetailHeader({ data }) {
                 style={{ color: "none" }}
               >
                 <svg
-                  onMouseDown={(e) => {
-                    e.target.parentElement.parentElement.style = "scale:0.95";
-                  }}
-                  onMouseUp={(e) => {
-                    e.target.parentElement.parentElement.style = "scale:1";
-                  }}
+                 
                   viewBox="0 0 32 32"
                   xmlns="http://www.w3.org/2000/svg"
                   aria-hidden="true"
@@ -256,12 +362,7 @@ export default function DetailHeader({ data }) {
               </div>
               <div
                 className="save-text d-none d-md-block"
-                onMouseDown={(e) => {
-                  e.target.parentElement.style = "scale:0.95";
-                }}
-                onMouseUp={(e) => {
-                  e.target.parentElement.style = "scale:1";
-                }}
+             
               >
                 Lưu
               </div>
