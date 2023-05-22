@@ -9,7 +9,7 @@ export default function DetailComment({ data, url }) {
         <div className="info-rating">
           <div className="rating-header">
             <div className="rating-header-icon">
-              <img src="/Star (1).png" alt="" />
+              <img src="/star (3).png" alt="" />
             </div>
             <div className="rating-header-des">{data.rate}</div>
           </div>

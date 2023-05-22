@@ -1354,7 +1354,6 @@ input[type="number"]::-webkit-inner-spin-button {
   margin-bottom: 0;
 }
 .booking__room--list--item--rate img {
-  aspect-ratio: 1.1;
   width: 15px;
 }
 .booking__room--list--item--name {
@@ -2078,4 +2077,7 @@ div.guest-pet-mobile.active {
 }
 #input-start-end::placeholder {
   color: var(--text-color);
+}
+.no-room{
+  font-size: 30px;
 }

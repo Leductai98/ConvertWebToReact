@@ -1,9 +1,11 @@
 import React, { useContext } from "react";
+import { useParams, useSearchParams } from "react-router-dom";
 import { HomeContext } from "./HomeContext&Reducer";
 import { actions } from "./HomeContext&Reducer";
 import { setRoomListAfterFilter } from "./HomeContext&Reducer/Actions";
 import { useBodyScrollLock } from "../../Component";
 export default function RoomFilter() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [state, dispatch] = useContext(HomeContext);
   const [isLocked, toggle] = useBodyScrollLock();
   const {
@@ -21,7 +23,7 @@ export default function RoomFilter() {
     rangePrice;
 
   const handleFilter = () => {
-    let result = roomList;
+    let result = roomListAfterFilter;
     result = result.filter(
       (item) =>
         Number(item.price.split(",").join("")) >= rangePrice.minPrice &&
@@ -57,7 +59,6 @@ export default function RoomFilter() {
         });
       }
     }
-    console.log(result2);
     result2 = result2.filter(
       (item) =>
         parseInt(item.room[0]) >= bedRoomCount &&
@@ -133,8 +134,54 @@ export default function RoomFilter() {
         item.utinity.some((item2) => item2.name === "Hệ thống sưởi")
       );
     }
-
-    dispatch(actions.setRoomListAfterFilter(result3));
+    console.log(searchParams);
+    searchParams.delete(
+      "maxprice",
+      "minprice",
+      "home",
+      "apartment",
+      "guestroom",
+      "hotel",
+      "bedroom",
+      "bed",
+      "bathroom",
+      "entirehouse",
+      "privateroom",
+      "commonroom",
+      "wifi",
+      "washingmachine",
+      "aircondition",
+      "kitchen",
+      "dryer",
+      "heating"
+    );
+    let x = {};
+    for (const [key, value] of searchParams.entries()) {
+      x = { ...x, [key]: value };
+    }
+    console.log(x);
+    setSearchParams({
+      ...x,
+      maxprice: maxPrice,
+      minprice: minPrice,
+      entirehouse: roomStatus.entireHouse,
+      privateroom: roomStatus.privateRoom,
+      commonroom: roomStatus.commonRoom,
+      bedroom: bedRoomCount,
+      bed: bedCount,
+      bathroom: bathRoomCount,
+      home: houseType.home,
+      apartment: houseType.apartment,
+      guestroom: houseType.guestRoom,
+      hotel: houseType.hotel,
+      wifi: things.wifi,
+      washingmachine: things.washingMachine,
+      aircondition: things.airCondition,
+      kitchen: things.kitchen,
+      dryer: things.dryer,
+      heating: things.heating,
+    });
+    dispatch(actions.setRoomListAfterFilterDetail(result3));
   };
   return (
     <div className="booking-filter-wrap">
@@ -1097,6 +1144,7 @@ export default function RoomFilter() {
               e.target.style = "scale:1";
             }}
             onClick={() => {
+              toggle();
               handleFilter();
             }}
           >

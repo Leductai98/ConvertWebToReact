@@ -1,5 +1,6 @@
 export const SET__ROOM__LIST = "set__room__list";
 export const SET__ROOM__LIST__AFTER__FILTER = "set__room__list__after";
+export const SET__ROOM__LIST__AFTER__FILTER__DETAIL = "set__room__list__after__detail";
 export const SET__MINPRICE = "set__minprice";
 export const SET__MAXPRICE = "set__maxprice";
 export const ACTIVE__FILTER__TYPE = "active__filter__type";

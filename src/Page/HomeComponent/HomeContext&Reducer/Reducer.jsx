@@ -17,6 +17,7 @@ import {
   SET__BATHROOM__COUNT,
   SET__THINGS,
   SET__ROOM__LIST__AFTER__FILTER,
+  SET__ROOM__LIST__AFTER__FILTER__DETAIL,
   SET__DEFAULT,
   SET__HOUSE__TYPE,
 } from "./Constant";
@@ -24,6 +25,7 @@ import {
 const initalState = {
   roomList: [],
   roomListAfterFilter: [],
+  roomListAfterFilterDetail: [],
   rangePrice: {
     minLength: 100000,
     minPrice: 500000,
@@ -71,6 +73,8 @@ function reducer(state, action) {
       return { ...state, roomList: action.value };
     case SET__ROOM__LIST__AFTER__FILTER:
       return { ...state, roomListAfterFilter: action.value };
+    case SET__ROOM__LIST__AFTER__FILTER__DETAIL:
+      return { ...state, roomListAfterFilterDetail: action.value };
     case ACTIVE__FILTER__TYPE:
       return {
         ...state,

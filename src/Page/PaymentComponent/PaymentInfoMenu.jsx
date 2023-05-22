@@ -112,7 +112,7 @@ export default function PaymentInfoMenu() {
           <div className="room-type-payment">{roomList.status}</div>
           <div className="room-location-payment">{roomList.location}</div>
           <div className="room-rate-payment">
-            <img src="/Star.jpg" alt="" /> <span>{roomList.rate}</span>
+            <img src="/star (3).png" alt="" /> <span>{roomList.rate}</span>
           </div>
         </div>
       </div>

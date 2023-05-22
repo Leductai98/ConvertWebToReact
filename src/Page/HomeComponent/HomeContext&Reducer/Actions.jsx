@@ -1,6 +1,7 @@
 import {
   SET__ROOM__LIST,
   SET__ROOM__LIST__AFTER__FILTER,
+  SET__ROOM__LIST__AFTER__FILTER__DETAIL,
   SET__MAXPRICE,
   SET__MINPRICE,
   ACTIVE__FILTER__TYPE,
@@ -25,6 +26,9 @@ export const setRoomList = (value) => {
 };
 export const setRoomListAfterFilter = (value) => {
   return { type: SET__ROOM__LIST__AFTER__FILTER, value };
+};
+export const setRoomListAfterFilterDetail = (value) => {
+  return { type: SET__ROOM__LIST__AFTER__FILTER__DETAIL, value };
 };
 export const setMaxPrice = (value) => {
   return { type: SET__MAXPRICE, value };

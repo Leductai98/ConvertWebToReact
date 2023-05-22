@@ -15,6 +15,7 @@ export default function Room() {
   const {
     roomList,
     roomListAfterFilter,
+    roomListAfterFilterDetail,
     FilterTypeActive,
     roomListAfterFilterLength,
     numberRoomRender,
@@ -23,13 +24,14 @@ export default function Room() {
     promise.then((data) => {
       dispatch(actions.setRoomList(data));
       dispatch(actions.setRoomListAfterFilter(data));
+      dispatch(actions.setRoomListAfterFilterDetail(data));
     });
   }, []);
   let list = [];
   if (FilterTypeActive.name == "Tất cả nhà") {
-    list = roomListAfterFilter;
+    list = roomListAfterFilterDetail;
   } else {
-    list = roomListAfterFilter.filter(
+    list = roomListAfterFilterDetail.filter(
       (item) => item.type == FilterTypeActive.name
     );
   }
@@ -54,9 +56,13 @@ export default function Room() {
       <RoomFilter />
       <div className="booking__room--list grid">
         <div className="row-index">
-          {arrayRender.map((item) => (
-            <RoomItem key={item.id} data={item} urlImage={urlImage} />
-          ))}
+          {arrayRender.length === 0 ? (
+            <div className="no-room">Không có phòng phù hợp</div>
+          ) : (
+            arrayRender.map((item) => (
+              <RoomItem key={item.id} data={item} urlImage={urlImage} />
+            ))
+          )}
         </div>
       </div>
     </section>

@@ -33,7 +33,7 @@ export default function RoomItem({ data, urlImage }) {
         className="list--item-wrap"
       >
         <div className="booking__room--list--item--rate">
-          <img src="Star.png" alt="" />
+          <img src="/star (3).png" alt="" />
           <p>{data.rate}</p>
         </div>
         <div className="booking__room--list--item--name">{data.name}</div>

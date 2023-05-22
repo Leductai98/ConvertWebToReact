@@ -108,9 +108,9 @@ export default function DetailHeader({ data }) {
             lg={1}
             className=" d-flex align-items-end justify-content-start"
           >
-            <div className="rating d-flex gap-2 align-items-end justify-content-start">
+            <div className="rating d-flex gap-2 align-items-center justify-content-start">
               <div className="rating-icon d-flex align-items-center">
-                <img src="/Star.jpg" alt="" />
+                <img src="/star (3).png" alt="" />
               </div>
               <div className="rating-text">{data.rate}</div>
             </div>
@@ -119,7 +119,7 @@ export default function DetailHeader({ data }) {
             xs={0}
             md={7}
             lg={9}
-            className=" d-none d-md-block d-flex align-items-end justify-content-start"
+            className=" d-none d-md-block d-flex align-items-center justify-content-start"
           >
             <div className="info-status">
               <span className="house">{data.status} |</span>
@@ -130,7 +130,7 @@ export default function DetailHeader({ data }) {
             xs={1}
             md={2}
             lg={1}
-            className="d-flex align-items-end justify-content-end"
+            className="d-flex align-items-center justify-content-end"
           >
             <label
               htmlFor="share-checkbox"
@@ -140,7 +140,7 @@ export default function DetailHeader({ data }) {
               }}
             >
               <div className="share-icon">
-                <svg             
+                <svg
                   viewBox="0 0 32 32"
                   xmlns="http://www.w3.org/2000/svg"
                   aria-hidden="true"
@@ -162,11 +162,7 @@ export default function DetailHeader({ data }) {
                   </g>
                 </svg>
               </div>
-              <div
-                className="share-text d-none d-md-block"
-              >
-                Chia sẻ
-              </div>
+              <div className="share-text d-none d-md-block">Chia sẻ</div>
             </label>
             <input type="checkbox" name="" id="share-checkbox" />
             <label
@@ -341,7 +337,6 @@ export default function DetailHeader({ data }) {
                 style={{ color: "none" }}
               >
                 <svg
-                 
                   viewBox="0 0 32 32"
                   xmlns="http://www.w3.org/2000/svg"
                   aria-hidden="true"
@@ -360,12 +355,7 @@ export default function DetailHeader({ data }) {
                   <path d="m16 28c7-4.733 14-10 14-17 0-1.792-.683-3.583-2.05-4.95-1.367-1.366-3.158-2.05-4.95-2.05-1.791 0-3.583.684-4.949 2.05l-2.051 2.051-2.05-2.051c-1.367-1.366-3.158-2.05-4.95-2.05-1.791 0-3.583.684-4.949 2.05-1.367 1.367-2.051 3.158-2.051 4.95 0 7 7 12.267 14 17z" />
                 </svg>
               </div>
-              <div
-                className="save-text d-none d-md-block"
-             
-              >
-                Lưu
-              </div>
+              <div className="save-text d-none d-md-block">Lưu</div>
             </div>
           </Col>
         </Row>

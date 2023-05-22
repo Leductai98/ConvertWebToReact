@@ -122,7 +122,27 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
     result = result.filter(
       (item) => parseInt(item.guest) >= guestAdult + guestChild
     );
+    searchParams.delete(
+      "location",
+      "daystart",
+      "dayend",
+      "guestadult",
+      "guestchild",
+      "guestbaby",
+      "guestpet"
+    );
+    setSearchParams({
+      location: filterInfo.location,
+      daystart: dayStart,
+      dayend: dayEnd,
+      guestadult: guestAdult,
+      guestchild: guestChild,
+      guestbaby: guestBaby,
+      guestpet: guestPet,
+    });
+
     dispatch(actions.setRoomListAfterFilter(result));
+    dispatch(actions.setRoomListAfterFilterDetail(result));
     dispatch(actions.setDefault());
   };
 
@@ -560,8 +580,6 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
               autoComplete="off"
               onChange={(e) => {
                 setFilterInfo({ ...filterInfo, location: e.target.value });
-                setSearchParams({ ...searchParams, location: e.target.value });
-                console.log(searchParams.get("location"));
               }}
               onFocus={(e) => {
                 handleLocationDisplay(e);
@@ -587,7 +605,6 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
                     onClick={(e) => {
                       handleLocationDisplay(e);
                       setFilterInfo({ ...filterInfo, location: item.name });
-                      setSearchParams({ location: item.name });
                     }}
                   >
                     <div className="location-item-icon">
@@ -634,11 +651,7 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
                     dispatch(
                       actions.setDayStart(e[0].toLocaleDateString("fr-CA"))
                     );
-                    setSearchParams({
-                      ...searchParams.getAll(searchParams),
-                      dayStart: e[0].toLocaleDateString("fr-CA"),
-                    });
-                    console.log(searchParams);
+
                     dispatch(
                       actions.setDayEnd(e[1].toLocaleDateString("fr-CA"))
                     );
@@ -895,7 +908,6 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
           onClick={(e) => {
             e.preventDefault();
             handleFilterRoom();
-            console.log(searchParams);
           }}
         >
           Khám phá ngay

@@ -581,7 +581,7 @@ export default function DetailInfo({ data, url }) {
               </div>
               <div className="booking-rate">
                 <div className="booking-rate-icon">
-                  <img src="/Star (2).png" alt="" />
+                  <img src="/star (3).png" alt="" />
                 </div>
                 <div className="booking-rate-des">{data.rate}</div>
               </div>

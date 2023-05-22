@@ -75,7 +75,9 @@ body {
   font-size: 16px;
   line-height: 24px;
   height: 24px;
-  padding-top: 5px;
+}
+.rating-icon img {
+  width: 20px;
 }
 .info-status {
   color: var(--text-color);
@@ -84,18 +86,19 @@ body {
   font-size: 16px;
   line-height: 24px;
   height: 24px;
-  padding-top: 5px;
+  display:flex;
+  align-items: center;
 }
 .share {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: flex-end;
   gap: 10px;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 .share:hover {
-  scale: 0.95;
+  scale: 1.1;
 }
 .share__menu--overlay {
   position: fixed;
@@ -246,19 +249,17 @@ body {
   line-height: 24px;
   display: flex;
   height: 24px;
-  padding-top: 5px;
-  user-select: none;
 }
 .save {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: flex-end;
   gap: 10px;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 .save:hover {
-  scale: 0.95;
+  scale: 1.1;
 }
 .save-icon.active {
   color: rgb(255, 56, 92);
@@ -1037,6 +1038,9 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.booking-rate-icon img{
+  width: 25px;
 }
 .booking-rate-des {
   height: 100%;
