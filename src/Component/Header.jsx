@@ -45,7 +45,7 @@ export default function Header() {
                     <div className="user-icon">
                       {userLogin !== null ? (
                         <img
-                          src="/man-with-rainbow-haircut-rainbow-shirt.jpg"
+                          src="/starscourge-radahn_elden-ring_bandai-namco.jpg"
                           alt=""
                         />
                       ) : (

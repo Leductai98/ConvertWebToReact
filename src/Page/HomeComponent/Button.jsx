@@ -16,8 +16,13 @@ export default function Button() {
     >
       <button
         onClick={() => {
-         
           dispatch(actions.setRoomRender(numberRoomRender + 4));
+        }}
+        onMouseDown={(e) => {
+          e.target.style = "scale:0.95";
+        }}
+        onMouseUp={(e) => {
+          e.target.style = "scale:1";
         }}
       >
         Thêm nữa

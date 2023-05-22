@@ -110,7 +110,17 @@ export default function PaymentComfirm() {
               </div>
             </div>
             <div className="item-eidt">
-              <label htmlFor="date">Chỉnh sửa</label>
+              <label
+                htmlFor="date"
+                onMouseDown={(e) => {
+                  e.target.style = "scale:0.95";
+                }}
+                onMouseUp={(e) => {
+                  e.target.style = "scale:1";
+                }}
+              >
+                Chỉnh sửa
+              </label>
               <Flatpickr
                 options={{
                   locale: Vietnamese,
@@ -175,7 +185,16 @@ export default function PaymentComfirm() {
               </div>
             </div>
             <div className="item-eidt">
-              <label htmlFor="guest-menu-input" onClick={toggle}>
+              <label
+                htmlFor="guest-menu-input"
+                onClick={toggle}
+                onMouseDown={(e) => {
+                  e.target.style = "scale:0.95";
+                }}
+                onMouseUp={(e) => {
+                  e.target.style = "scale:1";
+                }}
+              >
                 Chỉnh sửa
               </label>
               <div className="guest-wrap">

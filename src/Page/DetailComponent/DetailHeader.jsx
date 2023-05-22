@@ -132,11 +132,16 @@ export default function DetailHeader({ data }) {
             <div className="share">
               <div className="share-icon">
                 <svg
+                  onMouseDown={(e) => {
+                    e.target.parentElement.parentElement.style = "scale:0.95";
+                  }}
+                  onMouseUp={(e) => {
+                    e.target.parentElement.parentElement.style = "scale:1";
+                  }}
                   viewBox="0 0 32 32"
                   xmlns="http://www.w3.org/2000/svg"
                   aria-hidden="true"
                   role="presentation"
-                  focusable="false"
                   style={{
                     display: "block",
                     fill: "none",
@@ -154,7 +159,63 @@ export default function DetailHeader({ data }) {
                   </g>
                 </svg>
               </div>
-              <div className="share-text d-none d-md-block">Chia sẻ</div>
+              <div
+                className="share-text d-none d-md-block"
+                onMouseDown={(e) => {
+                  e.target.parentElement.style = "scale:0.95";
+                }}
+                onMouseUp={(e) => {
+                  e.target.parentElement.style = "scale:1";
+                }}
+              >
+                Chia sẻ
+              </div>
+            </div>
+            <input type="checkbox" name="" id="share-checkbox" />
+            <div className="share__menu--overlay"></div>
+            <div className="share__menu">
+              <div className="share__menu--close">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width={32}
+                  height={32}
+                  fill="currentColor"
+                  className="bi bi-x"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                </svg>
+              </div>
+              <h4>Chia sẻ nơi lưu trú này</h4>
+              <div className="share__menu--info">
+                <div className="share__menu--info--picture">
+                  <img
+                    src={`https://api-sandy-zeta.vercel.app${data.picture[0].link}`}
+                    alt=""
+                  />
+                </div>
+                <div className="share__menu--info--detail">
+                  <div className="share__menu--info--detail--item">
+                    {data.name}
+                  </div>
+                  <div className="share__menu--info--detail--item">
+                    <img src="/Star.png" alt="" />
+                    <p>{data.rate}</p>
+                  </div>
+                  <div className="share__menu--info--detail--item">
+                    <p>{data.room[0]}</p> <p> {data.room[1]} </p>
+                    <p> {data.room[2]} </p>
+                  </div>
+                </div>
+              </div>
+              <div className="share__menu--way">
+                <div className="share__menu--way--item">
+                  <div className="share__menu--way--item--picture">
+                    <img src="/facebook.png" alt="" />
+                  </div>
+                  <div className="share__menu--way--item--des">Facebook</div>
+                </div>
+              </div>
             </div>
           </Col>
           <Col
@@ -169,6 +230,12 @@ export default function DetailHeader({ data }) {
                 style={{ color: "none" }}
               >
                 <svg
+                  onMouseDown={(e) => {
+                    e.target.parentElement.parentElement.style = "scale:0.95";
+                  }}
+                  onMouseUp={(e) => {
+                    e.target.parentElement.parentElement.style = "scale:1";
+                  }}
                   viewBox="0 0 32 32"
                   xmlns="http://www.w3.org/2000/svg"
                   aria-hidden="true"
@@ -187,7 +254,17 @@ export default function DetailHeader({ data }) {
                   <path d="m16 28c7-4.733 14-10 14-17 0-1.792-.683-3.583-2.05-4.95-1.367-1.366-3.158-2.05-4.95-2.05-1.791 0-3.583.684-4.949 2.05l-2.051 2.051-2.05-2.051c-1.367-1.366-3.158-2.05-4.95-2.05-1.791 0-3.583.684-4.949 2.05-1.367 1.367-2.051 3.158-2.051 4.95 0 7 7 12.267 14 17z" />
                 </svg>
               </div>
-              <div className="save-text d-none d-md-block">Lưu</div>
+              <div
+                className="save-text d-none d-md-block"
+                onMouseDown={(e) => {
+                  e.target.parentElement.style = "scale:0.95";
+                }}
+                onMouseUp={(e) => {
+                  e.target.parentElement.style = "scale:1";
+                }}
+              >
+                Lưu
+              </div>
             </div>
           </Col>
         </Row>

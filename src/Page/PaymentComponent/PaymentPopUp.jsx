@@ -15,10 +15,28 @@ export default function PaymentPopUp() {
           <div className="success-content">Thanh toán thành công</div>
         </div>
         <div className="success-nav">
-          <Link to="/" className="back">
+          <Link
+            to="/"
+            className="back"
+            onMouseDown={(e) => {
+              e.target.style = "scale:0.95";
+            }}
+            onMouseUp={(e) => {
+              e.target.style = "scale:1";
+            }}
+          >
             Trở về trang chủ
           </Link>
-          <Link to="/manage" className="manage">
+          <Link
+            to="/manage"
+            className="manage"
+            onMouseDown={(e) => {
+              e.target.style = "scale:0.95";
+            }}
+            onMouseUp={(e) => {
+              e.target.style = "scale:1";
+            }}
+          >
             Đến trang quản lý
           </Link>
         </div>

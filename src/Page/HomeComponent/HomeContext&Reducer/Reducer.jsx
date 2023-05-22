@@ -158,7 +158,7 @@ function reducer(state, action) {
     case SET__HOUSE__TYPE:
       return {
         ...state,
-        houseType: { ...houseType, [action.name]: [action.value] },
+        houseType: { ...state.houseType, [action.name]: action.value },
       };
     case SET__THINGS:
       return {
@@ -186,6 +186,12 @@ function reducer(state, action) {
         bedRoomCount: 0,
         bedCount: 0,
         bathRoomCount: 0,
+        houseType: {
+          home: false,
+          apartment: false,
+          guestRoom: false,
+          hotel: false,
+        },
         things: {
           wifi: false,
           washingMachine: false,

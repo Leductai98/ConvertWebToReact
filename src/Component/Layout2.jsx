@@ -1,9 +1,9 @@
 import React from "react";
 
 import "../assets/css/swiper_index.css";
-import "../grid_system.css";
-import "../style.css";
-import "../responsive.css";
+import "../assets/css/grid_system.css";
+import "../assets/css/style.css";
+import "../assets/css/responsive.css";
 import { Outlet } from "react-router-dom";
 import Footer2 from "./Footer2";
 import ScrollToTop from "./ScrollToTop";

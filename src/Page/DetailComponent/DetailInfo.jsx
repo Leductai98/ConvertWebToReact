@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useRef } from "react";
 import { DetailContext } from "./DetailContext&Reducer";
 import { actions } from "./DetailContext&Reducer";
 import { Link } from "react-router-dom";
@@ -9,10 +9,9 @@ import { useBodyScrollLock } from "../../Component";
 export default function DetailInfo({ data, url }) {
   const [isLocked, toggle] = useBodyScrollLock();
   let today = new Date().toISOString().slice(0, 10);
+  const calendarRef = useRef();
   const [state, dispatch] = useContext(DetailContext);
-
   const { userLogin, guestMenu, dayStart, dayEnd, toast } = state;
-
   const {
     guestAdultChildMax,
     guestAdult,
@@ -26,7 +25,7 @@ export default function DetailInfo({ data, url }) {
     dispatch(actions.setGuestMax(parseInt(data.guest)));
   }, [data]);
   useEffect(() => {
-    let end = document.getElementById("out");
+    let end = calendarRef.current;
     end.value = dayEnd;
   }, [dayEnd]);
   useEffect(() => {
@@ -562,6 +561,12 @@ export default function DetailInfo({ data, url }) {
                   onClick={(e) => {
                     handleBookingRoom(e);
                   }}
+                  onMouseDown={(e) => {
+                    e.target.style = "scale:0.95";
+                  }}
+                  onMouseUp={(e) => {
+                    e.target.style = "scale:1";
+                  }}
                 >
                   <button className="booking-mobile-btn">Đặt phòng</button>
                 </Link>
@@ -629,6 +634,7 @@ export default function DetailInfo({ data, url }) {
                     <span className="leave">Trả</span> phòng
                   </label>
                   <input
+                    ref={calendarRef}
                     type="text"
                     name="date"
                     id="out"
@@ -867,6 +873,12 @@ export default function DetailInfo({ data, url }) {
                 to="/payment"
                 onClick={(e) => {
                   handleBookingRoom(e);
+                }}
+                onMouseDown={(e) => {
+                  e.target.style = "scale:0.95";
+                }}
+                onMouseUp={(e) => {
+                  e.target.style = "scale:1";
                 }}
               >
                 <button className="order-room">Đặt phòng</button>

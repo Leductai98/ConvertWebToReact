@@ -44,7 +44,10 @@ export default function UserMenuMobile({
             </label>
             <div className="avatar">
               {userLogin !== null ? (
-                <img src="/man-with-rainbow-haircut-rainbow-shirt.jpg" alt="" />
+                <img
+                  src="/starscourge-radahn_elden-ring_bandai-namco.jpg"
+                  alt=""
+                />
               ) : (
                 <img src="/userDetail.png" alt="" />
               )}

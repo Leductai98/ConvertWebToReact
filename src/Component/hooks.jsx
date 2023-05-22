@@ -9,7 +9,6 @@ const useBodyScrollLock = () => {
   }, [isLocked, bodyStyle]);
   const toggle = () => {
     setIsLocked(!isLocked);
-    console.log(123);
   };
   return [isLocked, toggle];
 };

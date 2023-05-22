@@ -486,8 +486,6 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
             </div>
           </div>
           <div className="nav__button">
-           
-          
             <div className="user-wrap">
               <div
                 className={`nav__button--user ${
@@ -497,17 +495,14 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
                   handleUserMenuDisplay();
                 }}
               >
-                <div
-                  className="nav__button--user--icon
-                "
-                >
+                <div className="nav__button--user--icon">
                   {userLogin !== null ? (
                     <img
-                      src="/man-with-rainbow-haircut-rainbow-shirt.jpg"
+                      src="/starscourge-radahn_elden-ring_bandai-namco.jpg"
                       alt=""
                     />
                   ) : (
-                    <img src="/user.svg" alt="" />
+                    <img src="/user.png" alt="" />
                   )}
                 </div>
               </div>
@@ -890,7 +885,13 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
           </div>
         </div>
         <button
-          className="btn header__search--button"
+          className="header__search--button"
+          onMouseDown={(e) => {
+            e.target.style = "scale:0.95";
+          }}
+          onMouseUp={(e) => {
+            e.target.style = "scale:1";
+          }}
           onClick={(e) => {
             e.preventDefault();
             handleFilterRoom();

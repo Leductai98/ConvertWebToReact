@@ -2,8 +2,10 @@ import React, { useContext } from "react";
 import { HomeContext } from "./HomeContext&Reducer";
 import { actions } from "./HomeContext&Reducer";
 import { setRoomListAfterFilter } from "./HomeContext&Reducer/Actions";
+import { useBodyScrollLock } from "../../Component";
 export default function RoomFilter() {
   const [state, dispatch] = useContext(HomeContext);
+  const [isLocked, toggle] = useBodyScrollLock();
   const {
     roomList,
     roomListAfterFilter,
@@ -139,20 +141,29 @@ export default function RoomFilter() {
       <label
         htmlFor="input-booking-room-filter"
         className="booking__room--filter"
+        onClick={() => {
+          toggle();
+        }}
       >
-        <img src="Vector (5).png" alt="" />
+        <img src="/settings-sliders.png" alt="" />
         <p>Bộ lọc</p>
       </label>
       <input type="checkbox" name="" id="input-booking-room-filter" />
       <label
         htmlFor="input-booking-room-filter"
         className="booking-filter-overlay"
+        onClick={() => {
+          toggle();
+        }}
       />
       <div className="booking-filter-menu-wrap">
         <div className="booking-filter-menu">
           <label
             htmlFor="input-booking-room-filter"
             className="cover-detail-close"
+            onClick={() => {
+              toggle();
+            }}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -1079,12 +1090,32 @@ export default function RoomFilter() {
           <label
             htmlFor="input-booking-room-filter"
             className="booking-filter-button"
+            onMouseDown={(e) => {
+              e.target.style = "scale:0.95";
+            }}
+            onMouseUp={(e) => {
+              e.target.style = "scale:1";
+            }}
             onClick={() => {
               handleFilter();
             }}
           >
             Tìm kiếm
           </label>
+          <div
+            className="booking-filter-delete-button"
+            onClick={() => {
+              dispatch(actions.setDefault());
+            }}
+            onMouseDown={(e) => {
+              e.target.style = "scale:0.95";
+            }}
+            onMouseUp={(e) => {
+              e.target.style = "scale:1";
+            }}
+          >
+            Xóa tất cả
+          </div>
         </div>
       </div>
     </div>

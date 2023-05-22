@@ -35,8 +35,8 @@ body {
   justify-content: space-around;
   width: 50px;
   height: 50px;
-  border-radius: 26px;
-  border: 1px solid var(--text-color);
+  border-radius: 50%;
+
   z-index: 2;
 }
 .user.active {
@@ -47,8 +47,8 @@ body {
   box-shadow: 0 5px 10px #7e7d7d96;
 }
 .user-icon img {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
 }
 .become-host {
@@ -91,6 +91,74 @@ body {
   align-items: flex-end;
   justify-content: flex-end;
   gap: 10px;
+}
+.share__menu--overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: black;
+  z-index: 20;
+}
+.share__menu {
+  position: fixed;
+  top: 20%;
+  bottom: 20%;
+  left: 30%;
+  right: 30%;
+  z-index: 21;
+  background-color: white;
+}
+.share__menu--info {
+  display: flex;
+  gap: 10px;
+}
+.share__menu--info--picture img {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+}
+.share__menu--info--detail {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.share__menu--info--detail--item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+}
+.share__menu--info--detail--item img {
+  width: 15px;
+  height: 15px;
+  object-fit: cover;
+}
+.share__menu--info--detail--item p {
+  margin: 0;
+  margin-right: 10px;
+}
+.share__menu--way--item {
+  display: flex;
+  gap: 20px;
+  width: 243px;
+  height: 74px;
+  border: 1px solid var(--border-bottom-color);
+  border-radius: 10px;
+  padding: 20px;
+  align-items: center;
+}
+.share__menu--way--item--des {
+  font-weight: 600;
+}
+.share__menu--way--item--picture {
+  display: flex;
+  align-items: center;
+}
+.share__menu--way--item--picture img {
+  width: 32px;
+  height: 32px;
 }
 .share-text,
 .save-text {
@@ -1171,6 +1239,7 @@ span.guest-pet.active {
   background-color: var(--background-color);
   border: none;
   border-radius: 10px;
+  transition: all 0.1s ease;
 }
 .cost-wrap {
   display: flex;
@@ -1418,13 +1487,13 @@ span.guest-pet.active {
   font-size: 20px;
   width: 150px;
   height: 60px;
+  transition: all 0.1s ease;
 }
 
 /*menu-user*/
 .user-wrap {
   position: relative;
 }
-
 
 .user__menu:hover {
   cursor: default;

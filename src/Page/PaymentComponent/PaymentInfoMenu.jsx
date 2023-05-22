@@ -195,6 +195,12 @@ export default function PaymentInfoMenu() {
         onClick={() => {
           handlePay();
         }}
+        onMouseDown={(e) => {
+          e.target.style = "scale:0.95";
+        }}
+        onMouseUp={(e) => {
+          e.target.style = "scale:1";
+        }}
       >
         <div className="pay-text">Thanh toán</div>
       </div>
