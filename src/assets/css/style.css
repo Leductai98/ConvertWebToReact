@@ -413,7 +413,7 @@ a:hover {
 .header__search--people--placeholder {
   font-weight: 500;
   font-size: 18px;
-  color: #696f8c;
+  color: var(--text-color);
 }
 .header__search--location--input {
   width: 170px;
@@ -1680,7 +1680,7 @@ input[type="number"]::-webkit-inner-spin-button {
 .header__search--people--placeholder-pc div {
   font-weight: 500;
   font-size: 18px;
-  color: #696f8c;
+  color: var(--text-color);
 }
 .header__search--people--placeholder-mobile div {
   display: inline-block;
@@ -2078,6 +2078,6 @@ div.guest-pet-mobile.active {
 #input-start-end::placeholder {
   color: var(--text-color);
 }
-.no-room{
+.no-room {
   font-size: 30px;
 }

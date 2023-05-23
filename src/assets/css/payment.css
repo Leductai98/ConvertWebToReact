@@ -262,6 +262,16 @@ body {
   transition: all 0.2s ease;
   opacity: 0.8;
 }
+.card-number-picture img {
+  width: 60px;
+}
+.card-number-picture {
+  width: fit-content;
+  height: fit-content;
+  position: absolute;
+  right: 10px;
+  top: 0;
+}
 .card-ex-cvv {
   display: flex;
 }

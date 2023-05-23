@@ -4,7 +4,7 @@ import { actions } from "./HomeContext&Reducer";
 export default function Button() {
   const [state, dispatch] = useContext(HomeContext);
   const { numberRoomRender, roomListAfterFilterLength } = state;
-
+  console.log(numberRoomRender,roomListAfterFilterLength)
   return (
     <div
       className="btn__moreroom"

@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -13,8 +14,9 @@ const getFilter = async () => {
 };
 const promise = getFilter();
 export default function Filter() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [state, dispatch] = useContext(HomeContext);
-  const { FilterTypeActive } = state;
+  const { activeFilterType } = state;
   const [filterList, setFilterList] = useState([]);
   useEffect(() => {
     promise.then((data) => {
@@ -51,11 +53,14 @@ export default function Filter() {
           <SwiperSlide
             key={item.id}
             className={`filter__item ${
-              FilterTypeActive.id === item.id ? "active" : ""
+              activeFilterType === item.name ? "active" : ""
             }`}
             data-type={item.name}
             onClick={() => {
-              dispatch(actions.activeFilterType(item.id, item.name));
+              searchParams.delete("activefiltertype");
+              searchParams.append("activefiltertype", item.name);
+              setSearchParams(searchParams);
+              dispatch(actions.setActiveFilterType(item.name));
             }}
           >
             <div className="filter__item--picture">

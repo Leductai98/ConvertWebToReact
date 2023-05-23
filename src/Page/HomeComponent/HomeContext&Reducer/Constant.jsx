@@ -1,6 +1,7 @@
 export const SET__ROOM__LIST = "set__room__list";
 export const SET__ROOM__LIST__AFTER__FILTER = "set__room__list__after";
-export const SET__ROOM__LIST__AFTER__FILTER__DETAIL = "set__room__list__after__detail";
+export const SET__ROOM__LIST__AFTER__FILTER__DETAIL =
+  "set__room__list__after__detail";
 export const SET__MINPRICE = "set__minprice";
 export const SET__MAXPRICE = "set__maxprice";
 export const ACTIVE__FILTER__TYPE = "active__filter__type";
@@ -18,4 +19,5 @@ export const SET__BED__COUNT = "set__bed__count";
 export const SET__BATHROOM__COUNT = "set__bathroom__count";
 export const SET__THINGS = "set__things";
 export const SET__DEFAULT = "set__default";
-export const SET__HOUSE__TYPE="set__house__type";
+export const SET__HOUSE__TYPE = "set__house__type";
+export const SET__RELOAD__PAGE = "set__relead__page";

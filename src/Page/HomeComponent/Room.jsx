@@ -4,35 +4,28 @@ import { useEffect, useState, useContext } from "react";
 import { HomeContext } from "./HomeContext&Reducer";
 import { actions } from "./HomeContext&Reducer";
 import RoomItem from "./RoomItem";
-const urlImage = `https://api-git-main-leductai98.vercel.app`;
-const getRoom = async () => {
-  const res = await fetch("https://api-sandy-zeta.vercel.app/room-list");
-  return res.json();
-};
-const promise = getRoom();
-export default function Room() {
+
+export default function Room({ urlImage, homeRoomList }) {
   const [state, dispatch] = useContext(HomeContext);
   const {
     roomList,
     roomListAfterFilter,
     roomListAfterFilterDetail,
-    FilterTypeActive,
+    activeFilterType,
     roomListAfterFilterLength,
     numberRoomRender,
   } = state;
   useEffect(() => {
-    promise.then((data) => {
-      dispatch(actions.setRoomList(data));
-      dispatch(actions.setRoomListAfterFilter(data));
-      dispatch(actions.setRoomListAfterFilterDetail(data));
-    });
-  }, []);
+    dispatch(actions.setRoomList(homeRoomList));
+    dispatch(actions.setRoomListAfterFilter(homeRoomList));
+    dispatch(actions.setRoomListAfterFilterDetail(homeRoomList));
+  }, [homeRoomList]);
   let list = [];
-  if (FilterTypeActive.name == "Tất cả nhà") {
+  if (activeFilterType == "Tất cả nhà") {
     list = roomListAfterFilterDetail;
   } else {
     list = roomListAfterFilterDetail.filter(
-      (item) => item.type == FilterTypeActive.name
+      (item) => item.type == activeFilterType
     );
   }
 
@@ -40,17 +33,18 @@ export default function Room() {
   if (numberRoomRender > 12) {
     number = list.length > numberRoomRender ? numberRoomRender : list.length;
   }
-
+  let listLength = list.length;
   useEffect(() => {
-    dispatch(actions.setRoomAfterFilter(list.length));
+    dispatch(actions.setRoomAfterFilter(listLength));
     dispatch(actions.setRoomRender(number));
-  }, [number]);
+  }, [number, listLength]);
 
   let arrayRender = [];
   for (let i = 0; i < number; i++) {
     arrayRender.push(list[i]);
   }
-
+  console.log(list);
+  console.log(number);
   return (
     <section className="booking__room">
       <RoomFilter />

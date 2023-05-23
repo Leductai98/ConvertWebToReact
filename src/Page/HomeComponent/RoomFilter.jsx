@@ -134,7 +134,7 @@ export default function RoomFilter() {
         item.utinity.some((item2) => item2.name === "Hệ thống sưởi")
       );
     }
-    console.log(searchParams);
+   
     searchParams.delete(
       "maxprice",
       "minprice",
@@ -159,7 +159,7 @@ export default function RoomFilter() {
     for (const [key, value] of searchParams.entries()) {
       x = { ...x, [key]: value };
     }
-    console.log(x);
+   
     setSearchParams({
       ...x,
       maxprice: maxPrice,

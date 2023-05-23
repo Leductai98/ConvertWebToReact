@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 import { HomeContext } from "./HomeContext&Reducer";
 import { actions } from "./HomeContext&Reducer";
 import { NavLink, useSearchParams } from "react-router-dom";
@@ -22,10 +22,23 @@ const getLocation = async () => {
 };
 const promise = getLocation();
 export default function HomeHeader({ filterInfo, setFilterInfo }) {
-  document.title = "Nhà nghỉ dưỡng & Căn hộ cho thuê - Tai";
   const [state, dispatch] = useContext(HomeContext);
   const [searchParams, setSearchParams] = useSearchParams();
-  const { roomList, guestMenu, dayStart, dayEnd, roomListAfterFilter } = state;
+  const {
+    roomList,
+    guestMenu,
+    activeFilterType,
+    dayStart,
+    dayEnd,
+    roomListAfterFilter,
+    roomStatus,
+    houseType,
+    things,
+    rangePrice,
+    bedRoomCount,
+    bedCount,
+    bathRoomCount,
+  } = state;
   const {
     guestAdultChildMax,
     guestBabyMax,
@@ -47,6 +60,7 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
     pc: false,
     mobile: false,
   });
+
   const handleUserMenuDisplay = () => {
     setUserMenuDisplay(!userMenuDisplay);
   };
@@ -97,6 +111,505 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
       setLocation(data);
     });
   }, [promise]);
+
+  useEffect(() => {
+    const getParams = () => {
+      setFilterInfo({
+        location:
+          searchParams.get("location") != null
+            ? searchParams.get("location")
+            : "",
+      });
+      dispatch(
+        actions.setDayStart(
+          searchParams.get("daystart") != null
+            ? searchParams.get("daystart")
+            : "0"
+        )
+      );
+      dispatch(
+        actions.setDayEnd(
+          searchParams.get("dayend") != null ? searchParams.get("dayend") : "0"
+        )
+      );
+      dispatch(
+        actions.setAdult(
+          searchParams.get("guestadult") != null
+            ? Number(searchParams.get("guestadult"))
+            : 1
+        )
+      );
+      dispatch(
+        actions.setChild(
+          searchParams.get("guestchild") != null
+            ? Number(searchParams.get("guestchild"))
+            : 0
+        )
+      );
+      dispatch(
+        actions.setBaby(
+          searchParams.get("guestbaby") != null
+            ? Number(searchParams.get("guestbaby"))
+            : 0
+        )
+      );
+      dispatch(
+        actions.setPet(
+          searchParams.get("guestpet") != null
+            ? Number(searchParams.get("guestpet"))
+            : 0
+        )
+      );
+      dispatch(
+        actions.setMinPrice(
+          searchParams.get("minprice") != null
+            ? Number(searchParams.get("minprice"))
+            : 500000
+        )
+      );
+      dispatch(
+        actions.setMaxPrice(
+          searchParams.get("maxprice") != null
+            ? Number(searchParams.get("maxprice"))
+            : 2000000
+        )
+      );
+      dispatch(
+        actions.setRoomStatus(
+          "entireHouse",
+          searchParams.get("entirehouse") != null
+            ? searchParams.get("entirehouse") === "true"
+              ? true
+              : false
+            : false
+        )
+      );
+      dispatch(
+        actions.setRoomStatus(
+          " privateRoom",
+          searchParams.get("privateroom") != null
+            ? searchParams.get("privateroom") === "true"
+              ? true
+              : false
+            : false
+        )
+      );
+      dispatch(
+        actions.setRoomStatus(
+          "commonRoom",
+          searchParams.get("commonroom") != null
+            ? searchParams.get("commonroom") === "true"
+              ? true
+              : false
+            : false
+        )
+      );
+      dispatch(
+        actions.setBedCount(
+          searchParams.get("bed") != null ? Number(searchParams.get("bed")) : 0
+        )
+      );
+      dispatch(
+        actions.setBedRoomCount(
+          searchParams.get("bedroom") != null
+            ? Number(searchParams.get("bedroom"))
+            : 0
+        )
+      );
+      dispatch(
+        actions.setBathRoomCount(
+          searchParams.get("bathroom") != null
+            ? Number(searchParams.get("bathroom"))
+            : 0
+        )
+      );
+      dispatch(
+        actions.setHouseType(
+          "home",
+          searchParams.get("home") != null
+            ? searchParams.get("home") === "true"
+              ? true
+              : false
+            : false
+        )
+      );
+      dispatch(
+        actions.setHouseType(
+          "apartment",
+          searchParams.get("apartment") != null
+            ? searchParams.get("apartment") === "true"
+              ? true
+              : false
+            : false
+        )
+      );
+      dispatch(
+        actions.setHouseType(
+          "guestRoom",
+          searchParams.get("guestroom") != null
+            ? searchParams.get("guestroom") === "true"
+              ? true
+              : false
+            : false
+        )
+      );
+      dispatch(
+        actions.setHouseType(
+          "hotel",
+          searchParams.get("hotel") != null
+            ? searchParams.get("hotel") === "true"
+              ? true
+              : false
+            : false
+        )
+      );
+      dispatch(
+        actions.setThings(
+          "wifi",
+          searchParams.get("wifi") != null
+            ? searchParams.get("wifi") === "true"
+              ? true
+              : false
+            : false
+        )
+      );
+      dispatch(
+        actions.setThings(
+          "washingMachine",
+          searchParams.get("washingmachine") != null
+            ? searchParams.get("washingmachine") === "true"
+              ? true
+              : false
+            : false
+        )
+      );
+      dispatch(
+        actions.setThings(
+          "airCondition",
+          searchParams.get("aircondition") != null
+            ? searchParams.get("aircondition") === "true"
+              ? true
+              : false
+            : false
+        )
+      );
+      dispatch(
+        actions.setThings(
+          "kitchen",
+          searchParams.get("kitchen") != null
+            ? searchParams.get("kitchen") === "true"
+              ? true
+              : false
+            : false
+        )
+      );
+      dispatch(
+        actions.setThings(
+          "dryer",
+          searchParams.get("dryer") != null
+            ? searchParams.get("dryer") === "true"
+              ? true
+              : false
+            : false
+        )
+      );
+      dispatch(
+        actions.setThings(
+          "heating",
+          searchParams.get("heating") != null
+            ? searchParams.get("heating") === "true"
+              ? true
+              : false
+            : false
+        )
+      );
+      dispatch(
+        actions.setActiveFilterType(
+          searchParams.get("activefiltertype") != null
+            ? searchParams.get("activefiltertype")
+            : "Tất cả nhà"
+        )
+      );
+
+      let result = roomList;
+
+      if (
+        searchParams.get("location") != null
+          ? searchParams.get("location")
+          : "" != ""
+      ) {
+        result = roomList.filter(
+          (item) => item.location === filterInfo.location
+        );
+      }
+
+      if (
+        (searchParams.get("daystart") != null
+          ? searchParams.get("daystart")
+          : "0") !== "0" &&
+        (searchParams.get("dayend") != null
+          ? searchParams.get("dayend")
+          : "0") !== "0"
+      ) {
+        result = result.filter(
+          (item) =>
+            Date.parse(item.start) <= Date.parse(dayStart) &&
+            Date.parse(item.end) >= Date.parse(dayEnd)
+        );
+      }
+
+      result = result.filter(
+        (item) =>
+          parseInt(item.guest) >=
+          (searchParams.get("guestadult") != null
+            ? Number(searchParams.get("guestadult"))
+            : 1) +
+            (searchParams.get("guestchild") != null
+              ? Number(searchParams.get("guestchild"))
+              : 0)
+      );
+
+      dispatch(actions.setRoomListAfterFilter(result));
+      dispatch(actions.setRoomListAfterFilterDetail(result));
+
+      result = result.filter(
+        (item) =>
+          Number(item.price.split(",").join("")) >=
+            (searchParams.get("minprice") != null
+              ? Number(searchParams.get("minprice"))
+              : 500000) &&
+          Number(item.price.split(",").join("")) <=
+            (searchParams.get("maxprice") != null
+              ? Number(searchParams.get("maxprice"))
+              : 2000000)
+      );
+
+      let result2 = [];
+      if (
+        !(searchParams.get("entirehouse") != null
+          ? searchParams.get("entirehouse") === "true"
+            ? true
+            : false
+          : false) &&
+        !(searchParams.get("privateroom") != null
+          ? searchParams.get("privateroom") === "true"
+            ? true
+            : false
+          : false) &&
+        !(searchParams.get("commonroom") != null
+          ? searchParams.get("commonroom") === "true"
+            ? true
+            : false
+          : false)
+      ) {
+        result2 = result;
+      } else {
+        if (
+          searchParams.get("entirehouse") != null
+            ? searchParams.get("entirehouse") === "true"
+              ? true
+              : false
+            : false
+        ) {
+          result.forEach((item) => {
+            if (item.status === "Toàn bộ nhà") {
+              result2.push(item);
+            }
+          });
+        }
+        if (
+          searchParams.get("privateroom") != null
+            ? searchParams.get("privateroom") === "true"
+              ? true
+              : false
+            : false
+        ) {
+          result.forEach((item) => {
+            if (item.status === "Phòng riêng") {
+              result2.push(item);
+            }
+          });
+        }
+        if (
+          searchParams.get("commonroom") != null
+            ? searchParams.get("commonroom") === "true"
+              ? true
+              : false
+            : false
+        ) {
+          result.forEach((item) => {
+            if (item.status === "Phòng chung") {
+              result2.push(item);
+            }
+          });
+        }
+      }
+
+      result2 = result2.filter(
+        (item) =>
+          parseInt(item.room[0]) >=
+            (searchParams.get("bedroom") != null
+              ? Number(searchParams.get("bedroom"))
+              : 0) &&
+          parseInt(item.room[1]) >=
+            (searchParams.get("bedroom") != null
+              ? Number(searchParams.get("bedroom"))
+              : 0) &&
+          parseInt(item.room[2]) >=
+            (searchParams.get("bathroom") != null
+              ? Number(searchParams.get("bathroom"))
+              : 0)
+      );
+      let result3 = [];
+      if (
+        !(searchParams.get("home") != null
+          ? searchParams.get("home") === "true"
+            ? true
+            : false
+          : false) &&
+        !(searchParams.get("apartment") != null
+          ? searchParams.get("apartment") === "true"
+            ? true
+            : false
+          : false) &&
+        !(searchParams.get("guestroom") != null
+          ? searchParams.get("guestroom") === "true"
+            ? true
+            : false
+          : false) &&
+        !(searchParams.get("hotel") != null
+          ? searchParams.get("hotel") === "true"
+            ? true
+            : false
+          : false)
+      ) {
+        result3 = result2;
+      } else {
+        if (
+          searchParams.get("home") != null
+            ? searchParams.get("home") === "true"
+              ? true
+              : false
+            : false
+        ) {
+          result2.forEach((item) => {
+            if (item.house === "Nhà") {
+              result3.push(item);
+            }
+          });
+        }
+        if (
+          searchParams.get("apartment") != null
+            ? searchParams.get("apartment") === "true"
+              ? true
+              : false
+            : false
+        ) {
+          result2.forEach((item) => {
+            if (item.house === "Căn hộ") {
+              result3.push(item);
+            }
+          });
+        }
+        if (
+          searchParams.get("guestroom") != null
+            ? searchParams.get("guestroom") === "true"
+              ? true
+              : false
+            : false
+        ) {
+          result2.forEach((item) => {
+            if (item.house === "Nhà khách") {
+              result3.push(item);
+            }
+          });
+        }
+        if (
+          searchParams.get("hotel") != null
+            ? searchParams.get("hotel") === "true"
+              ? true
+              : false
+            : false
+        ) {
+          result2.forEach((item) => {
+            if (item.house === "Khách sạn") {
+              result3.push(item);
+            }
+          });
+        }
+      }
+
+      if (
+        searchParams.get("wifi") != null
+          ? searchParams.get("wifi") === "true"
+            ? true
+            : false
+          : false
+      ) {
+        result3 = result3.filter((item) =>
+          item.utinity.some((item2) => item2.name === "Wi-fi")
+        );
+      }
+      if (
+        searchParams.get("washingmachine") != null
+          ? searchParams.get("washingmachine") === "true"
+            ? true
+            : false
+          : false
+      ) {
+        result3 = result3.filter((item) =>
+          item.utinity.some((item2) => item2.name === "Máy giặt")
+        );
+      }
+      if (
+        searchParams.get("aircondition") != null
+          ? searchParams.get("aircondition") === "true"
+            ? true
+            : false
+          : false
+      ) {
+        result3 = result3.filter((item) =>
+          item.utinity.some((item2) => item2.name === "Điều hòa nhiệt độ")
+        );
+      }
+      if (
+        searchParams.get("kitchen") != null
+          ? searchParams.get("kitchen") === "true"
+            ? true
+            : false
+          : false
+      ) {
+        result3 = result3.filter((item) =>
+          item.utinity.some((item2) => item2.name === "Bếp")
+        );
+      }
+      if (
+        searchParams.get("dryer") != null
+          ? searchParams.get("dryer") === "true"
+            ? true
+            : false
+          : false
+      ) {
+        result3 = result3.filter((item) =>
+          item.utinity.some((item2) => item2.name === "Máy sấy quần áo")
+        );
+      }
+      if (
+        searchParams.get("heating") != null
+          ? searchParams.get("heating") === "true"
+            ? true
+            : false
+          : false
+      ) {
+        result3 = result3.filter((item) =>
+          item.utinity.some((item2) => item2.name === "Hệ thống sưởi")
+        );
+      }
+
+      dispatch(actions.setRoomListAfterFilterDetail(result3));
+    };
+    getParams();
+  }, [roomList]);
   const locationList = location.filter((item) =>
     filterInfo.location !== ""
       ? item.name
@@ -109,10 +622,11 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
 
   const handleFilterRoom = () => {
     let result = roomList;
-    if (filterInfo.location != "") {
+
+    if (filterInfo.location !== "") {
       result = roomList.filter((item) => item.location === filterInfo.location);
     }
-    if (dayStart !== 0 && dayEnd !== 0) {
+    if (dayStart !== "0" && dayEnd !== "0") {
       result = result.filter(
         (item) =>
           Date.parse(item.start) <= Date.parse(dayStart) &&
@@ -129,7 +643,8 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
       "guestadult",
       "guestchild",
       "guestbaby",
-      "guestpet"
+      "guestpet",
+      "activefiltertype"
     );
     setSearchParams({
       location: filterInfo.location,
@@ -139,21 +654,41 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
       guestchild: guestChild,
       guestbaby: guestBaby,
       guestpet: guestPet,
+      activefiltertype: activeFilterType,
     });
 
     dispatch(actions.setRoomListAfterFilter(result));
     dispatch(actions.setRoomListAfterFilterDetail(result));
     dispatch(actions.setDefault());
+    dispatch(actions.setRoomAfterFilter(result.length));
   };
 
   return (
     <section className="header-index">
       <div className="header-wrap">
         <div className="nav">
-          <NavLink to="/" className="nav__icon">
+          <NavLink
+            to="/"
+            className="nav__icon"
+            onClick={() => {
+              dispatch(actions.setReloadPage());
+              dispatch(actions.setRoomListAfterFilter(roomList));
+              dispatch(actions.setRoomListAfterFilterDetail(roomList));
+              dispatch(actions.setRoomAfterFilter(roomList.length));
+            }}
+          >
             <img src="/Group.png" alt="" />
           </NavLink>
-          <NavLink to="/" className="nav__icon-tablet-mobile">
+          <NavLink
+            to="/"
+            className="nav__icon-tablet-mobile"
+            onClick={() => {
+              dispatch(actions.setReloadPage());
+              dispatch(actions.setRoomListAfterFilter(roomList));
+              dispatch(actions.setRoomListAfterFilterDetail(roomList));
+              dispatch(actions.setRoomAfterFilter(roomList.length));
+            }}
+          >
             <img src="/Group (4).png" alt="" />
           </NavLink>
           <div className="header__search on-tablet-mobile">
@@ -161,6 +696,20 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
               className="search-icon"
               onClick={() => {
                 handleFilterRoom();
+              }}
+              onMouseDown={(e) => {
+                if (e.target.className == "search-icon") {
+                  e.target.style = "scale:0.95";
+                } else {
+                  e.target.parentElement.style = "scale:0.95";
+                }
+              }}
+              onMouseUp={(e) => {
+                if (e.target.className == "search-icon") {
+                  e.target.style = "scale:1";
+                } else {
+                  e.target.parentElement.style = "scale:1";
+                }
               }}
             >
               <svg
@@ -266,6 +815,14 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
                 placeholder="Ngày"
                 className="input-mobile"
                 autoComplete="off"
+                value={
+                  dayStart !== "0" && dayEnd !== "0"
+                    ? `${dayStart.split("-").reverse().join("-")} đến ${dayEnd
+                        .split("-")
+                        .reverse()
+                        .join("-")}`
+                    : ""
+                }
                 onChange={(e) => {
                   if (e.length > 1) {
                     dispatch(
@@ -639,23 +1196,21 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
                   dateFormat: "d-m-Y",
                   minDate: "today",
                   allowInput: true,
-                  plugins: [new rangePlugin({ input: "#end" })],
                 }}
                 id="start"
                 className="input-start"
                 type="text"
                 placeholder="Thêm ngày"
                 autoComplete="off"
+                value={
+                  dayStart !== "0"
+                    ? dayStart.split("-").reverse().join("-")
+                    : ""
+                }
                 onChange={(e) => {
-                  if (e.length > 1) {
-                    dispatch(
-                      actions.setDayStart(e[0].toLocaleDateString("fr-CA"))
-                    );
-
-                    dispatch(
-                      actions.setDayEnd(e[1].toLocaleDateString("fr-CA"))
-                    );
-                  }
+                  dispatch(
+                    actions.setDayStart(e[0].toLocaleDateString("fr-CA"))
+                  );
                 }}
               />
             </div>
@@ -665,12 +1220,27 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
               <div className="header__search--day--des-header">Trả phòng</div>
             </div>
             <div className="header__search--day--placeholder">
-              <input
+              <Flatpickr
+                options={{
+                  locale: Vietnamese,
+                  dateFormat: "d-m-Y",
+                  minDate:
+                    dayStart !== "0"
+                      ? dayStart.split("-").reverse().join("-")
+                      : "today",
+                  allowInput: true,
+                }}
                 id="end"
                 className="input-end"
                 type="text"
                 placeholder="Thêm ngày"
                 autoComplete="off"
+                value={
+                  dayEnd !== "0" ? dayEnd.split("-").reverse().join("-") : ""
+                }
+                onChange={(e) => {
+                  dispatch(actions.setDayEnd(e[0].toLocaleDateString("fr-CA")));
+                }}
               />
             </div>
           </div>

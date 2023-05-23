@@ -401,7 +401,7 @@ export default function PaymentComfirm() {
                       className="guest-menu-close"
                       onClick={toggle}
                     >
-                      Lưu lại
+                      Đóng
                     </label>
                   </div>
                 </div>
@@ -529,10 +529,14 @@ export default function PaymentComfirm() {
                 dispatch(actions.setCardNumber(result.join("")));
               }}
             />
+
             <label htmlFor="card-number" className="card-number">
               Số thẻ
             </label>
             <div className="card-border"></div>
+            <div className="card-number-picture">
+              <img src="/credit-card.png" alt="" />
+            </div>
           </div>
           <div className="payment-by-number">
             <input

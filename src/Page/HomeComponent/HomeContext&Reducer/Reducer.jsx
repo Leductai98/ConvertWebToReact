@@ -20,6 +20,7 @@ import {
   SET__ROOM__LIST__AFTER__FILTER__DETAIL,
   SET__DEFAULT,
   SET__HOUSE__TYPE,
+  SET__RELOAD__PAGE,
 } from "./Constant";
 
 const initalState = {
@@ -33,7 +34,7 @@ const initalState = {
     progressLeft: 0,
     progressRight: 0,
   },
-  FilterTypeActive: { id: 0, name: "Tất cả nhà" },
+  activeFilterType: "Tất cả nhà",
   roomListAfterFilterLength: 0,
   numberRoomRender: 12,
   guestMenu: {
@@ -45,8 +46,8 @@ const initalState = {
     guestBaby: 0,
     guestPet: 0,
   },
-  dayStart: 0,
-  dayEnd: 0,
+  dayStart: "0",
+  dayEnd: "0",
   roomStatus: { entireHouse: false, privateRoom: false, commonRoom: false },
   bedRoomCount: 0,
   bedCount: 0,
@@ -78,7 +79,7 @@ function reducer(state, action) {
     case ACTIVE__FILTER__TYPE:
       return {
         ...state,
-        FilterTypeActive: { id: action.id, name: action.value },
+        activeFilterType: action.value,
       };
     case SET__MAXPRICE:
       return {
@@ -182,6 +183,55 @@ function reducer(state, action) {
 
         roomListAfterFilterLength: 0,
         numberRoomRender: 12,
+        roomStatus: {
+          entireHouse: false,
+          privateRoom: false,
+          commonRoom: false,
+        },
+        bedRoomCount: 0,
+        bedCount: 0,
+        bathRoomCount: 0,
+        houseType: {
+          home: false,
+          apartment: false,
+          guestRoom: false,
+          hotel: false,
+        },
+        things: {
+          wifi: false,
+          washingMachine: false,
+          airCondition: false,
+          kitchen: false,
+          dryer: false,
+          heating: false,
+        },
+      };
+    case SET__RELOAD__PAGE:
+      return {
+        ...state,
+        roomListAfterFilter: [],
+        roomListAfterFilterDetail: [],
+        rangePrice: {
+          minLength: 100000,
+          minPrice: 500000,
+          maxPrice: 2000000,
+          progressLeft: 0,
+          progressRight: 0,
+        },
+        activeFilterType: "Tất cả nhà",
+        roomListAfterFilterLength: 0,
+        numberRoomRender: 12,
+        guestMenu: {
+          guestAdultChildMax: 16,
+          guestBabyMax: 5,
+          guestPetMax: 5,
+          guestAdult: 1,
+          guestChild: 0,
+          guestBaby: 0,
+          guestPet: 0,
+        },
+        dayStart: "0",
+        dayEnd: "0",
         roomStatus: {
           entireHouse: false,
           privateRoom: false,

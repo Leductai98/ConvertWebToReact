@@ -20,6 +20,7 @@ import {
   SET__THINGS,
   SET__DEFAULT,
   SET__HOUSE__TYPE,
+  SET__RELOAD__PAGE,
 } from "./Constant";
 export const setRoomList = (value) => {
   return { type: SET__ROOM__LIST, value };
@@ -37,8 +38,8 @@ export const setMinPrice = (value) => {
   return { type: SET__MINPRICE, value };
 };
 
-export const activeFilterType = (id, value) => {
-  return { type: ACTIVE__FILTER__TYPE, value, id };
+export const setActiveFilterType = (value) => {
+  return { type: ACTIVE__FILTER__TYPE, value };
 };
 
 export const setRoomAfterFilter = (value) => {
@@ -88,3 +89,7 @@ export const setThings = (name, value) => {
 export const setDefault = () => {
   return { type: SET__DEFAULT };
 };
+
+export const setReloadPage=()=>{
+  return {type:SET__RELOAD__PAGE}
+}

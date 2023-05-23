@@ -7,7 +7,23 @@ export default function BookingBanner() {
         Nhận giảm giá cho kỳ nghỉ của bạn
       </div>
       <div className="booking__banner--sign-up">
-        <button>
+        <button
+          className="banner__btn"
+          onMouseDown={(e) => {
+            if (e.target.className == "banner__btn") {
+              e.target.style = "scale:0.95";
+            } else {
+              e.target.parentElement.style = "scale:0.95";
+            }
+          }}
+          onMouseUp={(e) => {
+            if (e.target.className == "banner__btn") {
+              e.target.style = "scale:1";
+            } else {
+              e.target.parentElement.style = "scale:1";
+            }
+          }}
+        >
           <Link
             to="/signup"
             style={{
