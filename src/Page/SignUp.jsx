@@ -120,7 +120,7 @@ export default function SignUp() {
           setPopUp(true);
         }, 500);
         setTimeout(() => {
-          localStorage.setItem("previousSignUp", true);
+         
           navigate("/signin");
         }, 1500);
       }
@@ -141,8 +141,6 @@ export default function SignUp() {
         ...toast,
         { id: Math.random() * 100000, name: "Bạn đang đăng nhập rồi" },
       ]);
-    } else {
-      localStorage.setItem("previousSignUp", true);
     }
   };
   useEffect(() => {
