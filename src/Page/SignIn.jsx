@@ -7,7 +7,6 @@ import SignInContent from "./SignInComponent/SignInContent";
 import SignInPopUp from "./SignInComponent/SignInPopUp";
 import SignInToast from "./SignInComponent/SignInToast";
 export default function SignIn() {
- 
   document.title = "Đăng nhập - Tai";
   const navigate = useNavigate();
 
@@ -71,12 +70,7 @@ export default function SignIn() {
             setPopUp(true);
           }, 500);
           setTimeout(() => {
-            if (localStorage.getItem("previousSignUp")) {
-              navigate(-2);
-              localStorage.removeItem("previousSignUp");
-            } else {
-              navigate(-1);
-            }
+            navigate("/");
           }, 1500);
         } else {
           setToast([
