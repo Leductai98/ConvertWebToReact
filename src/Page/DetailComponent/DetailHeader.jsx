@@ -254,7 +254,7 @@ export default function DetailHeader({ data }) {
                     onClick={() => {
                       window.open(
                         `https://www.linkedin.com/shareArticle?url=${encodeURI(
-                          "https://build-orcin-nine.vercel.app/detail/8"
+                          location.href
                         )}`,
                         "",
                         "width=800,height=1000"
