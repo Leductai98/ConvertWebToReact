@@ -314,7 +314,7 @@ a:hover {
   left: -5px;
   min-width: 250px;
   background-color: white;
-  padding: 20px;
+
   border-radius: 0 0 10px 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.103);
   display: none;
@@ -330,7 +330,6 @@ a:hover {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 15px;
   overflow: scroll;
 }
 .location-list::-webkit-scrollbar {
@@ -341,10 +340,14 @@ a:hover {
   display: flex;
   width: 100%;
   gap: 20px;
-  margin-bottom: 20px;
+
+  padding: 10px 20px;
   justify-content: flex-start;
   align-items: center;
   cursor: pointer;
+}
+.location-item:hover {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 .location-item-icon {
   display: flex;
