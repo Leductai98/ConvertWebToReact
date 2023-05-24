@@ -43,8 +43,7 @@ export default function Room({ urlImage, homeRoomList }) {
   for (let i = 0; i < number; i++) {
     arrayRender.push(list[i]);
   }
-  console.log(list);
-  console.log(number);
+ 
   return (
     <section className="booking__room">
       <RoomFilter />

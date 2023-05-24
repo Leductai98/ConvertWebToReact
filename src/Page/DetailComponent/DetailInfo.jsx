@@ -9,7 +9,7 @@ import { useBodyScrollLock } from "../../Component";
 export default function DetailInfo({ data, url }) {
   const [isLocked, toggle] = useBodyScrollLock();
   let today = new Date().toISOString().slice(0, 10);
-  const calendarRef = useRef();
+
   const [state, dispatch] = useContext(DetailContext);
   const { userLogin, guestMenu, dayStart, dayEnd, toast } = state;
   const {
@@ -24,10 +24,7 @@ export default function DetailInfo({ data, url }) {
   useEffect(() => {
     dispatch(actions.setGuestMax(parseInt(data.guest)));
   }, [data]);
-  useEffect(() => {
-    let end = calendarRef.current;
-    end.value = dayEnd;
-  }, [dayEnd]);
+
   useEffect(() => {
     dispatch(actions.setUserLogin(JSON.parse(localStorage.getItem("login"))));
   }, [localStorage.getItem("login")]);
@@ -607,8 +604,6 @@ export default function DetailInfo({ data, url }) {
                           to: data.end.split("-").reverse().join("-"),
                         },
                       ],
-
-                      plugins: [new rangePlugin({ input: "#out" })],
                     }}
                     className="in"
                     type="text"
@@ -618,14 +613,9 @@ export default function DetailInfo({ data, url }) {
                     autoComplete="off"
                     value={dayStart}
                     onChange={(e) => {
-                      if (e.length > 1) {
-                        dispatch(
-                          actions.setDayStart(e[0].toLocaleDateString("es-CL"))
-                        );
-                        dispatch(
-                          actions.setDayEnd(e[1].toLocaleDateString("es-CL"))
-                        );
-                      }
+                      dispatch(
+                        actions.setDayStart(e[0].toLocaleDateString("es-CL"))
+                      );
                     }}
                   />
                 </div>
@@ -633,15 +623,36 @@ export default function DetailInfo({ data, url }) {
                   <label htmlFor="out" className="check-out">
                     <span className="leave">Trả</span> phòng
                   </label>
-                  <input
-                    ref={calendarRef}
+                  <Flatpickr
+                    options={{
+                      allowInput: true,
+                      locale: Vietnamese,
+                      dateFormat: "d-m-Y",
+                      minDate:
+                        dayStart !== ""
+                          ? dayStart
+                          : Date.parse(data.start) >= Date.parse(today)
+                          ? data.start.split("-").reverse().join("-")
+                          : today.split("-").reverse().join("-"),
+                      enable: [
+                        {
+                          from: data.start.split("-").reverse().join("-"),
+                          to: data.end.split("-").reverse().join("-"),
+                        },
+                      ],
+                    }}
                     type="text"
                     name="date"
                     id="out"
-                    defaultValue={dayEnd}
+                    value={dayEnd}
                     className="input__out"
                     placeholder="Thêm ngày"
                     autoComplete="off"
+                    onChange={(e) => {
+                      dispatch(
+                        actions.setDayEnd(e[0].toLocaleDateString("es-CL"))
+                      );
+                    }}
                   />
                 </div>
               </div>
