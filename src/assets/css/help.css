@@ -546,3 +546,18 @@
 #answer-input-35:checked ~ .answer-item {
   cursor: default;
 }
+@media (max-width: 767px) {
+  .question-answer-list {
+    margin-top: 40px;
+  }
+  .contact-phone-icon {
+    display: none;
+  }
+  .contact-phone-number {
+    display: flex;
+    align-items: center;
+    line-height: 25px;
+    height: 50px;
+    text-align: center;
+  }
+}

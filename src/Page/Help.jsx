@@ -21,7 +21,7 @@ export default function Help() {
       <Container>
         <div className="help__content">
           <Row>
-            <Col xs={4}>
+            <Col xs={0} md={4}>
               <div className="list-question">
                 <a href="#1" className="list-question-item">
                   <div className="question-icon">
@@ -122,7 +122,7 @@ export default function Help() {
                 </a>
               </div>
             </Col>
-            <Col xs={8}>
+            <Col xs={12} md={8}>
               <div className="question-answer-list">
                 <div className="question-contact">
                   <div className="question-contact-text">

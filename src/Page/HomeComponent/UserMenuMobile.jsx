@@ -70,14 +70,7 @@ export default function UserMenuMobile({
                   Danh sách yêu thích
                 </NavLink>
               </li>
-              <li>
-                <NavLink className="menu-item" style={{ cursor: "default" }}>
-                  Trở thành chủ nhà
-                </NavLink>
-              </li>
-              <li className="menu-item-languages">
-                Ngôn ngữ: <span>Tiếng Việt</span>
-              </li>
+
               <li>
                 <NavLink to="/help" className="menu-item">
                   Trợ giúp
@@ -124,14 +117,7 @@ export default function UserMenuMobile({
                   Đăng ký
                 </NavLink>
               </li>
-              <li>
-                <NavLink className="menu-item" style={{ cursor: "default" }}>
-                  Trở thành chủ nhà
-                </NavLink>
-              </li>
-              <li className="menu-item-languages">
-                Ngôn ngữ: <span>Tiếng Việt</span>
-              </li>
+
               <li>
                 <NavLink to="/help" className="menu-item">
                   Trợ giúp
