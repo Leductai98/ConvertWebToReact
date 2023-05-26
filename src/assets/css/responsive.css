@@ -206,6 +206,11 @@
   .filter {
     margin-top: 100px;
   }
+  .clear--all {
+    height: 40px;
+    line-height: 40px;
+    font-size: 15px;
+  }
   .booking__room--filter {
     width: 80px;
     height: 40px;

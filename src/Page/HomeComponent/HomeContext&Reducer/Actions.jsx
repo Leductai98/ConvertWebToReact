@@ -21,6 +21,7 @@ import {
   SET__DEFAULT,
   SET__HOUSE__TYPE,
   SET__RELOAD__PAGE,
+  SET__IS__LOADING,
 } from "./Constant";
 export const setRoomList = (value) => {
   return { type: SET__ROOM__LIST, value };
@@ -90,6 +91,10 @@ export const setDefault = () => {
   return { type: SET__DEFAULT };
 };
 
-export const setReloadPage=()=>{
-  return {type:SET__RELOAD__PAGE}
-}
+export const setReloadPage = () => {
+  return { type: SET__RELOAD__PAGE };
+};
+
+export const setIsLoading = (value) => {
+  return { type: SET__IS__LOADING, value };
+};

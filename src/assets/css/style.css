@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap");
 
 :root {
   --background-color: #3a6ad5;
@@ -19,7 +19,7 @@ img {
   height: auto;
 }
 body {
-  font-family: Lato, sans-serif !important;
+  font-family: Open Sans, sans-serif !important;
   margin-left: auto;
   margin-right: auto;
   line-height: unset;
@@ -38,7 +38,7 @@ a:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-weight: 700;
+  font-weight: 500;
   font-size: 18px;
   font-style: normal;
 }
@@ -52,7 +52,7 @@ a:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-weight: 700;
+  font-weight: 500;
   font-size: 18px;
   font-style: normal;
   transition: all 0.05s ease;
@@ -407,14 +407,14 @@ a:hover {
 .header__search--people--des {
   display: flex;
   gap: 5px;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 20px;
   color: #304659;
 }
 .header__search--location--input,
 .header__search--day--placeholder,
 .header__search--people--placeholder {
-  font-weight: 500;
+  font-weight: 400;
   font-size: 18px;
   color: var(--text-color);
 }
@@ -429,7 +429,7 @@ a:hover {
   margin: 0;
   padding: 0;
   text-align: start;
-  font-family: Lato, sans-serif;
+
   color: var(--text-color);
 }
 .input-start,
@@ -623,7 +623,7 @@ a:hover {
   justify-content: center;
   color: var(--text-color);
   font-size: 15px;
-  font-weight: bold;
+  font-weight: 600;
 }
 .filter__item--des span {
   display: block;
@@ -724,6 +724,23 @@ body .filter .owl-carousel .owl-stage-outer {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+}
+.booking-filter-wrap {
+  display: flex;
+}
+.clear--all {
+  width: 80px;
+  height: 54px;
+  line-height: 54px;
+  color: var(--text-color);
+  gap: 5px;
+  text-decoration: underline;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.clear--all:hover {
+  scale: 1.1;
 }
 .booking__room--filter {
   width: 100px;
@@ -834,7 +851,7 @@ body .filter .owl-carousel .owl-stage-outer {
 .booking-filter-menu-header {
   width: auto;
   text-align: center;
-  font-weight: 700;
+  font-weight: 500;
 }
 .booking-filter-list {
   margin-top: 40px;
@@ -851,7 +868,7 @@ body .filter .owl-carousel .owl-stage-outer {
 .booking-filter-item-header {
   width: auto;
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 500;
 }
 .booking-filter-item-price {
   width: auto;
@@ -1230,7 +1247,7 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 .house-item-name {
   min-width: 50px;
-  font-weight: 700;
+  font-weight: 500;
 }
 .house-item:hover {
   border: 2px solid var(--text-color);
@@ -1376,7 +1393,7 @@ input[type="number"]::-webkit-inner-spin-button {
   -webkit-box-orient: vertical;
   overflow: hidden;
   width: 100%;
-  font-weight: bold;
+  font-weight: 600;
   margin-bottom: 5px;
 }
 .booking__room--list--item--des {
@@ -1390,7 +1407,7 @@ input[type="number"]::-webkit-inner-spin-button {
   color: var(--placecholdeer-color);
 }
 .booking__room--list--item--prices span {
-  font-weight: bold;
+  font-weight: 600;
   margin-right: 5px;
   font-size: 20px;
   color: var(--text-color);
@@ -1403,7 +1420,7 @@ input[type="number"]::-webkit-inner-spin-button {
 .btn__moreroom button {
   color: var(--text-color);
   vertical-align: middle;
-  font-weight: bold;
+  font-weight: 600;
   font-size: 20px;
   text-align: center;
   width: 122px;
@@ -1431,7 +1448,7 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 .booking__banner--header {
   font-size: 48px;
-  font-weight: bold;
+  font-weight: 600;
   height: 80px;
 }
 .booking__banner--sign-up {
@@ -1447,7 +1464,7 @@ input[type="number"]::-webkit-inner-spin-button {
   background-color: var(--background-color);
   color: white;
   font-size: 18px;
-  font-weight: bold;
+  font-weight: 600;
   border: none;
 }
 .booking__banner--des {
@@ -1633,7 +1650,7 @@ input[type="number"]::-webkit-inner-spin-button {
   background-color: rgba(0, 0, 255, 0.1);
 }
 .user__menu-login {
-  font-weight: 600;
+  font-weight: 700;
 }
 .user__menu-signup {
   position: relative;
@@ -1691,13 +1708,13 @@ input[type="number"]::-webkit-inner-spin-button {
   padding: 5px;
 }
 .header__search--people--placeholder-pc div {
-  font-weight: 500;
+  font-weight: 400;
   font-size: 18px;
   color: var(--text-color);
 }
 .header__search--people--placeholder-mobile div {
   display: inline-block;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 14px;
   color: var(--text-color);
 }
@@ -1863,7 +1880,7 @@ div.guest-pet-mobile.active {
   text-align: start;
 }
 .item-left-header {
-  font-weight: 700;
+  font-weight: 600;
 }
 .item-right {
   color: var(--text-color);
@@ -1972,7 +1989,7 @@ div.guest-pet-mobile.active {
   height: fit-content;
   padding-right: 10px;
   text-align: end;
-  font-weight: 700;
+  font-weight: 500;
   text-decoration: underline;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -2044,7 +2061,7 @@ div.guest-pet-mobile.active {
 }
 .detail-header-icon-contact {
   font-style: normal;
-  font-weight: 700;
+  font-weight: 500;
   font-size: 24px;
   line-height: 32px;
   margin-bottom: 20px;
@@ -2082,7 +2099,7 @@ div.guest-pet-mobile.active {
   color: var(--text-color);
   font-size: 18px;
   margin-bottom: 10px;
-  font-weight: 700;
+  font-weight: 500;
 }
 .detail-item-text-contact {
   color: var(--text-color);

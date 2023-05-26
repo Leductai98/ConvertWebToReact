@@ -181,8 +181,8 @@ button {
   position: fixed;
   align-items: center;
   justify-content: flex-start;
-  gap: 10px;
-  padding: 20px;
+  gap: 0;
+  padding: 10px;
   top: 40%;
   width: 350px;
   left: calc((100% - 300px) / 2);
@@ -194,8 +194,7 @@ button {
   display: flex;
 }
 .pop-up-signin img {
-  width: 35px;
-  height: 35px;
+  width: 50px;
 }
 .toast-icon {
   color: green;

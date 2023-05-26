@@ -64,7 +64,7 @@ export default function PaymentInfoMenu() {
             ...toast,
             {
               id: Math.floor(Math.random() * 1000000),
-              name: "Thông tin thẻ không đúng",
+              name: "Tải lại trang nếu đã thay đổi thông tin thẻ",
             },
           ])
         );

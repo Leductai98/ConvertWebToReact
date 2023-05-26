@@ -6,7 +6,10 @@ export default function FavoriteList() {
   const [state, dispatch] = useContext(FavoriteContext);
   const { favoriteList } = state;
   useEffect(() => {
-    let result = JSON.parse(localStorage.getItem("favorite"));
+    let result =
+      localStorage.getItem("favorite") !== null
+        ? JSON.parse(localStorage.getItem("favorite"))
+        : [];
     if (result.length) {
       result = result.filter(
         (item) => item.user === JSON.parse(localStorage.getItem("login")).name
@@ -27,7 +30,13 @@ export default function FavoriteList() {
       {favoriteList.length === 0 ? (
         <h5>Chưa có chuyến đi nào</h5>
       ) : (
-        favoriteList.map((item) => <FavoriteItem key={item.id} data={item} onDeleteFavorite={handleDeleteFavorite}/>)
+        favoriteList.map((item) => (
+          <FavoriteItem
+            key={item.id}
+            data={item}
+            onDeleteFavorite={handleDeleteFavorite}
+          />
+        ))
       )}
     </div>
   );

@@ -20,20 +20,39 @@ export default function Home() {
   document.title = "Nhà nghỉ dưỡng & Căn hộ cho thuê - Tai";
   const [filterInfo, setFilterInfo] = useState({ location: "" });
   const [homeRoomList, setHomeRoomList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
-    promise.then((data) => {
-      setHomeRoomList(data);
-    });
+    promise
+      .then((data) => {
+        setHomeRoomList(data);
+      })
+      .then(() => {
+        setIsLoading(false);
+      });
   }, []);
-
+  if (isLoading)
+    return (
+      <div className="detail--loading--img">
+        <img src="/Spinner-1s-200px.svg" alt="" />
+      </div>
+    );
   return (
     <>
       <HomeProvider>
         <ImageBackGround />
         <HomeHeader filterInfo={filterInfo} setFilterInfo={setFilterInfo} />
-        <Filter />
-        <Room homeRoomList={homeRoomList} urlImage={urlImage} />
-        <Button />
+        {isLoading ? (
+          <div className="detail--loading--img">
+            <img src="/Spinner-1s-200px.svg" alt="" />
+          </div>
+        ) : (
+          <>
+            <Filter />
+            <Room homeRoomList={homeRoomList} urlImage={urlImage} />
+            <Button />
+          </>
+        )}
+
         <BookingBanner />
       </HomeProvider>
     </>

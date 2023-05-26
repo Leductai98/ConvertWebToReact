@@ -21,3 +21,4 @@ export const SET__THINGS = "set__things";
 export const SET__DEFAULT = "set__default";
 export const SET__HOUSE__TYPE = "set__house__type";
 export const SET__RELOAD__PAGE = "set__relead__page";
+export const SET__IS__LOADING = "set__is__loading";

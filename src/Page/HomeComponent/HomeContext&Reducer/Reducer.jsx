@@ -21,6 +21,7 @@ import {
   SET__DEFAULT,
   SET__HOUSE__TYPE,
   SET__RELOAD__PAGE,
+  SET__IS__LOADING,
 } from "./Constant";
 
 const initalState = {
@@ -66,6 +67,7 @@ const initalState = {
     dryer: false,
     heating: false,
   },
+  isLoading: true,
 };
 
 function reducer(state, action) {
@@ -254,6 +256,11 @@ function reducer(state, action) {
           dryer: false,
           heating: false,
         },
+      };
+    case SET__IS__LOADING:
+      return {
+        ...state,
+        isLoading: action.value,
       };
   }
 }

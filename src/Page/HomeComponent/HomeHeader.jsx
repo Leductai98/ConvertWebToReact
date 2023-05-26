@@ -186,7 +186,7 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
       );
       dispatch(
         actions.setRoomStatus(
-          " privateRoom",
+          "privateRoom",
           searchParams.get("privateroom") != null
             ? searchParams.get("privateroom") === "true"
               ? true

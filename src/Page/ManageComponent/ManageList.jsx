@@ -6,7 +6,10 @@ export default function ManageList() {
   const [state, dispatch] = useContext(ManageContext);
   const { paymentList } = state;
   useEffect(() => {
-    let result = JSON.parse(localStorage.getItem("payment"));
+    let result =
+      localStorage.getItem("payment") !== null
+        ? JSON.parse(localStorage.getItem("payment"))
+        : [];
     if (result.length) {
       result = result.filter(
         (item) => item.user === JSON.parse(localStorage.getItem("login")).name

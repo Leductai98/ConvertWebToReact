@@ -179,10 +179,10 @@ button {
   display: flex;
   position: fixed;
   align-items: center;
-  justify-content: space-between;
-  padding: 20px;
+  justify-content: center;
+  gap: 0;
   top: 40%;
-  width: 300px;
+  width: 350px;
   left: calc((100% - 300px) / 2);
   bottom: 40%;
   border-radius: 10px;
@@ -192,8 +192,8 @@ button {
   display: flex;
 }
 .pop-up-success img {
-  width: 35px;
-  height: 35px;
+  width: 50px;
+ 
 }
 .toast-icon-success {
   color: green;
