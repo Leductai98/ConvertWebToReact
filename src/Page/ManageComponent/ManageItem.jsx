@@ -31,7 +31,7 @@ export default function ManageItem({ data }) {
         </Col>
         <Col xs={12} lg={3}>
           <div className="date">
-            <div className="date-header">Thời gian</div>
+            <div className="date-header-manage">Thời gian</div>
             <div className="date-des">{data.date}</div>
           </div>
         </Col>

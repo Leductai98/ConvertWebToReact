@@ -19,7 +19,7 @@ export default function FavoriteItem({ data, onDeleteFavorite }) {
         </Col>
         <Col xs={12} lg={3}>
           <div className="date">
-            <div className="date-header">Địa điểm</div>
+            <div className="date-header-manage">Địa điểm</div>
             <div className="date-des">{data.location}</div>
           </div>
         </Col>
