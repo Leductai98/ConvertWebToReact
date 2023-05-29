@@ -312,7 +312,7 @@ export default function DetailInfo({ data, url }) {
                       </div>
                       <div className="detail-item-content">
                         <div className="detail-item-date">
-                          {new Date().toLocaleDateString()}
+                          {new Date().toLocaleDateString("es-CL")}
                         </div>
                         <div className="detail-item-text">
                           Hoàn tiền đầy đủ: Được hoàn lại 100% số tiền bạn đã

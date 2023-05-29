@@ -63,7 +63,7 @@ body {
 .header-name p {
   color: var(--text-color);
   font-style: normal;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 30px;
   line-height: 32px;
 }
@@ -336,7 +336,7 @@ body {
 }
 .name h5 {
   font-style: normal;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 24px;
   line-height: 32px;
 }
@@ -385,7 +385,7 @@ body {
 }
 .info-cover-header {
   font-style: normal;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 24px;
   line-height: 32px;
 }
@@ -400,7 +400,7 @@ body {
 }
 .info-cover-more {
   font-style: normal;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 16px;
   line-height: 32px;
   text-decoration: underline;
@@ -476,7 +476,7 @@ body {
 }
 .detail-header-icon {
   font-style: normal;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 24px;
   line-height: 32px;
 }
@@ -502,7 +502,7 @@ body {
   width: calc((100% - 40px) / 2);
 }
 .detail-item-header {
-  font-weight: 700;
+  font-weight: 600;
 }
 .detail-item-text {
   opacity: 0.8;
@@ -515,7 +515,7 @@ body {
 }
 .info-sleep-header {
   font-style: normal;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 24px;
   line-height: 32px;
   margin-bottom: 20px;
@@ -557,7 +557,7 @@ body {
 }
 .utinity-des {
   font-style: normal;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 24px;
   line-height: 32px;
   margin-bottom: 30px;
@@ -601,7 +601,7 @@ body {
 }
 .cancel-header {
   font-style: normal;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 24px;
   line-height: 32px;
 }
@@ -622,7 +622,7 @@ body {
 }
 .cancel-more span {
   font-style: normal;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 16px;
   line-height: 32px;
   text-decoration: underline;
@@ -664,7 +664,8 @@ body {
   gap: 20px;
 }
 .info-cancel-detail .detail-item-date {
-  font-weight: 700;
+  font-weight: 600;
+  width: 100px;
 }
 .info-cancel-detail .detail-item-text {
   opacity: 1;
@@ -672,7 +673,7 @@ body {
 .detail-item-content {
   display: flex;
   justify-content: space-between;
-  gap: 40px;
+  gap: 20px;
 }
 /* rules-detail*/
 .info-rules-detail {
@@ -732,7 +733,7 @@ body {
 }
 .rules-des {
   font-style: normal;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 24px;
   line-height: 32px;
 }
@@ -758,7 +759,7 @@ body {
 }
 .rules-more span {
   font-style: normal;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 16px;
   line-height: 32px;
   text-decoration: underline;
@@ -774,7 +775,7 @@ body {
 }
 .date-header {
   font-style: normal;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 24px;
   line-height: 29px;
 }
@@ -829,7 +830,7 @@ body {
 .rating-header-des {
   padding-top: 10px;
   font-style: normal;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 26px;
   line-height: 24px;
   color: #696f8c;
@@ -857,7 +858,7 @@ body {
 }
 .rating-item-user-name span {
   font-style: normal;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 20px;
   line-height: 20px;
 }
@@ -1024,7 +1025,7 @@ body {
 }
 .booking-money span {
   font-style: normal;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 20px;
   line-height: 32px;
 }
@@ -1076,7 +1077,7 @@ body {
   display: block;
   text-align: center;
   font-style: normal;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 14px;
   line-height: 20px;
   text-transform: uppercase;
@@ -1102,7 +1103,7 @@ body {
   display: block;
   text-align: center;
   font-style: normal;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 14px;
   line-height: 20px;
   text-transform: uppercase;
@@ -1146,7 +1147,7 @@ input::placeholder {
 .guest-header {
   text-transform: uppercase;
   font-style: normal;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 14px;
   line-height: 20px;
 }
@@ -1425,7 +1426,7 @@ span.guest-pet.active {
 }
 .total {
   display: flex;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 20px;
   justify-content: space-between;
 }
@@ -1542,7 +1543,7 @@ span.guest-pet.active {
   gap: 10px;
 }
 .booking-mobile-money span {
-  font-weight: 700;
+  font-weight: 600;
 }
 .booking-mobile-time {
   display: flex;
@@ -1749,7 +1750,7 @@ span.flatpickr-weekday {
 }
 .map-header {
   font-size: 24px;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 /*toast */
