@@ -4,7 +4,7 @@ import { HomeContext } from "./HomeContext&Reducer";
 import { actions } from "./HomeContext&Reducer";
 import { setRoomListAfterFilter } from "./HomeContext&Reducer/Actions";
 import { useBodyScrollLock } from "../../Component";
-export default function RoomFilter() {
+export default function RoomFilter({ setFilterInfo }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const [state, dispatch] = useContext(HomeContext);
   const [isLocked, toggle] = useBodyScrollLock();
@@ -194,6 +194,7 @@ export default function RoomFilter() {
             dispatch(actions.setRoomListAfterFilterDetail(roomList));
             dispatch(actions.setRoomAfterFilter(roomList.length));
             setSearchParams();
+            setFilterInfo({ location: "" });
           }}
         >
           Xóa lọc

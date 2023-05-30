@@ -5,7 +5,7 @@ import { HomeContext } from "./HomeContext&Reducer";
 import { actions } from "./HomeContext&Reducer";
 import RoomItem from "./RoomItem";
 
-export default function Room({ urlImage, homeRoomList }) {
+export default function Room({ urlImage, homeRoomList, setFilterInfo }) {
   const [state, dispatch] = useContext(HomeContext);
   const {
     roomList,
@@ -43,10 +43,10 @@ export default function Room({ urlImage, homeRoomList }) {
   for (let i = 0; i < number; i++) {
     arrayRender.push(list[i]);
   }
- 
+
   return (
     <section className="booking__room">
-      <RoomFilter />
+      <RoomFilter setFilterInfo={setFilterInfo} />
       <div className="booking__room--list grid">
         <div className="row-index">
           {arrayRender.length === 0 ? (

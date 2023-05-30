@@ -48,7 +48,11 @@ export default function Home() {
         ) : (
           <>
             <Filter />
-            <Room homeRoomList={homeRoomList} urlImage={urlImage} />
+            <Room
+              homeRoomList={homeRoomList}
+              urlImage={urlImage}
+              setFilterInfo={setFilterInfo}
+            />
             <Button />
           </>
         )}

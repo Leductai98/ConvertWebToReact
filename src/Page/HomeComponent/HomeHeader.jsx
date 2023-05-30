@@ -675,6 +675,7 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
               dispatch(actions.setRoomListAfterFilter(roomList));
               dispatch(actions.setRoomListAfterFilterDetail(roomList));
               dispatch(actions.setRoomAfterFilter(roomList.length));
+              setFilterInfo({ location: "" });
             }}
           >
             <img src="/Group.png" alt="" />
@@ -687,6 +688,7 @@ export default function HomeHeader({ filterInfo, setFilterInfo }) {
               dispatch(actions.setRoomListAfterFilter(roomList));
               dispatch(actions.setRoomListAfterFilterDetail(roomList));
               dispatch(actions.setRoomAfterFilter(roomList.length));
+              setFilterInfo({ location: "" });
             }}
           >
             <img src="/Group (4).png" alt="" />
