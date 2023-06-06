@@ -24,6 +24,9 @@ body {
   color: var(--text-color);
   background-color: white;
 }
+.nav__icon-signin img {
+  z-index: 999;
+}
 .signin-wrap input {
   outline: none;
   width: 400px;

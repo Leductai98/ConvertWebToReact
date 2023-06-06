@@ -515,7 +515,7 @@ a:hover {
 }
 .menu-list {
   width: 100%;
-  margin-top: 20px;
+  margin: 0;
   list-style: none;
   display: flex;
   flex-direction: column;
@@ -530,7 +530,7 @@ a:hover {
   line-height: 40px;
 }
 .menu-list li:hover {
-  background-color: rgba(0, 0, 255, 0.1);
+  background-color: rgba(0, 0, 0, 0.1);
 }
 .menu-item {
   text-decoration: none;
@@ -1611,10 +1611,11 @@ input[type="number"]::-webkit-inner-spin-button {
   display: none;
   flex-direction: column;
   gap: 0;
-  padding: 10px 0;
+
   box-shadow: 0 0 5px 1px rgba(209, 207, 207, 0.459);
   border-radius: 10px;
   z-index: 10;
+  overflow: hidden;
 }
 .user__menu:hover {
   cursor: default;
@@ -1635,19 +1636,19 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 .user__menu-login:hover {
   cursor: pointer;
-  background-color: rgba(0, 0, 255, 0.1);
+  background-color: rgba(0, 0, 0, 0.1);
 }
 .user__menu-signup:hover {
   cursor: pointer;
-  background-color: rgba(0, 0, 255, 0.1);
+  background-color: rgba(0, 0, 0, 0.1);
 }
 .user__menu-become-host:hover {
   cursor: pointer;
-  background-color: rgba(0, 0, 255, 0.1);
+  background-color: rgba(0, 0, 0, 0.1);
 }
 .user__menu-help:hover {
   cursor: pointer;
-  background-color: rgba(0, 0, 255, 0.1);
+  background-color: rgba(0, 0, 0, 0.1);
 }
 .user__menu-login {
   font-weight: 700;
