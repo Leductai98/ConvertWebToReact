@@ -62,7 +62,16 @@ export default function AboutContent() {
           </Row>
         </div>
       </div>
-      <Link to="/" className="about-more">
+      <Link
+        to="/"
+        className="about-more"
+        onMouseDown={(e) => {
+          e.target.style = "scale:0.95";
+        }}
+        onMouseUp={(e) => {
+          e.target.style = "scale:1";
+        }}
+      >
         Khám Phá Thêm
       </Link>
     </Container>
