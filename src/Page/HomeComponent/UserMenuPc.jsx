@@ -29,7 +29,7 @@ export default function UserMenuPc({
               to="/user"
               style={{
                 color: "inherit",
-                fontWeight: 500,
+                fontWeight: 400,
                 textDecoration: "none",
               }}
               className="user__menu-login"
@@ -82,11 +82,7 @@ export default function UserMenuPc({
             >
               Đăng ký
             </NavLink>
-            <NavLink
-              to="/about"
-              className="user__menu-become-host"
-              
-            >
+            <NavLink to="/about" className="user__menu-become-host">
               Về chúng tôi
             </NavLink>
             <NavLink
